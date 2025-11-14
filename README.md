@@ -1,45 +1,75 @@
-# Paper Trading Bot
+# Paper Trading Bot  
+**AI-Powered Crypto Strategy Simulator** – Practice before real money.
 
-A **paper trading bot** for iOS (Pythonista 3) that monitors crypto prices from **Crypto.com**, makes simulated buys/sells, and uses **AI (DeepSeek via OpenRouter)** for trade signals.
+![Pythonista](https://img.shields.io/badge/Platform-iOS%20(Pythonista%203)-blue)  
+![OpenRouter](https://img.shields.io/badge/AI-DeepSeek%20via%20OpenRouter-green)  
+![License](https://img.shields.io/github/license/mohameddodda/Paper_trading_bot)
+
+---
+
+## What It Does
+- Monitors **live Crypto.com prices** (BTC, ETH, SOL, DOGE, SHIB, CRO)  
+- Uses **DeepSeek AI (via OpenRouter)** to suggest **BUY / SELL / HOLD**  
+- Simulates trades with **$1,000,000 virtual balance**  
+- Logs every trade to CSV  
+- Runs **natively on iPhone/iPad** in **Pythonista 3**
+
+> **Zero risk** – **No real money is ever used.**
 
 ---
 
 ## Features
-- Real-time price tracking (BTC, ETH, SOL, DOGE, SHIB, CRO)
-- Paper trading with $1,000,000 virtual balance
-- Dynamic buy/sell thresholds based on volatility
-- AI-powered trade suggestions (BUY/SELL/HOLD)
-- CSV trade logging
-- Console UI with price charts
-- Push notifications on trades
-- Manual force buy/sell via commands
+| Feature | Status |
+|-------|--------|
+| Real-time price updates | Done |
+| Dynamic volatility thresholds | Done |
+| AI trade signals | Done |
+| Push notifications | Done |
+| CSV trade log | Done |
+| Force buy/sell commands | Done |
+| Console UI with charts | Done |
 
 ---
 
-## Tech Stack
-- **Pythonista 3** (iOS)
-- **Crypto.com Public API**
-- **OpenRouter AI** (`deepseek/deepseek-chat:free`)
-- **GitHub Pages** (for OpenRouter referer)
+## Coming Soon (PC Version)
+- Desktop app (Python/Tkinter or Electron)  
+- Backtesting engine  
+- Strategy optimizer  
+- Web dashboard
+
+---
+
+## Setup (iOS)
+1. Install **Pythonista 3** from the App Store  
+2. Copy `bot.py` into Pythonista  
+3. Run → type `start` in console  
+4. Watch AI signals and simulated trades
 
 ---
 
 ## Commands
-| Command | Action |
-|--------|--------|
-| `start` | Resume bot |
-| `stop`  | Pause bot |
-| `reset` | Reset balance & portfolio |
-| `force buy BTC` | Buy 10% of balance |
-| `force sell BTC` | Sell all holdings |
+start          → Resume bot stop           → Pause bot reset          → Reset balance & portfolio force buy BTC  → Buy 10% of balance force sell BTC → Sell all holdings
 
 ---
 
-## Setup
-1. Run in **Pythonista 3**
-2. Enable **GitHub Pages** on this repo
-3. Use URL: `https://mohameddodda.github.io/Paper_trading_bot/`
+## Tech Stack
+- **Pythonista 3** (iOS)  
+- **Crypto.com Public API**  
+- **OpenRouter** (`deepseek/deepseek-chat:free`)  
+- **GitHub Pages** (referer for OpenRouter)
 
 ---
 
-> **Note**: This is a simulation — no real money is traded.
+## GitHub Pages (Live Site)
+[https://mohameddodda.github.io/Paper_trading_bot/](https://mohameddodda.github.io/Paper_trading_bot/)
+
+> Required for OpenRouter API access.
+
+---
+
+## License
+MIT License – Free to use, modify, and share.
+
+---
+
+*Built with love on iPhone. Next stop: desktop domination.*
