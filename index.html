@@ -3,20 +3,106 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Paper Trading Bot</title>
+  <title>Paper Trading Bot – Practice Before Real Trading</title>
   <style>
-    body { font-family: -apple-system, sans-serif; text-align: center; padding: 50px; background: #f4f4f4; }
-    h1 { color: #1a73e8; }
-    p { max-width: 600px; margin: 20px auto; color: #555; }
-    .badge { background: #1a73e8; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9em; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-align: center;
+      padding: 50px 20px;
+      background: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #1a73e8;
+      font-size: 2em;
+      margin-bottom: 0.5em;
+    }
+    p {
+      max-width: 700px;
+      margin: 16px auto;
+      color: #555;
+      font-size: 1.1em;
+    }
+    .badge {
+      display: inline-block;
+      background: #1a73e8;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: 600;
+      margin: 10px 0;
+    }
+    .warning {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      color: #856404;
+      padding: 12px;
+      border-radius: 8px;
+      max-width: 680px;
+      margin: 20px auto;
+      font-size: 0.95em;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #777;
+    }
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.6em; }
+      p { font-size: 1em; }
+    }
   </style>
 </head>
 <body>
   <h1>Paper Trading Bot</h1>
-  <p>AI-powered crypto paper trading bot running on <strong>Pythonista 3</strong> for iOS.</p>
-  <p>Uses <strong>DeepSeek AI</strong> via OpenRouter for trade signals.</p>
-  <span class="badge">Simulation Only – No Real Funds</span>
-  <hr>
-  <p><small>GitHub: <a href="https://github.com/mohameddodda/Paper_trading_bot">mohameddodda/Paper_trading_bot</a></small></p>
+
+  <p>
+    A <strong>risk-free simulation</strong> of an AI-powered crypto trading bot, 
+    designed to help you practice strategies before using real money.
+  </p>
+
+  <p>
+    Currently running on <strong>iOS via Pythonista 3</strong>, 
+    this bot monitors live prices from <strong>Crypto.com</strong> and uses 
+    <strong>DeepSeek AI (via OpenRouter)</strong> to suggest BUY, SELL, or HOLD signals.
+  </p>
+
+  <div class="badge">Simulation Only – No Real Funds</div>
+
+  <div class="warning">
+    <strong>Important:</strong> This is <strong>paper trading only</strong>. 
+    No real money is involved. Use it to test logic, timing, and AI accuracy.
+  </div>
+
+  <p>
+    <strong>Next Step:</strong> A <strong>PC version</strong> is in development 
+    to allow faster testing, backtesting, and strategy optimization 
+    before any live deployment.
+  </p>
+
+  <p>
+    Think of this as your <em>training ground</em> — 
+    build confidence, refine rules, and prove the system works.
+  </p>
+
+  <div class="footer">
+    <p>
+      GitHub: <a href="https://github.com/mohameddodda/Paper_trading_bot" target="_blank">
+        mohameddodda/Paper_trading_bot
+      </a>
+    </p>
+    <p>
+      <small>Built with Pythonista 3 • OpenRouter • GitHub Pages</small>
+    </p>
+  </div>
 </body>
 </html>
