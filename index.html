@@ -3,106 +3,233 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Paper Trading Bot – Practice Before Real Trading</title>
+  <title>Paper Trading Bot | Practice Crypto Strategies</title>
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
   <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #0d47a1;
+      --success: #2e7d32;
+      --warning: #f9a825;
+      --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text: #2d3748;
+      --text-light: #718096;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      text-align: center;
-      padding: 50px 20px;
-      background: #f8f9fa;
-      color: #333;
-      line-height: 1.6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    h1 {
-      color: #1a73e8;
-      font-size: 2em;
-      margin-bottom: 0.5em;
+
+    .container {
+      max-width: 800px;
+      width: 100%;
     }
-    p {
-      max-width: 700px;
-      margin: 16px auto;
-      color: #555;
-      font-size: 1.1em;
-    }
-    .badge {
-      display: inline-block;
-      background: #1a73e8;
-      color: white;
-      padding: 8px 16px;
+
+    .card {
+      background: var(--card-bg);
       border-radius: 20px;
-      font-size: 0.9em;
-      font-weight: 600;
-      margin: 10px 0;
+      padding: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
     }
-    .warning {
-      background: #fff3cd;
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .feature {
+      padding: 1rem;
+      border-radius: 12px;
+      background: rgba(26, 115, 232, 0.05);
+      border: 1px solid rgba(26, 115, 232, 0.1);
+    }
+
+    .feature i {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+
+    .feature h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-dark);
+    }
+
+    .feature p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .warning-banner {
+      background: linear-gradient(90deg, #fff3cd, #ffeaa7);
       border: 1px solid #ffeaa7;
       color: #856404;
-      padding: 12px;
-      border-radius: 8px;
-      max-width: 680px;
-      margin: 20px auto;
-      font-size: 0.95em;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
+
+    .warning-banner i {
+      color: var(--warning);
+    }
+
+    .roadmap {
+      background: rgba(46, 125, 50, 0.08);
+      border: 1px dashed var(--success);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin: 2rem 0;
+      color: var(--success);
+      font-weight: 600;
+    }
+
     .footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #777;
+      margin-top: 2.5rem;
+      font-size: 0.9rem;
+      color: var(--text-light);
     }
-    a {
-      color: #1a73e8;
+
+    .footer a {
+      color: var(--primary);
       text-decoration: none;
+      font-weight: 600;
     }
-    a:hover {
+
+    .footer a:hover {
       text-decoration: underline;
     }
+
     @media (max-width: 600px) {
-      h1 { font-size: 1.6em; }
-      p { font-size: 1em; }
+      .card { padding: 2rem 1.5rem; }
+      h1 { font-size: 1.8rem; }
+      .feature-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <h1>Paper Trading Bot</h1>
+  <div class="container">
+    <div class="card">
+      <!-- Logo -->
+      <div class="logo">
+        <i class="fas fa-robot"></i>
+      </div>
 
-  <p>
-    A <strong>risk-free simulation</strong> of an AI-powered crypto trading bot, 
-    designed to help you practice strategies before using real money.
-  </p>
+      <!-- Title -->
+      <h1>Paper Trading Bot</h1>
+      <p class="subtitle">AI-Powered Crypto Strategy Simulator</p>
 
-  <p>
-    Currently running on <strong>iOS via Pythonista 3</strong>, 
-    this bot monitors live prices from <strong>Crypto.com</strong> and uses 
-    <strong>DeepSeek AI (via OpenRouter)</strong> to suggest BUY, SELL, or HOLD signals.
-  </p>
+      <!-- Features -->
+      <div class="feature-grid">
+        <div class="feature">
+          <i class="fas fa-chart-line"></i>
+          <h3>Live Market Data</h3>
+          <p>Real-time prices from Crypto.com</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-brain"></i>
+          <h3>AI Trade Signals</h3>
+          <p>DeepSeek AI suggests BUY/SELL/HOLD</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-mobile-alt"></i>
+          <h3>iOS Native</h3>
+          <p>Runs in Pythonista 3 on iPhone/iPad</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-shield-alt"></i>
+          <h3>Zero Risk</h3>
+          <p>Paper trading with $1M virtual balance</p>
+        </div>
+      </div>
 
-  <div class="badge">Simulation Only – No Real Funds</div>
+      <!-- Warning -->
+      <div class="warning-banner">
+        <i class="fas fa-exclamation-triangle"></i>
+        SIMULATION ONLY — NO REAL MONEY IS USED
+      </div>
 
-  <div class="warning">
-    <strong>Important:</strong> This is <strong>paper trading only</strong>. 
-    No real money is involved. Use it to test logic, timing, and AI accuracy.
-  </div>
+      <!-- Roadmap -->
+      <div class="roadmap">
+        <i class="fas fa-laptop-code"></i>
+        PC Version in Development — Faster backtesting & strategy optimization coming soon.
+      </div>
 
-  <p>
-    <strong>Next Step:</strong> A <strong>PC version</strong> is in development 
-    to allow faster testing, backtesting, and strategy optimization 
-    before any live deployment.
-  </p>
+      <!-- Description -->
+      <p>
+        This is your <strong>training ground</strong>. Test strategies, timing, and AI logic 
+        before ever risking real capital. The iOS version is the first step — 
+        a full <strong>desktop app</strong> is being built for deeper analysis.
+      </p>
 
-  <p>
-    Think of this as your <em>training ground</em> — 
-    build confidence, refine rules, and prove the system works.
-  </p>
-
-  <div class="footer">
-    <p>
-      GitHub: <a href="https://github.com/mohameddodda/Paper_trading_bot" target="_blank">
-        mohameddodda/Paper_trading_bot
-      </a>
-    </p>
-    <p>
-      <small>Built with Pythonista 3 • OpenRouter • GitHub Pages</small>
-    </p>
+      <!-- Footer -->
+      <div class="footer">
+        <p>
+          Open Source on 
+          <a href="https://github.com/mohameddodda/Paper_trading_bot" target="_blank">
+            GitHub → mohameddodda/Paper_trading_bot
+          </a>
+        </p>
+        <p>
+          <small>Built with Pythonista 3 • OpenRouter • GitHub Pages</small>
+        </p>
+      </div>
+    </div>
   </div>
 </body>
 </html>
