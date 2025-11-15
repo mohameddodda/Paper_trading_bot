@@ -3,233 +3,489 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Paper Trading Bot | Practice Crypto Strategies</title>
+  <meta name="description" content="Paper Trading Bot -- Practice crypto trading with $1M virtual balance, live Crypto.com data, and AI signals. 100% free, open-source on GitHub."/>
+  <meta name="author" content="mohameddodda"/>
+  <meta name="theme-color" content="#4285f4"/>
+  <meta property="og:title" content="Paper Trading Bot -- Practice Crypto Without Risk"/>
+  <meta property="og:description" content="AI-powered paper trading on iOS with real-time data. Open source on GitHub."/>
+  <meta property="og:image" content="https://opengraph.githubassets.com/1/mohameddodda/Paper_trading_bot"/>
+  <meta property="og:url" content="https://mohameddodda.github.io/Paper_trading_bot"/>
+  <meta property="og:type" content="website"/>
 
-  <!-- Font Awesome for Icons -->
+  <title>Paper Trading Bot | AI-Powered Crypto Simulator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>Robot</text></svg>">
 
   <style>
     :root {
-      --primary: #1a73e8;
-      --primary-dark: #0d47a1;
-      --success: #2e7d32;
-      --warning: #f9a825;
-      --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --text: #2d3748;
-      --text-light: #718096;
+      --google-blue: #4285f4;
+      --deep-indigo: #1a4a8f;
+      --dark-blue:   #0f2c5e;
+      --card-bg:     rgba(255, 255, 255, 0.12);
+      --card-border: rgba(255, 255, 255, 0.18);
+      --text-light:  #ffffff;
+      --text-muted:  #c0d8f7;
+      --glow:        0 0 20px rgba(66, 133, 244, 0.4);
+      --transition:  all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: var(--bg-gradient);
+      font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--dark-blue) 0%, var(--deep-indigo) 45%, var(--google-blue) 100%);
       background-attachment: fixed;
-      color: var(--text);
+      color: #fff;
       min-height: 100vh;
-      padding: 2rem 1rem;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    .container {
-      max-width: 800px;
-      width: 100%;
+    .header {
+      width: 100%; max-width: 1200px; padding: 1rem 1.5rem;
+      display: flex; justify-content: center;
+      background: rgba(15, 44, 94, 0.75);
+      backdrop-filter: blur(14px); border-radius: 0 0 20px 20px;
+      margin-bottom: 3rem; position: sticky; top: 0; z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .header-logo {
+      font-size: clamp(1.5rem, 4vw, 1.9rem); font-weight: 900; color: #fff;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .header-logo i {
+      color: var(--google-blue); font-size: clamp(1.8rem, 5vw, 2.2rem);
+      filter: drop-shadow(0 0 8px rgba(66,133,244,0.6));
+      animation: pulse 2s infinite;
     }
 
-    .card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 2.5rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      text-align: center;
+    .hero {
+      text-align: center; max-width: 900px; margin: 2rem auto 5rem; padding: 0 1rem;
+      opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease-out forwards;
+    }
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 4.2rem); font-weight: 900;
+      background: linear-gradient(90deg, #e0f7ff, #fff, #a0f0ff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      margin-bottom: 1rem; letter-spacing: -1px; line-height: 1.1;
+    }
+    .hero p {
+      font-size: clamp(1.1rem, 3vw, 1.4rem); color: var(--text-muted);
+      margin-bottom: 2.5rem; font-weight: 500;
+    }
+    .cta-btn {
+      background: var(--google-blue); color: #fff;
+      padding: 1rem 3rem; border-radius: 3rem; font-weight: 700;
+      text-decoration: none; box-shadow: var(--glow), 0 10px 30px rgba(66,133,244,.5);
+      transition: var(--transition); display: inline-block; font-size: 1.1rem;
+      position: relative; overflow: hidden;
+    }
+    .cta-btn::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.6s;
+    }
+    .cta-btn:hover::before { left: 100%; }
+    .cta-btn:hover {
+      background: #357ae8; transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(66,133,244,.6);
     }
 
-    .logo {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 1.5rem;
-      background: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 2rem;
-      box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+    .stats {
+      display: flex; justify-content: center; gap: 3rem; margin: 3rem 0; flex-wrap: wrap; font-weight: 700;
+    }
+    .stat {
+      text-align: center; opacity: 0; animation: fadeUp 0.8s ease-out forwards; animation-delay: 0.3s;
+    }
+    .stat-num {
+      font-size: 2.2rem; color: var(--google-blue); display: block;
+    }
+    .stat-label {
+      font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;
     }
 
-    h1 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--primary-dark);
-      margin-bottom: 0.5rem;
+    .features {
+      width: 100%; max-width: 1200px; display: grid; gap: 2.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      margin-bottom: 5rem; padding: 0 1.5rem;
     }
+    .feature-card {
+      background: var(--card-bg); backdrop-filter: blur(16px); border: 1px solid var(--card-border);
+      border-radius: 28px; padding: 2.5rem; text-align: center;
+      transition: var(--transition); position: relative; overflow: hidden;
+      opacity: 0; transform: translateY(30px); animation: fadeUp 0.7s ease-out forwards;
+    }
+    .feature-card:nth-child(1) { animation-delay: 0.1s; }
+    .feature-card:nth-child(2) { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) { animation-delay: 0.3s; }
+    .feature-card:nth-child(4) { animation-delay: 0.4s; }
 
-    .subtitle {
-      font-size: 1.1rem;
-      color: var(--text-light);
-      margin-bottom: 2rem;
+    .feature-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0; transition: opacity 0.4s;
     }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-card:hover {
+      transform: translateY(-12px); box-shadow: 0 25px 50px rgba(0,0,0,.3), var(--glow);
+      border-color: rgba(66,133,244,.5);
+    }
+    .feature-card i {
+      font-size: 3rem; color: var(--google-blue); margin-bottom: 1.3rem; display: block;
+      filter: drop-shadow(0 0 10px rgba(66,133,244,0.5));
+    }
+    .feature-card h3 {
+      font-size: 1.6rem; margin-bottom: 0.8rem; color: #fff; font-weight: 800;
+    }
+    .feature-card p {
+      color: var(--text-muted); font-size: 1.02rem;
+    }
+    .feature-card.dark {
+      background: rgba(15,44,94,.92); border-color: rgba(66,133,244,.4);
+    }
+    .ios-card {
+      background: linear-gradient(145deg, rgba(15,44,94,.98), rgba(26,74,143,.9));
+      position: relative; overflow: hidden;
+    }
+    .ios-card .text { position: relative; z-index: 2; padding: 2.5rem; }
+    .ios-mockup {
+      position: absolute; bottom: -60px; right: -70px; width: 75%; max-width: 360px;
+      opacity: .95; transform: rotate(9deg); filter: drop-shadow(0 25px 40px rgba(0,0,0,.6));
+      z-index: 1; transition: transform 0.6s ease; loading: lazy;
+    }
+    .ios-card:hover .ios-mockup { transform: rotate(9deg) translateY(-8px); }
 
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
+    .banners {
+      max-width: 900px; width: 100%; margin: 4rem auto; padding: 0 1.5rem;
     }
+    .banner {
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      padding: 1.4rem 2.2rem; border-radius: 18px; font-weight: 600;
+      margin-bottom: 1.8rem; font-size: 1.05rem; backdrop-filter: blur(10px);
+      transition: transform 0.3s;
+    }
+    .banner:hover { transform: translateX(4px); }
+    .warning { background: rgba(255,179,0,0.15); border: 1px solid rgba(255,179,0,0.5); color: #fff8e1; }
+    .warning i { color: #ffb300; }
+    .roadmap { background: rgba(0,201,167,0.15); border: 1px solid #00c9a7; color: #fff; }
+    .roadmap i { color: #00c9a7; }
 
-    .feature {
-      padding: 1rem;
-      border-radius: 12px;
-      background: rgba(26, 115, 232, 0.05);
-      border: 1px solid rgba(26, 115, 232, 0.1);
+    .setup-guide {
+      max-width: 900px; width: 100%; margin: 4rem auto; padding: 0 1.5rem;
     }
+    .setup-toggle {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      padding: 1.2rem 1.8rem; border-radius: 16px; font-weight: 700;
+      color: #fff; cursor: pointer; display: flex; justify-content: space-between;
+      align-items: center; transition: all 0.3s; margin-bottom: 1rem;
+    }
+    .setup-toggle:hover { background: rgba(255,255,255,0.15); }
+    .setup-toggle i { transition: transform 0.3s; }
+    .setup-toggle.active i { transform: rotate(180deg); }
+    .setup-content {
+      background: rgba(15,44,94,0.9); border: 1px solid rgba(66,133,244,0.3);
+      border-radius: 16px; padding: 2rem; color: #e0f2f7; line-height: 1.7;
+      display: none; animation: fadeIn 0.5s ease-out;
+    }
+    .setup-content.active { display: block; }
+    .setup-content h4 { color: var(--google-blue); margin: 1.2rem 0 0.6rem; font-size: 1.2rem; }
+    .setup-content code {
+      background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 6px; font-family: 'Courier New', monospace;
+    }
+    .api-btn {
+      background: #00c853; color: white; padding: 0.7rem 1.5rem; border-radius: 2rem;
+      font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+      margin: 1rem 0; font-size: 0.95rem; transition: all 0.3s;
+    }
+    .api-btn:hover { background: #00b140; transform: translateY(-2px); }
 
-    .feature i {
-      font-size: 1.8rem;
-      color: var(--primary);
-      margin-bottom: 0.8rem;
+    .readme-section {
+      max-width: 900px; width: 100%; margin: 4rem auto; padding: 0 1.5rem;
     }
-
-    .feature h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      color: var(--primary-dark);
+    .readme-box {
+      background: rgba(15,44,94,0.95); border: 1px solid rgba(66,133,244,0.3);
+      border-radius: 20px; padding: 2.2rem; color: #e0f7ff; line-height: 1.8;
+      font-size: 1rem; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
-
-    .feature p {
-      font-size: 0.9rem;
-      color: var(--text-light);
-    }
-
-    .warning-banner {
-      background: linear-gradient(90deg, #fff3cd, #ffeaa7);
-      border: 1px solid #ffeaa7;
-      color: #856404;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      margin: 2rem 0;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .warning-banner i {
-      color: var(--warning);
-    }
-
-    .roadmap {
-      background: rgba(46, 125, 50, 0.08);
-      border: 1px dashed var(--success);
-      border-radius: 12px;
-      padding: 1.2rem;
-      margin: 2rem 0;
-      color: var(--success);
-      font-weight: 600;
-    }
+    .readme-box h1, .readme-box h2, .readme-box h3 { color: #fff; margin: 1.5rem 0 0.8rem; }
+    .readme-box h1 { font-size: 1.8rem; border-bottom: 2px solid var(--google-blue); padding-bottom: 0.5rem; }
+    .readme-box h2 { font-size: 1.5rem; color: var(--google-blue); }
+    .readme-box ul, .readme-box ol { margin: 0.8rem 0; padding-left: 1.8rem; }
+    .readme-box li { margin: 0.4rem 0; }
+    .readme-box code { background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 6px; }
+    .readme-box pre { background: #111; padding: 1rem; border-radius: 12px; overflow-x: auto; margin: 1rem 0; }
+    .readme-box table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    .readme-box th, .readme-box td { border: 1px solid rgba(255,255,255,0.2); padding: 0.6rem; text-align: left; }
+    .readme-box th { background: rgba(66,133,244,0.2); }
+    .readme-box img.shields { height: 20px; vertical-align: middle; }
 
     .footer {
-      margin-top: 2.5rem;
-      font-size: 0.9rem;
-      color: var(--text-light);
+      width: 100%; max-width: 1200px; padding: 3rem 1.5rem 2rem;
+      text-align: center; color: var(--text-light); font-size: 0.95rem;
+      border-top: 1px solid rgba(255,255,255,.15); margin-top: 6rem;
+    }
+    .footer a { color: var(--google-blue); text-decoration: none; font-weight: 700; }
+    .footer a:hover { text-decoration: underline; }
+    .tech-stack { margin-top: 1rem; font-size: 0.9rem; opacity: 0.95; color: #eee; }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .ios-mockup { transform: none !important; }
     }
 
-    .footer a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
+    @media (max-width: 768px) {
+      .stats { gap: 2rem; }
+      .stat-num { font-size: 1.8rem; }
+      .ios-mockup { width: 85%; bottom: -30px; right: -30px; }
+      .setup-content { padding: 1.5rem; }
     }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-      .card { padding: 2rem 1.5rem; }
-      h1 { font-size: 1.8rem; }
-      .feature-grid { grid-template-columns: 1fr; }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2.4rem; }
+      .cta-btn { width: 90%; padding: 1rem; }
+      .banner { font-size: 0.95rem; padding: 1rem; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <!-- Logo -->
-      <div class="logo">
-        <i class="fas fa-robot"></i>
-      </div>
 
-      <!-- Title -->
-      <h1>Paper Trading Bot</h1>
-      <p class="subtitle">AI-Powered Crypto Strategy Simulator</p>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-logo">
+      <i class="fas fa-robot"></i> Paper
+    </div>
+  </header>
 
-      <!-- Features -->
-      <div class="feature-grid">
-        <div class="feature">
-          <i class="fas fa-chart-line"></i>
-          <h3>Live Market Data</h3>
-          <p>Real-time prices from Crypto.com</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-brain"></i>
-          <h3>AI Trade Signals</h3>
-          <p>DeepSeek AI suggests BUY/SELL/HOLD</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-mobile-alt"></i>
-          <h3>iOS Native</h3>
-          <p>Runs in Pythonista 3 on iPhone/iPad</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-shield-alt"></i>
-          <h3>Zero Risk</h3>
-          <p>Paper trading with $1M virtual balance</p>
-        </div>
-      </div>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Paper Trading Bot</h1>
+    <p>Practice crypto trading with $1M virtual balance, live data, and AI signals -- zero risk.</p>
+    <a href="https://github.com/mohameddodda/Paper_trading_bot" target="_blank" class="cta-btn">
+      Start Practicing Today
+    </a>
+  </section>
 
-      <!-- Warning -->
-      <div class="warning-banner">
-        <i class="fas fa-exclamation-triangle"></i>
-        SIMULATION ONLY — NO REAL MONEY IS USED
-      </div>
-
-      <!-- Roadmap -->
-      <div class="roadmap">
-        <i class="fas fa-laptop-code"></i>
-        PC Version in Development — Faster backtesting & strategy optimization coming soon.
-      </div>
-
-      <!-- Description -->
-      <p>
-        This is your <strong>training ground</strong>. Test strategies, timing, and AI logic 
-        before ever risking real capital. The iOS version is the first step — 
-        a full <strong>desktop app</strong> is being built for deeper analysis.
-      </p>
-
-      <!-- Footer -->
-      <div class="footer">
-        <p>
-          Open Source on 
-          <a href="https://github.com/mohameddodda/Paper_trading_bot" target="_blank">
-            GitHub → mohameddodda/Paper_trading_bot
-          </a>
-        </p>
-        <p>
-          <small>Built with Pythonista 3 • OpenRouter • GitHub Pages</small>
-        </p>
-      </div>
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-num" data-count="1000000">$0</span>
+      <span class="stat-label">Virtual Balance</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="50">0</span>
+      <span class="stat-label">Supported Pairs</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="24">0</span>
+      <span class="stat-label">Live Data</span>
     </div>
   </div>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="feature-card">
+      <i class="fas fa-chart-line"></i>
+      <h3>Live Market Data</h3>
+      <p>Real-time prices from Crypto.com to simulate authentic trading conditions.</p>
+    </div>
+
+    <div class="feature-card dark">
+      <i class="fas fa-brain"></i>
+      <h3>AI-Powered Trade Signals</h3>
+      <p>DeepSeek AI suggests <strong>BUY/SELL/HOLD</strong> in real time via OpenRouter.</p>
+    </div>
+
+    <div class="feature-card">
+      <i class="fas fa-shield-alt"></i>
+      <h3>Zero Financial Risk</h3>
+      <p>Trade with a <strong>$1,000,000</strong> virtual balance -- 100% safe.</p>
+    </div>
+
+    <div class="feature-card ios-card">
+      <div class="text">
+        <i class="fas fa-mobile-alt"></i>
+        <h3>iOS Native Experience</h3>
+        <p>Runs natively on iPhone & iPad using <strong>Pythonista 3</strong>.</p>
+      </div>
+      <img src="https://assets.codepen.io/605876/iphone-14-pro-mockup.png" 
+           alt="Paper Trading Bot on iPhone" class="ios-mockup" loading="lazy">
+    </div>
+  </section>
+
+  <!-- Banners -->
+  <div class="banners">
+    <div class="banner warning">
+      <i class="fas fa-exclamation-triangle"></i>
+      SIMULATION ONLY -- NO REAL MONEY IS USED
+    </div>
+    <div class="banner roadmap">
+      <i class="fas fa-laptop-code"></i>
+      PC Version in Development -- Faster backtesting & strategy optimization coming soon.
+    </div>
+  </div>
+
+  <!-- Pythonista Setup Guide -->
+  <div class="setup-guide">
+    <div class="setup-toggle" onclick="toggleSetup()">
+      <spam>Pythonista 3 Setup Guide (API Key Required)</span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="setup-content" id="setupContent">
+      <p><strong>Step 1: Get your OpenRouter API key (free)</strong></p>
+      <a href="https://openrouter.ai/keys" target="_blank" class="api-btn">
+        <i class="fas fa-key"></i> Get Free API Key
+      </a>
+
+      <p><strong>Step 2: Install Pythonista 3</strong></p>
+      <ol>
+        <li>Download from <a href="http://omz-software.com/pythonista/" target="_blank" style="color:var(--google-blue);">App Store</a></li>
+        <li>Open Pythonista → Tap <code>+</code> → <code>Import from GitHub</code></li>
+        <li>Enter: <code>mohameddodda/Paper_trading_bot</code></li>
+        <li>Tap <strong>Import</strong></li>
+      </ol>
+
+      <p><strong>Step 3: Add your API key</strong></p>
+      <ol>
+        <li>Open <code>config.py</code></li>
+        <li>Replace placeholder:</li>
+      </ol>
+      <pre><code>OPENROUTER_API_KEY = "sk-or-v1-..."  # ← Paste your key here</code></pre>
+
+      <p><strong>Step 4: Run!</strong></p>
+      <p>→ Open <code>main.py</code> → Type <code>start</code></p>
+
+      <h4>Free Tier</h4>
+      <ul>
+        <li>$5 free credit (~10,000 signals)</li>
+        <li>After: ~$0.02 per 1,000 signals</li>
+      </ul>
+      <p><em>Your key stays on your device. Never shared.</em></p>
+    </div>
+  </div>
+
+  <!-- README.md Embedded -->
+  <div class="readme-section">
+    <div class="readme-box">
+      <h1>Paper Trading Bot</h1>
+      <p><strong>AI-Powered Crypto Strategy Simulator</strong> – Practice before real money.</p>
+
+      <p>
+        <a href="https://opensource.org/licenses/MIT" target="_blank">
+          <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" class="shields">
+        </a>
+        <img src="https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54" alt="Python" class="shields">
+        <img src="https://img.shields.io/badge/iOS-000000?style=flat&logo=apple&logoColor=white" alt="iOS" class="shields">
+      </p>
+
+      <p><strong>Pythonista 3</strong> • <strong>OpenRouter</strong> • <strong>Crypto.com API</strong></p>
+
+      <hr>
+
+      <h2>What It Does</h2>
+      <ul>
+        <li>Monitors live Crypto.com prices (BTC, ETH, SOL, DOGE, SHIB, CRO)</li>
+        <li>Uses <strong>DeepSeek AI</strong> (via OpenRouter) to suggest <strong>BUY / SELL / HOLD</strong></li>
+        <li><strong>Auto-executes AI signals</strong> (optional in future)</li>
+        <li>Simulates trades with <strong>$1,000,000 virtual balance</strong></li>
+        <li>Logs every trade to CSV</li>
+        <li>Runs <strong>natively on iPhone/iPad</strong> in <strong>Pythonista 3</strong></li>
+      </ul>
+      <p><strong>Zero risk – No real money is ever used.</strong></p>
+
+      <h2>Features</h2>
+      <table>
+        <tr><th>Feature</th><th>Status</th></tr>
+        <tr><td>Real-time price updates</td><td>Done</td></tr>
+        <tr><td>Dynamic volatility thresholds</td><td>Done</td></tr>
+        <tr><td>AI trade signals</td><td>Done</td></tr>
+        <tr><td><strong>Auto buy/sell (AI-driven)</strong></td><td>Planned</td></tr>
+        <tr><td>Push notifications</td><td>Done</td></tr>
+        <tr><td>CSV trade log</td><td>Done</td></tr>
+        <tr><td>Force buy/sell commands</td><td>Done</td></tr>
+        <tr><td>Console UI with charts</td><td>Done</td></tr>
+      </table>
+
+      <h2>Coming Soon</h2>
+      <ul>
+        <li><strong>Auto Buy/Sell</strong>: Fully automated AI trading (toggle on/off)</li>
+        <li><strong>PC Version (Basic)</strong>: Simple desktop runner (Python script)</li>
+      </ul>
+
+      <h2>Setup (iOS)</h2>
+      <ol>
+        <li>Install <strong>Pythonista 3</strong> from the App Store</li>
+        <li>Copy <code>bot.py</code> into Pythonista</li>
+        <li>Run → type <code>start</code> in console</li>
+        <li>Watch AI signals and simulated trades</li>
+      </ol>
+
+      <h2>Commands</h2>
+      <pre><code>start    # Resume bot
+stop     # Pause bot
+reset    # Reset balance & portfolio
+force buy BTC   # Buy 10% of balance
+force sell BTC  # Sell all holdings</code></pre>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>
+      Open Source on 
+      <a href="https://github.com/mohameddodda/Paper_trading_bot" target="_blank">
+        GitHub → mohameddodda/Paper_trading_bot
+      </a>
+    </p>
+    <p class="tech-stack">
+      Built with <strong>Pythonista 3</strong> • <strong>OpenRouter</strong> • <strong>GitHub Pages</strong>
+    </p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    function toggleSetup() {
+      const content = document.getElementById('setupContent');
+      const toggle = document.querySelector('.setup-toggle');
+      content.classList.toggle('active');
+      toggle.classList.toggle('active');
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const counters = document.querySelectorAll('.stat-num');
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        const isMoney = counter.textContent.includes('$');
+        const isPairs = target === 50;
+        const isLive = target === 24;
+        let count = 0;
+        const increment = target / 70;
+        const timer = setInterval(() => {
+          count += increment;
+          if (count >= target) {
+            if (isMoney) counter.textContent = '$1,000,000';
+            else if (isPairs) counter.textContent = '50+';
+            else if (isLive) counter.textContent = '24/7';
+            clearInterval(timer);
+          } else {
+            if (isMoney) counter.textContent = '$' + Math.floor(count).toLocaleString();
+            else if (isPairs) counter.textContent = Math.floor(count) + '+';
+            else if (isLive) counter.textContent = Math.floor(count) + '/7';
+          }
+        }, 35);
+      });
+    });
+  </script>
+
 </body>
 </html>
