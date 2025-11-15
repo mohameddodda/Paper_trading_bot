@@ -1,55 +1,44 @@
-# ========================================
-# Paper Trading Bot – .gitignore
-# ========================================
+name: Deploy to GitHub Pages
 
-# === API & Secrets ===
-.env
-.env.local
-config.py
-*.key
-*.pem
-*.crt
-*.pfx
+# Trigger on push to main or manual run
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'index.html'
+      - 'README.md'
+      - 'assets/**'
+  workflow_dispatch:
 
-# === Python / Pythonista ===
-*.pyc
-*.pyo
-*.pyd
-__pycache__/
-*.egg-info/
-dist/
-build/
-*.egg
+# Permissions for deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-# === macOS / iOS ===
-.DS_Store
-*.mobileprovision
-*.ipa
-Thumbs.db
+# Cancel in-progress runs
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
-# === IDE / Editors ===
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-*.code-workspace
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-# === Logs & Temp ===
-*.log
-*.tmp
-*.bak
-*.swp
-*~
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-# === Pythonista Local Files ===
-*.py~
-*.pyc
-Pythonista3/
-Documents/
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
 
-# === GitHub Pages (Optional) ===
-_site/
-docs/
-
-# === Never commit real config ===
-# Always use .env.example + config.py template
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
