@@ -14,6 +14,7 @@
 
 - Monitors live Crypto.com prices (BTC, ETH, SOL, DOGE, SHIB, CRO)
 - Uses **DeepSeek AI** (via OpenRouter) to suggest **BUY / SELL / HOLD**
+- **Auto-executes AI signals** (optional in future)
 - Simulates trades with **$1,000,000 virtual balance**
 - Logs every trade to CSV
 - Runs **natively on iPhone/iPad** in **Pythonista 3**
@@ -26,22 +27,21 @@
 
 | Feature                  | Status  |
 |—————————|———|
-| Real-time price updates  | Done |
-| Dynamic volatility thresholds | Done |
-| AI trade signals         | Done |
-| Push notifications       | Done |
-| CSV trade log            | Done |
-| Force buy/sell commands  | Done |
-| Console UI with charts   | Done |
+| Real-time price updates  | ✅Done |
+| Dynamic volatility thresholds | ✅Done |
+| AI trade signals         | ✅Done |
+| **Auto buy/sell (AI-driven)** | ⏳Planned |
+| Push notifications       | ✅Done |
+| CSV trade log            | ✅Done |
+| Force buy/sell commands  | ✅Done |
+| Console UI with charts   | ✅Done |
 
 —
 
-## Coming Soon (PC Version)
+## Coming Soon
 
-- Desktop app (Python/Tkinter or Electron)
-- Backtesting engine
-- Strategy optimizer
-- Web dashboard
+- **Auto Buy/Sell**: Fully automated AI trading (toggle on/off)
+- **PC Version (Basic)**: Simple desktop runner (Python script)
 
 —
 
@@ -56,31 +56,18 @@
 
 ## Commands
 
-—
+```bash
+start          # Resume bot
+stop           # Pause bot
+reset          # Reset balance & portfolio
+force buy BTC  # Buy 10% of balance
+force sell BTC # Sell all holdings
+
+-
 
 ## Tech Stack
 
-- **Pythonista 3** (iOS)
-- **Crypto.com Public API**
-- **OpenRouter** (`deepseek/deepseek-chat:free`)
-- **GitHub Pages** (referer for OpenRouter)
-
-—
-
-## GitHub Pages (Live Site)
-
-https://mohameddodda.github.io/Paper_trading_bot/
-
-*Required for OpenRouter API access.*
-
-—
-
-## License
-
-MIT License – Free to use, modify, and share.
-
-Built with love on iPhone. Next stop: desktop domination.
-
-—
-
-**Topics**: `python`, `cryptocurrency`, `trading-bot`, `ios`, `pythonista`, `ai`, `simulation`
+•  Pythonista 3 (iOS)
+•  Crypto.com Public API
+•  OpenRouter (deepseek/deepseek-chat:free)
+•  GitHub Pages (referer for OpenRouter)
