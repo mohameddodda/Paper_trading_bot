@@ -3,7 +3,7 @@
 **AI-Powered Crypto Strategy Simulator** – Practice before real money.
 
 ![Deploy Status](https://github.com/mohameddodda/Paper_trading_bot/actions/workflows/pages.yml/badge.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-MIT%20OR%20Apache%202.0-blue.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54)
 ![iOS](https://img.shields.io/badge/iOS-000000?style=flat&logo=apple&logoColor=white)
 ![Security](https://img.shields.io/badge/security-API_key_local-green)
@@ -41,6 +41,13 @@
 | Console UI with charts   | Done |
 
 —
+## Legal & Security
+- [License (MIT)](LICENSE)
+- [Disclaimer](DISCLAIMER.md)
+- [Security Policy](SECURITY.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+ 
+ 
 
 ## Coming Soon
 
