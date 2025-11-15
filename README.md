@@ -27,14 +27,14 @@
 
 | Feature                  | Status  |
 |—————————|———|
-| Real-time price updates  | ✅ Done |
-| Dynamic volatility thresholds | ✅ Done |
-| AI trade signals         | ✅ Done |
+| Real-time price updates  | Done |
+| Dynamic volatility thresholds | Done |
+| AI trade signals         | Done |
 | **Auto buy/sell (AI-driven)** | Planned |
-| Push notifications       | ✅ Done |
-| CSV trade log            | ✅ Done |
-| Force buy/sell commands  | ✅ Done |
-| Console UI with charts   | ✅ Done |
+| Push notifications       | Done |
+| CSV trade log            | Done |
+| Force buy/sell commands  | Done |
+| Console UI with charts   | Done |
 
 —
 
@@ -47,10 +47,16 @@
 
 ## Setup (iOS)
 
+> **API KEY REQUIRED**  
+> You need a **free OpenRouter API key** to get AI trade signals.  
+> → Get it at: [openrouter.ai/keys](https://openrouter.ai/keys)
+
 1. Install **Pythonista 3** from the App Store
-2. Copy `bot.py` into Pythonista
-3. Run → type `start` in console
-4. Watch AI signals and simulated trades
+2. Tap `+` → `Import from GitHub`
+3. Enter: `mohameddodda/Paper_trading_bot`
+4. Tap **Import**
+5. Open `config.py` → paste your OpenRouter API key
+6. Run `bot.py` → type `start`
 
 —
 
