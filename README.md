@@ -2,6 +2,7 @@
 
 **AI-Powered Crypto Strategy Simulator** – Practice before real money.
 
+![Deploy Status](https://github.com/mohameddodda/Paper_trading_bot/actions/workflows/pages.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54)
 ![iOS](https://img.shields.io/badge/iOS-000000?style=flat&logo=apple&logoColor=white)
@@ -45,6 +46,7 @@
 
 - **Auto Buy/Sell**: Fully automated AI trading (toggle on/off)
 - **PC Version (Basic)**: Simple desktop runner (Python script)
+- **Backtesting Mode**: Test strategies on historical data
 
 —
 
