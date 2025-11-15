@@ -1,20 +1,55 @@
-name: Deploy to GitHub Pages
+# ========================================
+# Paper Trading Bot – .gitignore
+# ========================================
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+# === API & Secrets ===
+.env
+.env.local
+config.py
+*.key
+*.pem
+*.crt
+*.pfx
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+# === Python / Pythonista ===
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.egg-info/
+dist/
+build/
+*.egg
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
-          force_orphan: true
+# === macOS / iOS ===
+.DS_Store
+*.mobileprovision
+*.ipa
+Thumbs.db
+
+# === IDE / Editors ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# === Logs & Temp ===
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# === Pythonista Local Files ===
+*.py~
+*.pyc
+Pythonista3/
+Documents/
+
+# === GitHub Pages (Optional) ===
+_site/
+docs/
+
+# === Never commit real config ===
+# Always use .env.example + config.py template
