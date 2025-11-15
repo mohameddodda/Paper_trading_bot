@@ -27,14 +27,14 @@
 
 | Feature                  | Status  |
 |—————————|———|
-| Real-time price updates  | ✅Done |
-| Dynamic volatility thresholds | ✅Done |
-| AI trade signals         | ✅Done |
-| **Auto buy/sell (AI-driven)** | ⏳Planned |
-| Push notifications       | ✅Done |
-| CSV trade log            | ✅Done |
-| Force buy/sell commands  | ✅Done |
-| Console UI with charts   | ✅Done |
+| Real-time price updates  | ✅ Done |
+| Dynamic volatility thresholds | ✅ Done |
+| AI trade signals         | ✅ Done |
+| **Auto buy/sell (AI-driven)** | Planned |
+| Push notifications       | ✅ Done |
+| CSV trade log            | ✅ Done |
+| Force buy/sell commands  | ✅ Done |
+| Console UI with charts   | ✅ Done |
 
 —
 
@@ -57,17 +57,8 @@
 ## Commands
 
 ```bash
-start          # Resume bot
-stop           # Pause bot
-reset          # Reset balance & portfolio
-force buy BTC  # Buy 10% of balance
-force sell BTC # Sell all holdings
-
--
-
-## Tech Stack
-
-•  Pythonista 3 (iOS)
-•  Crypto.com Public API
-•  OpenRouter (deepseek/deepseek-chat:free)
-•  GitHub Pages (referer for OpenRouter)
+start    # Resume bot
+stop     # Pause bot
+reset    # Reset balance & portfolio
+force buy BTC   # Buy 10% of balance
+force sell BTC  # Sell all holdings
