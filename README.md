@@ -5,6 +5,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54)
 ![iOS](https://img.shields.io/badge/iOS-000000?style=flat&logo=apple&logoColor=white)
+![Security](https://img.shields.io/badge/security-API_key_local-green)
+![Safe](https://img.shields.io/badge/safe-no_real_money-blue)
+![Simulation](https://img.shields.io/badge/simulation-only-orange)
 
 > **Pythonista 3** • **OpenRouter** • **Crypto.com API**
 
