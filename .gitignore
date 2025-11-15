@@ -1,0 +1,17 @@
+# Pythonista / iOS
+*.pyc
+__pycache__/
+*.pyo
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Pythonista-specific
+Pythonista3/
+*.stash
+*.stash.py
+
+# Secrets
+*.env
+keychain*
