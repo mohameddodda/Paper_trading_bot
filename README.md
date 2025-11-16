@@ -43,7 +43,6 @@ Practice trading **without financial risk** — **$1M virtual balance**.
 | RL training (desktop)      | Done |
 | Auto-trading (toggle)      | Planned |
 
-—
 
 ## Coming Soon
 
@@ -51,7 +50,6 @@ Practice trading **without financial risk** — **$1M virtual balance**.
 - **Desktop App** – Full backtesting + strategy builder
 - **Web Dashboard** – View trades from any device
 
-—
 
 ## Setup (iOS – Pythonista 3)
 
@@ -71,20 +69,7 @@ Practice trading **without financial risk** — **$1M virtual balance**.
 
 > **No jailbreak. No real trading. 100% safe.**
 
-—
-
-## Console Commands
-
-```text
-start        → Resume bot
-stop         → Pause bot
-reset        → Reset balance & portfolio
-force buy BTC   → Buy 10% of cash
-force sell BTC  → Sell all BTC
-
--
-
-## Security & Privacy
+** ## Security & Privacy **
 
 •  Your API key is stored only on your device (Keychain)
 •  Never transmitted to us or third parties
@@ -92,7 +77,6 @@ force sell BTC  → Sell all BTC
 •  Simulation-only — no real funds
 Read full security policy
 
--
 
 ## Contributing
 
@@ -100,7 +84,6 @@ We welcome contributions!
 See CONTRIBUTING.md
 Contributors Welcome
 
--
 
 ## Legal
 
@@ -108,7 +91,6 @@ Contributors Welcome
 •  LICENSE – MIT OR Apache-2.0
 •  NOTICE.md – Apache compliance
 
--
 
 ## About
 
@@ -116,3 +98,12 @@ Built by @MohamedDodda
 November 15, 2025 • United States
 
 Your training ground for crypto mastery — without the risk.
+
+## Console Commands 
+
+```text
+start        → Resume bot
+stop         → Pause bot
+reset        → Reset balance & portfolio
+force buy BTC   → Buy 10% of cash
+force sell BTC  → Sell all BTC
