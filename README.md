@@ -1,82 +1,118 @@
 # Paper Trading Bot
 
-**AI-Powered Crypto Strategy Simulator** – Practice before real money.
+![Deploy: Ready](https://img.shields.io/badge/Deploy-Ready-green)
+![License: MIT OR Apache-2.0](https://img.shields.io/badge/License-MIT%20OR%20Apache—2.0-blue)
+![Python: 3.8+](https://img.shields.io/badge/Python-3.8%2B-yellow)
+![iOS: 14+](https://img.shields.io/badge/iOS-14%2B-orange)
+![Security: Safe](https://img.shields.io/badge/Security-Safe-success)
+![Simulation: Only](https://img.shields.io/badge/Simulation-Only-red)
 
-![Deploy Status](https://github.com/mohameddodda/Paper_trading_bot/actions/workflows/pages.yml/badge.svg)
-[![License](https://img.shields.io/badge/License-MIT%20OR%20Apache%202.0-blue.svg)](LICENSE)
-![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54)
-![iOS](https://img.shields.io/badge/iOS-000000?style=flat&logo=apple&logoColor=white)
-![Security](https://img.shields.io/badge/security-API_key_local-green)
-![Safe](https://img.shields.io/badge/safe-no_real_money-blue)
-![Simulation](https://img.shields.io/badge/simulation-only-orange)
+**AI-Powered Crypto Strategy Simulator**  
+Practice trading **without financial risk** — **$1M virtual balance**.
 
-> **Pythonista 3** • **OpenRouter** • **Crypto.com API**
+**Pythonista 3** • **OpenRouter** • **Crypto.com API** • **DeepSeek AI**
 
 —
 
 ## What It Does
 
-- Monitors live Crypto.com prices (BTC, ETH, SOL, DOGE, SHIB, CRO)
-- Uses **DeepSeek AI** (via OpenRouter) to suggest **BUY / SELL / HOLD**
-- **Auto-executes AI signals** (optional in future)
-- Simulates trades with **$1,000,000 virtual balance**
-- Logs every trade to CSV
-- Runs **natively on iPhone/iPad** in **Pythonista 3**
+- **Live Crypto.com prices** for 8 major pairs  
+  `BTC_USDT`, `ETH_USDT`, `SOL_USDT`, `DOGE_USDT`, `SHIB_USDT`, `CRO_USDT`, `XRP_USDT`, `ADA_USDT`
+- **AI trade signals** from **DeepSeek** via **OpenRouter**
+- **Simulated execution** with $1,000,000 virtual cash
+- **Push notifications** + **voice alerts** on trades
+- **CSV trade log** + **performance chart**
+- **Runs natively** in **Pythonista 3** on iPhone/iPad
 
-**Zero risk – No real money is ever used.**
+> **Zero risk. No real money. No real trading.**
 
 —
 
 ## Features
 
-| Feature                  | Status  |
-|—————————|———|
-| Real-time price updates  | Done |
-| Dynamic volatility thresholds | Done |
-| AI trade signals         | Done |
-| **Auto buy/sell (AI-driven)** | Planned |
-| Push notifications       | Done |
-| CSV trade log            | Done |
-| Force buy/sell commands  | Done |
-| Console UI with charts   | Done |
+| Feature                     | Status  |
+|-—————————|———|
+| Real-time price updates    | Done |
+| AI-powered trade signals   | Done |
+| Push notifications         | Done |
+| Voice alerts               | Done |
+| CSV trade log              | Done |
+| Force buy/sell commands    | Done |
+| Console UI with live chart | Done |
+| Backtesting (historical)   | Done |
+| RL training (desktop)      | Done |
+| Auto-trading (toggle)      | Planned |
 
 —
-## Legal & Security
-- [License (MIT)](LICENSE)
-- [Disclaimer](DISCLAIMER.md)
-- [Security Policy](SECURITY.md)
-- [Code of Conduct](CODE_OF_CONDUCT.md)
- 
- 
 
 ## Coming Soon
 
-- **Auto Buy/Sell**: Fully automated AI trading (toggle on/off)
-- **PC Version (Basic)**: Simple desktop runner (Python script)
-- **Backtesting Mode**: Test strategies on historical data
+- **Auto Buy/Sell** – Fully automated AI execution
+- **Desktop App** – Full backtesting + strategy builder
+- **Web Dashboard** – View trades from any device
 
 —
 
-## Setup (iOS)
+## Setup (iOS – Pythonista 3)
 
-> **API KEY REQUIRED**  
-> You need a **free OpenRouter API key** to get AI trade signals.  
-> → Get it at: [openrouter.ai/keys](https://openrouter.ai/keys)
+> **API Key Required** (Free)  
+> Get your **OpenRouter API key** at:  
+> [openrouter.ai/keys](https://openrouter.ai/keys) ($5 free credit)
+
+### Steps:
 
 1. Install **Pythonista 3** from the App Store
-2. Tap `+` → `Import from GitHub`
+2. Tap `+` → **Import from GitHub**
 3. Enter: `mohameddodda/Paper_trading_bot`
 4. Tap **Import**
-5. Open `config.py` → paste your OpenRouter API key
-6. Run `bot.py` → type `start`
+5. Run `bot.py`
+6. Enter your **OpenRouter API key** (saved securely in **Keychain**)
+7. Type `start` in console
+
+> **No jailbreak. No real trading. 100% safe.**
 
 —
 
-## Commands
+## Console Commands
 
-```bash
-start    # Resume bot
-stop     # Pause bot
-reset    # Reset balance & portfolio
-force buy BTC   # Buy 10% of balance
-force sell BTC  # Sell all holdings
+```text
+start        → Resume bot
+stop         → Pause bot
+reset        → Reset balance & portfolio
+force buy BTC   → Buy 10% of cash
+force sell BTC  → Sell all BTC
+
+-
+
+## Security & Privacy
+
+•  Your API key is stored only on your device (Keychain)
+•  Never transmitted to us or third parties
+•  No data collection
+•  Simulation-only — no real funds
+Read full security policy
+
+-
+
+## Contributing
+
+We welcome contributions!
+See CONTRIBUTING.md
+Contributors Welcome
+
+-
+
+## Legal
+
+•  DISCLAIMER.md – Not financial advice
+•  LICENSE – MIT OR Apache-2.0
+•  NOTICE.md – Apache compliance
+
+-
+
+## About
+
+Built by @MohamedDodda
+November 15, 2025 • United States
+
+Your training ground for crypto mastery — without the risk.

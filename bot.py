@@ -4,17 +4,17 @@ Paper Trading Bot – AI-Powered Crypto Strategy Simulator
 ============================================================
 
 Author: @MohamedDodda
-Version: 1.0.0
+Version: 1.2.1
 License: MIT
 GitHub: https://github.com/mohameddodda/Paper_trading_bot
 Live Pages: https://mohameddodda.github.io/Paper_trading_bot/
 
 Features:
-- Real-time Crypto.com prices (BTC, ETH, SOL, DOGE, SHIB, CRO)
+- Real-time Crypto.com prices (BTC, ETH, SOL, DOGE, SHIB, CRO, XRP, ADA)
 - DeepSeek AI signals via OpenRouter (free tier)
 - $1M virtual balance – zero risk
 - Dynamic volatility-based risk management
-- CSV trade log + push notifications
+- CSV trade log + push notifications + voice alerts
 - Console UI with sparkline charts
 - Force buy/sell commands
 
@@ -30,11 +30,11 @@ VOLATILITY_WINDOW   = 10
 INITIAL_BALANCE     = 1_000_000.0
 API_TIMEOUT         = 10
 
-# Coins to monitor
-SYMBOLS = ["BTC_USDT", "ETH_USDT", "SOL_USDT", "DOGE_USDT", "SHIB_USDT", "CRO_USDT"]
+# Coins to monitor (expanded per X discussion)
+SYMBOLS = ["BTC_USDT", "ETH_USDT", "SOL_USDT", "DOGE_USDT", "SHIB_USDT", "CRO_USDT", "XRP_USDT", "ADA_USDT"]
 
 # AI Settings
-AI_MODEL            = "mistralai/mistral-7b-instruct:free"
+AI_MODEL            = "deepseek/deepseek-chat"
 AI_CONSULT_INTERVAL = 15
 REFERER_URL         = "https://mohameddodda.github.io/Paper_trading_bot/"
 
@@ -44,7 +44,7 @@ MAX_RISK_PCT        = 0.03
 STOP_LOSS_PCT       = -0.05
 TAKE_PROFIT_PCT     = 0.10
 
-__version__ = "1.0.0"
+__version__ = "1.2.1"
 log_file = os.path.expanduser('~/Documents/paper_trading_log.csv')
 
 # ------------------------------------------------------------
@@ -63,6 +63,7 @@ import json
 import random
 import keychain
 import re
+import sound  # For voice alerts
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
@@ -135,6 +136,18 @@ def fetch_all_prices():
 
 def get_single_price(symbol):
     return fetch_all_prices().get(symbol)
+
+# Volatility Calculation (new X feature)
+def calculate_volatility(sym):
+    hist = price_history[sym]
+    if len(hist) < 2:
+        return 0.01
+    max_p = max(hist)
+    min_p = min(hist)
+    if min_p == 0:
+        return 0.01
+    vol = (max_p - min_p) / min_p
+    return max(0.01, min(vol, 0.05))
 
 # AI CONSULT – Robust JSON + Fallback
 def consult_ai(symbol, recent_prices, drop_pct, gain_pct):
@@ -251,6 +264,13 @@ def log_trade(sym, action, price, qty, bal, profit_pct=None, reason=""):
     except Exception as e:
         console.hud_alert(f"Log error: {e}", 'error', 1)
 
+# Voice Alert (new X feature: iOS sound on trades)
+def voice_alert(message):
+    try:
+        sound.play_effect('arcade:Coin_5')  # Subtle chime; Pythonista built-in
+    except:
+        pass  # Silent fallback
+
 def dynamic_risk(prices):
     if len(prices) < 2: return 0.02
     changes = [abs((prices[i+1]-prices[i])/prices[i]*100) for i in range(len(prices)-1) if prices[i] != 0]
@@ -302,6 +322,9 @@ def bot_step():
         qty = portfolio.get(sym, 0)
         entry = entry_prices.get(sym, price)
 
+        # Volatility Adjustment (enhanced per X)
+        vol = calculate_volatility(sym)
+
         # AI Signal
         ai_signal, ai_reason = None, ""
         if ai_consult_counter % AI_CONSULT_INTERVAL == 0 and len(hist) > 2:
@@ -317,26 +340,29 @@ def bot_step():
         if qty > 0 and entry != 0:
             profit_loss = (price - entry) / entry
             vol_risk = dynamic_risk(hist)
-            dyn_sl = STOP_LOSS_PCT - vol_risk
-            dyn_tp = TAKE_PROFIT_PCT + vol_risk
+            dyn_sl = STOP_LOSS_PCT * (1 + vol)  # Wider SL on high vol
+            dyn_tp = TAKE_PROFIT_PCT * (1 - vol / 2)  # Tighter TP on high vol
 
             sold = False
             if profit_loss <= dyn_sl:
                 sim_balance += qty * price
                 log_trade(sym, "SELL", price, qty, sim_balance, profit_loss*100, "Stop-Loss")
                 notification.schedule(f"STOP-LOSS {sym} @ ${price:.2f}", 0)
+                voice_alert(f"Sold {sym}")
                 sold = True
             elif profit_loss >= dyn_tp:
                 sim_balance += qty * price
                 log_trade(sym, "SELL", price, qty, sim_balance, profit_loss*100, "Take-Profit")
                 notification.schedule(f"TAKE-PROFIT {sym} @ ${price:.2f}", 0)
+                voice_alert(f"Sold {sym}")
                 sold = True
             elif ai_signal == "sell":
                 sell_qty = qty * 0.5
                 sim_balance += sell_qty * price
-                portfolio[sym] -= sell_qty
                 log_trade(sym, "SELL", price, sell_qty, sim_balance, reason=ai_reason)
                 notification.schedule(f"AI SELL {sym} @ ${price:.2f}", 0)
+                voice_alert(f"Sold {sym}")
+                portfolio[sym] -= sell_qty
                 sold = True
 
             if sold and ai_signal != "sell":
@@ -348,7 +374,8 @@ def bot_step():
         if can_buy(sym) and len(hist) > 2:
             max_r = max(hist[:-1])
             drop = (price - max_r) / max_r * 100 if max_r != 0 else 0
-            if drop <= -0.5 and (ai_signal == "buy" or ai_signal is None):
+            buy_threshold = -0.02 * (1 + vol)  # Dynamic: deeper drop needed on high vol
+            if drop <= buy_threshold and (ai_signal == "buy" or ai_signal is None):
                 risk_pct = dynamic_risk(hist)
                 usd = sim_balance * risk_pct
                 if usd > 10:
@@ -359,6 +386,7 @@ def bot_step():
                     last_buy_time[sym] = time.time()
                     log_trade(sym, "BUY", price, coins, sim_balance, reason=ai_reason)
                     notification.schedule(f"BUY {sym} @ ${price:.2f}", 0)
+                    voice_alert(f"Bought {sym}")
 
 # ------------------------------------------------------------
 # DISPLAY
@@ -472,6 +500,7 @@ while True:
                     last_buy_time[full] = time.time()
                     log_trade(full, "BUY", price, qty, sim_balance)
                     notification.schedule(f"FORCED BUY {qty:.6f} {full}", 0)
+                    voice_alert(f"Bought {full}")
                 elif action == "sell" and portfolio.get(full, 0) > 0:
                     qty = portfolio[full]
                     sim_balance += qty * price
@@ -480,6 +509,7 @@ while True:
                     entry_prices.pop(full, None)
                     last_buy_time.pop(full, None)
                     notification.schedule(f"FORCED SELL {qty:.6f} {full}", 0)
+                    voice_alert(f"Sold {full}")
         display_status()
     except queue.Empty:
         pass

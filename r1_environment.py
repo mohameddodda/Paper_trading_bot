@@ -1,83 +1,152 @@
-import gymnasium as gym
+"""
+rl_environment.py – Reinforcement Learning Environment
+======================================================
+
+Gymnasium-compatible environment for training RL agents.
+Uses **Crypto.com public API** (no key needed).
+Designed for **simulation only** -- no real trading.
+
+Author: @MohamedDodda
+Last updated: November 15, 2025
+"""
+
+import logging
 import numpy as np
-from tensortrade.env.default import TradingEnv
-from tensortrade.feed.core import Stream, DataFeed
-from tensortrade.oms.exchanges import Exchange
-from tensortrade.oms.wallets import Wallet, Portfolio
-from tensortrade.oms.instruments import Instrument
-from tensortrade.oms.orders import proportion_order
-from polygon import RESTClient
-from config import POLYGON_API_KEY, SYMBOLS
+import gymnasium as gym
+from typing import Dict, Any, Tuple
 
-# Instruments
-USD = Instrument("USD", 2, "U.S. Dollar")
-CRYPTO = {sym.split("_")[0]: Instrument(sym.split("_")[0], 8, sym.split("_")[0]) for sym in SYMBOLS}
+from config import (
+    SYMBOLS,
+    STARTING_CASH,
+    WINDOW_SIZE,
+)
+from bot import PaperTradingBot
 
-class PolygonExchange(Exchange):
-    def __init__(self, api_key: str):
-        super().__init__(base_instrument=USD, default=True)
-        self.client = RESTClient(api_key)
+# === Logging ===
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger(__name__)
 
-    def _get_price(self, symbol: str) -> float:
-        try:
-            resp = self.client.get_last_trade(symbol)
-            return float(resp.last.price) if resp and resp.last else 0.0
-        except:
-            return 0.0
+# === Crypto.com Public API (No Key) ===
+CRYPTOCOM_BASE = "https://api.crypto.com/v2/public"
 
-    def quote_price(self, instrument: Instrument, quote: Instrument = USD) -> float:
-        if instrument == USD:
-            return 1.0
-        symbol = f"{instrument.symbol}_USD"
-        return self._get_price(symbol)
+def _fetch_latest_price(symbol: str) -> float:
+    """Fetch latest price from Crypto.com (no API key)."""
+    try:
+        import requests
+        instrument = symbol.replace("_", "-")
+        url = f"{CRYPTOCOM_BASE}/get-ticker"
+        params = {"instrument_name": instrument}
+        resp = requests.get(url, params=params, timeout=8)
+        data = resp.json()
+        if data.get("code") == 0 and data.get("result", {}).get("data"):
+            return float(data["result"]["data"][0]["a"])  # last ask price
+        return 0.0
+    except Exception as e:
+        log.debug(f"Price fetch failed for {symbol}: {e}")
+        return 0.0
 
-def create_tensortrade_env(symbol: str = "BTC", window_size: int = 20):
-    exchange = PolygonExchange(POLYGON_API_KEY)
-    
-    # Wallets
-    cash = Wallet(exchange, STARTING_CASH * USD)
-    asset = Wallet(exchange, 0 * CRYPTO[symbol])
-    portfolio = Portfolio(USD, [cash, asset])
-
-    # Price stream
-    price_stream = Stream.source(
-        lambda: exchange.quote_price(CRYPTO[symbol]), dtype="float"
-    ).rename(f"{symbol.lower()}_usd")
-
-    feed = DataFeed([price_stream])
-
-    env = TradingEnv(
-        portfolio=portfolio,
-        feed=feed,
-        action_scheme="managed-risk",
-        reward_scheme="risk-adjusted",
-        window_size=window_size
-    )
-    return env
 
 class RLTradingEnv(gym.Env):
-    metadata = {"render.modes": ["human"]}
+    """
+    Gymnasium environment for RL training.
+    - Observation: Last N prices (normalized)
+    - Action: 0=hold, 1=buy 3%, 2=sell 3%
+    - Reward: PnL change
+    """
 
-    def __init__(self, symbol: str = "BTC", window_size: int = 20):
-        self.tt_env = create_tensortrade_env(symbol, window_size)
+    metadata = {"render_modes": ["human"]}
+
+    def __init__(self, symbol: str = "BTC_USDT", window_size: int = WINDOW_SIZE):
+        super().__init__()
+        if symbol not in SYMBOLS:
+            raise ValueError(f"Symbol {symbol} not in config.SYMBOLS")
+
+        self.symbol = symbol
         self.window_size = window_size
-        self.observation_space = gym.spaces.Box(low=0, high=1e10, shape=(window_size,), dtype=np.float32)
+        self.bot = PaperTradingBot()
+        self.bot.portfolio = {s: 0.0 for s in SYMBOLS}
+        self.bot.portfolio["USD"] = STARTING_CASH
+        self.bot.history = {s: [] for s in SYMBOLS}
+
+        # === Spaces ===
+        self.observation_space = gym.spaces.Box(
+            low=0, high=1e10, shape=(window_size,), dtype=np.float32
+        )
         self.action_space = gym.spaces.Discrete(3)  # 0=hold, 1=buy, 2=sell
 
-    def reset(self, **kwargs):
-        obs = self.tt_env.reset()
-        return np.array(obs["price"][-self.window_size:]).astype(np.float32)
+        self.current_step = 0
+        self.max_steps = 1000  # Prevent infinite loops
+        self.initial_cash = STARTING_CASH
 
-    def step(self, action):
-        order = None
-        if action == 1:
-            order = proportion_order(self.tt_env.portfolio, "buy", 0.1)
-        elif action == 2:
-            order = proportion_order(self.tt_env.portfolio, "sell", 0.1)
+    def reset(self, seed=None, options=None) -> Tuple[np.ndarray, Dict]:
+        super().reset(seed=seed)
+        self.bot.reset()
+        self.current_step = 0
 
-        obs, reward, done, info = self.tt_env.step(order)
-        price_obs = np.array(obs["price"][-self.window_size:]).astype(np.float32)
-        return price_obs, reward, done, False, info
+        # Seed with ~20 fake prices
+        base_price = _fetch_latest_price(self.symbol) or 30000.0
+        prices = np.linspace(base_price * 0.9, base_price * 1.1, self.window_size)
+        self.bot.history[self.symbol] = [
+            {"timestamp": i, "price": p} for i, p in enumerate(prices)
+        ]
 
-    def render(self):
-        print(f"Net Worth: {self.tt_env.portfolio.net_worth:,.2f} USD")
+        obs = self._get_observation()
+        return obs, {}
+
+    def step(self, action: int) -> Tuple[np.ndarray, float, bool, bool, Dict]:
+        if action not in [0, 1, 2]:
+            raise ValueError("Action must be 0, 1, or 2")
+
+        prev_net_worth = self.bot.get_net_worth()
+
+        # === Execute Action ===
+        if action == 1:  # Buy 3%
+            self.bot.execute_trade(self.symbol, "buy", amount_usd=STARTING_CASH * 0.03)
+        elif action == 2:  # Sell 3%
+            self.bot.execute_trade(self.symbol, "sell", amount_usd=STARTING_CASH * 0.03)
+
+        # === Update Price (Live) ===
+        price = _fetch_latest_price(self.symbol)
+        if price > 0:
+            self.bot.history[self.symbol].append(
+                {"timestamp": self.current_step, "price": price}
+            )
+            # Keep history size
+            if len(self.bot.history[self.symbol]) > self.window_size:
+                self.bot.history[self.symbol] = self.bot.history[self.symbol][-self.window_size:]
+
+        # === Reward ===
+        current_net_worth = self.bot.get_net_worth()
+        reward = current_net_worth - prev_net_worth
+
+        # === Done ===
+        self.current_step += 1
+        done = self.current_step >= self.max_steps or current_net_worth <= 0
+
+        obs = self._get_observation()
+        info = {
+            "net_worth": current_net_worth,
+            "cash": self.bot.portfolio["USD"],
+            "holdings": self.bot.portfolio[self.symbol],
+            "price": price,
+        }
+
+        return obs, reward, done, False, info
+
+    def _get_observation(self) -> np.ndarray:
+        prices = [h["price"] for h in self.bot.history[self.symbol]]
+        if len(prices) < self.window_size:
+            pad = [prices[0]] * (self.window_size - len(prices))
+            prices = pad + prices
+        else:
+            prices = prices[-self.window_size:]
+        return np.array(prices, dtype=np.float32)
+
+    def render(self, mode="human"):
+        nw = self.bot.get_net_worth()
+        print(f"Step: {self.current_step} | Net Worth: ${nw:,.2f} | "
+              f"Cash: ${self.bot.portfolio['USD']:,.0f} | "
+              f"{self.symbol}: {self.bot.portfolio[self.symbol]:.6f}")
+
+    def close(self):
+        pass

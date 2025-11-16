@@ -1,16 +1,17 @@
-# Contributing
+# Contributing to Paper Trading Bot
 
-Thanks for your interest!
+**Thank you** for your interest in improving **Paper Trading Bot**!  
+Your contributions help make this a better tool for learning and simulation.
+
+—
 
 ## How to Contribute
-1. Fork the repo
-2. Create a branch: `feature/ai-improvement`
-3. Make changes
-4. Open a Pull Request
 
-## Rules
-- No real trading
-- No paid APIs
-- Keep it iOS/Pythonista compatible
+1. **Fork** the repository  
+   → Click **”Fork”** on [GitHub](https://github.com/mohameddodda/Paper_trading_bot)
 
-We review all PRs within 48 hours.
+2. **Clone** your fork  
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/Paper_trading_bot.git
+   cd Paper_trading_bot
+   

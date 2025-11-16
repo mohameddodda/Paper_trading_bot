@@ -10,6 +10,8 @@ config.py
 *.pem
 *.crt
 *.pfx
+secrets/
+keychain_storage/
 
 # === Python / Pythonista ===
 *.pyc
@@ -20,20 +22,43 @@ __pycache__/
 dist/
 build/
 *.egg
+*.py[cod]
+*.py~
+*.pyui
+*.pyc~
 
-__pycache__/
-*.pyc
-.env
-checkpoints/
+# === Virtual Environments ===
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# === Logs & Data ===
 *.log
+*.csv
+*.db
+*.sqlite3
+*.jsonl
+checkpoints/
 performance.png
-.DS_Store
+trades.csv
+paper_trading_log.csv
 
 # === macOS / iOS ===
 .DS_Store
 *.mobileprovision
 *.ipa
 Thumbs.db
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
 
 # === IDE / Editors ===
 .vscode/
@@ -41,23 +66,35 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 *.code-workspace
-
-# === Logs & Temp ===
-*.log
-*.tmp
-*.bak
+*.tmproj
 *.swp
+*.swo
 *~
 
-# === Pythonista Local Files ===
-*.py~
-*.pyc
-Pythonista3/
-Documents/
+# === Temp & Backup ===
+*.tmp
+*.bak
+*.backup
+*.orig
+*.rej
 
 # === GitHub Pages (Optional) ===
 _site/
 docs/
+*.html
+*.css
+*.js
+!index.html
 
-# === Never commit real config ===
+# === Pythonista Local Files & Folders ===
+Pythonista3/
+Documents/
+Pythonista/
+*.pyui
+*.pyuic
+*.pyuix
+*.pyproject
+
+# === Never commit real config or sensitive data ===
 # Always use .env.example + config.py template
+# Keychain is used in-app -- never store raw keys

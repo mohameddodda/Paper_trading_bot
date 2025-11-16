@@ -1,9 +1,33 @@
-requests>=2.28.0    
-polygon-api-client>=1.25
-pandas>=2.0
-numpy>=1.24
-matplotlib>=3.7
-tensortrade>=1.0.4
-ray[rllib]==2.9.3
-gymnasium==0.29.1
-python-dotenv>=1.0
+# Paper Trading Bot – requirements.txt
+# ====================================
+# Last updated: November 15, 2025
+# Author: @MohamedDodda
+# Project: https://github.com/mohameddodda/Paper_trading_bot
+
+# === Core & HTTP ===
+requests>=2.31.0
+
+# === Data & Analysis ===
+pandas>=2.1.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+
+# === AI & Reinforcement Learning (Optional) ===
+# tensortrade>=1.0.4        # Removed: no longer maintained
+# ray[rllib]==2.9.3         # Removed: heavy, not needed for simulation
+# gymnasium==0.29.1         # Removed: not used in current bot
+
+# === Environment & Secrets ===
+python-dotenv>=1.0.0
+
+# === iOS / Pythonista 3 Compatibility ===
+# No additional packages needed -- uses built-in:
+#   - speech (voice alerts)
+#   - notification (push)
+#   - keychain (secure storage)
+#   - console, ui, sound
+
+# === Dev & Testing ===
+# Add to dev-requirements.txt if needed
+# pytest>=7.0
+# black>=23.0
