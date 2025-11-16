@@ -28,18 +28,19 @@ Practice trading **without financial risk** — **$1M virtual balance**.
 
 ## Features
 
-| Feature                     | Status  |
-|-—————————|———|
-| Real-time price updates    | Done |
-| AI-powered trade signals   | Done |
-| Push notifications         | Done |
-| Voice alerts               | Done |
-| CSV trade log              | Done |
-| Force buy/sell commands    | Done |
-| Console UI with live chart | Done |
-| Backtesting (historical)   | Done |
-| RL training (desktop)      | Done |
-| Auto-trading (toggle)      | Planned |
+
+| Feature                     | Status  |  
+|-—————-———————|———|  
+| Real-time price updates    | Done |  
+| AI-powered trade signals   | Done |  
+| Push notifications         | Done |  
+| Voice alerts               | Done |  
+| CSV trade log              | Done |  
+| Force buy/sell commands    | Done |  
+| Console UI with live chart | Done |  
+| Backtesting (historical)   | Done |  
+| RL training (desktop)      | Done |  
+| Auto-trading (toggle)      | Planned |  
 
 
 ## Coming Soon
@@ -68,28 +69,27 @@ Practice trading **without financial risk** — **$1M virtual balance**.
 
 > **No jailbreak. No real trading. 100% safe.**
 
+## Security & Privacy  
 
-** ## Security & Privacy **
-
-•  Your API key is stored only on your device (Keychain)
-•  Never transmitted to us or third parties
-•  No data collection
-•  Simulation-only — no real funds
-Read full security policy
+•  Your API key is stored only on your device (Keychain)  
+•  Never transmitted to us or third parties  
+•  No data collection  
+•  Simulation-only — no real funds  
+> **Read full security policy**  
 
 
 ## Contributing
 
-We welcome contributions!
-See CONTRIBUTING.md
-Contributors Welcome
+We welcome contributions!  
+See CONTRIBUTING.md  
+Contributors are Welcomed  
 
 
 ## Legal
 
-•  DISCLAIMER.md – Not financial advice
-•  LICENSE – MIT OR Apache-2.0
-•  NOTICE.md – Apache compliance
+•  DISCLAIMER.md – Not financial advice  
+•  LICENSE – MIT OR Apache-2.0  
+•  NOTICE.md – Apache compliance  
 
 
 ## About
