@@ -1,39 +1,20 @@
-# Paper Trading Bot
+Paper Trading Bot
 Copyright (c) 2025 Mohamed Dodda (@MohamedDodda)
 
-This project is dual-licensed under either:
+This project is dual-licensed under the terms of **either**:
 
-- Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
-- MIT License ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+- Apache License, Version 2.0  
+  ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+
+- MIT License  
+  ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option.
 
----
-
-## Full License Texts
-
-### Apache License, Version 2.0
-See [LICENSE-APACHE](LICENSE-APACHE)
-
-### MIT License
-See [LICENSE-MIT](LICENSE-MIT)
+You may use this software under **one** of the above licenses.  
+Include the corresponding license file and retain this copyright notice.
 
 ---
-
-## How to Apply
-
-You may choose to use this software under **either** the Apache-2.0 **or** MIT license.
-
-To comply:
-- Include **one** of the license files in your distribution.
-- Retain the copyright notice above.
-- For Apache-2.0: Follow redistribution rules in Section 4.
-- For MIT: Include the full MIT permission notice and disclaimer.
-
+Apache-2.0 provides a patent grant (ideal for enterprise).  
+MIT is simpler and more permissive.
 ---
-
-**Recommendation**: Use **Apache-2.0** for enterprise compatibility (patent grant), or **MIT** for maximum simplicity.
-
----
-
-*Dual licensing ensures maximum flexibility while protecting contributors.*
