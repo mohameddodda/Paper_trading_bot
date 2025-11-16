@@ -12,7 +12,6 @@ Practice trading **without financial risk** — **$1M virtual balance**.
 
 **Pythonista 3** • **OpenRouter** • **Crypto.com API** • **DeepSeek AI**
 
-—
 
 ## What It Does
 
@@ -26,7 +25,6 @@ Practice trading **without financial risk** — **$1M virtual balance**.
 
 > **Zero risk. No real money. No real trading.**
 
-—
 
 ## Features
 
@@ -57,6 +55,7 @@ Practice trading **without financial risk** — **$1M virtual balance**.
 > Get your **OpenRouter API key** at:  
 > [openrouter.ai/keys](https://openrouter.ai/keys) ($5 free credit)
 
+
 ### Steps:
 
 1. Install **Pythonista 3** from the App Store
@@ -68,6 +67,7 @@ Practice trading **without financial risk** — **$1M virtual balance**.
 7. Type `start` in console
 
 > **No jailbreak. No real trading. 100% safe.**
+
 
 ** ## Security & Privacy **
 
