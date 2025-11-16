@@ -21,6 +21,14 @@ dist/
 build/
 *.egg
 
+__pycache__/
+*.pyc
+.env
+checkpoints/
+*.log
+performance.png
+.DS_Store
+
 # === macOS / iOS ===
 .DS_Store
 *.mobileprovision
