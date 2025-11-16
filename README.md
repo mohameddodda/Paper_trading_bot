@@ -8,7 +8,7 @@
 ![Simulation: Only](https://img.shields.io/badge/Simulation-Only-red)
 
 **AI-Powered Crypto Strategy Simulator**  
-Practice trading **without financial risk** — **$1M virtual balance**.
+Practice trading **without financial risk** — **Adjustable virtual balance**.
 
 **Pythonista 3** • **OpenRouter** • **Crypto.com API** • **DeepSeek AI**
 
@@ -28,20 +28,18 @@ Practice trading **without financial risk** — **$1M virtual balance**.
 
 ## Features
 
-
-| Feature                     | Status  |  
-|-—————-———————|———|  
-| Real-time price updates    | Done |  
-| AI-powered trade signals   | Done |  
-| Push notifications         | Done |  
-| Voice alerts               | Done |  
-| CSV trade log              | Done |  
-| Force buy/sell commands    | Done |  
-| Console UI with live chart | Done |  
-| Backtesting (historical)   | Done |  
-| RL training (desktop)      | Done |  
-| Auto-trading (toggle)      | Planned |  
-
+| Feature      | Status              |
+| ---          | ---                      |
+| Real-time price updates    | `Done` |  
+| AI-powered trade signals   | `Done` |  
+| Push notifications         | `Done` |  
+| Voice alerts               | `Done` |  
+| CSV trade log              | `Done` |  
+| Force buy/sell commands    | `Done` |  
+| Console UI with live chart | `Done` |  
+| Backtesting (historical)   | `Done` |  
+| RL training (desktop)      | `Done` |
+| Auto-trading (toggle)      | `Planned` |
 
 ## Coming Soon
 
