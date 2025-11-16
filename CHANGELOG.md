@@ -1,13 +1,39 @@
+cat > CHANGELOG.md << ‘EOF’
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to **Paper Trading Bot** will be documented here.
 
-## [1.2.1] - 2025-11-15
-### Added
-- Expanded symbols: XRP_USDT, ADA_USDT
-- Voice alerts on trades (iOS sound)
-- Enhanced volatility adjustments for buy/sell thresholds
+## [v1.2.1] - 2025-11-15
 
-## [1.0.0] - 2025-11-13
 ### Added
-- Initial release with core simulation, AI signals, CSV log, notifications, console UI
+- **XRP_USDT** and **ADA_USDT** to supported symbols
+- **Voice alerts** on trade execution (iOS)
+- **Backtesting** with `backtest.py` (Crypto.com public data)
+- **RL training** with `train_rl.py` (Stable-Baselines3, desktop)
+- **Console UI** with live price chart (sparklines)
+
+### Changed
+- Switched from **Polygon** → **Crypto.com public API** (no key)
+- **Dual licensing**: MIT OR Apache-2.0
+- **$1M virtual balance** (from $10k)
+
+### Security
+- API key stored in **Keychain** only
+- `.env` gitignored
+
+—
+
+## [v1.2.0] - 2025-11-10
+
+### Added
+- **OpenRouter + DeepSeek AI** for trade signals
+- **Push notifications** on trades
+- **CSV trade logging**
+
+—
+
+*Follows [Keep a Changelog](https://keepachangelog.com/)*
+EOF
+
+git add CHANGELOG.md
+git commit -m “docs: add CHANGELOG.md with v1.2.1”
