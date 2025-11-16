@@ -1,0 +1,19 @@
+{
+  "symbols": ["BTC_USDT", "ETH_USDT", "SOL_USDT", "DOGE_USDT", "SHIB_USDT", "CRO_USDT", "XRP_USDT", "ADA_USDT"],
+  "update_interval": 10,
+  "chart_length": 10,
+  "volatility_window": 10,
+  "initial_balance": 1000000.0,
+  "api_timeout": 10,
+  "ai_model": "deepseek/deepseek-chat",
+  "ai_consult_interval": 15,
+  "referer_url": "https://mohameddodda.github.io/Paper_trading_bot/",
+  "cooldown": 300,
+  "max_risk_pct": 0.03,
+  "stop_loss_pct": -0.05,
+  "take_profit_pct": 0.10,
+  "log_file": "~/paper_trading_log.csv",
+  "price_cache_ttl": 10,
+  "max_retries": 3,
+  "retry_backoff": 2
+}
