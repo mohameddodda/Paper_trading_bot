@@ -1,5 +1,6 @@
-update_interval: 15
-initial_balance: 1000000.0
+# Paper Trading Bot Pro Config – November 17, 2025
+update_interval: 15  # Seconds between checks
+initial_balance: 1000000.0  # Virtual starting cash
 symbols:
   - BTC_USDT
   - ETH_USDT
@@ -7,4 +8,13 @@ symbols:
   - DOGE_USDT
   - SHIB_USDT
   - CRO_USDT
-ai_model: mistralai/mistral-7b-instruct:free
+  - XRP_USDT
+  - ADA_USDT
+ai_model: mistralai/mistral-7b-instruct:free  # OpenRouter model
+cooldown: 300  # Seconds between buys per symbol
+max_risk_pct: 0.03  # Max % of balance per trade
+stop_loss_pct: -0.05  # Sell if -5%
+take_profit_pct: 0.10  # Sell if +10%
+log_dir: bot_logs  # Trade logs folder
+report_file: performance_report.html  # QuantStats output
+cloud_enabled: false  # AWS/Docker toggle

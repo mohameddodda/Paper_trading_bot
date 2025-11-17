@@ -95,6 +95,29 @@ Pythonista/
 *.pyuix
 *.pyproject
 
+# Logs & Reports
+bot_logs/
+*.html
+*.csv
+
+# Env & Secrets
+.env
+*.key
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
 # === Never commit real config or sensitive data ===
 # Always use .env.example + config.py template
 # Keychain is used in-app -- never store raw keys
