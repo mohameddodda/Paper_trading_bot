@@ -263,16 +263,16 @@
   <!-- Header -->
   <header class="header">
     <div class="header-logo">
-      <i class="fas fa-robot"></i> Paper
+      <i class="fas fa-robot"></i> Paper Pro
     </div>
   </header>
 
   <!-- Hero -->
   <section class="hero">
-    <h1>Paper Trading Bot</h1>
-    <p>Practice crypto trading with $1M virtual balance, live data, and AI signals -- zero risk.</p>
-    <a href="https://github.com/mohameddodda/Paper_trading_bot" target="_blank" class="cta-btn">
-      Start Practicing Today
+    <h1>Paper Trading Bot <span style="background:#00d4aa;color:black;padding:8px 20px;border-radius:50px;font-size:0.7em;font-weight:bold;">PRO</span></h1>
+    <p>Practice crypto trading with <strong>$1,000,000 virtual balance</strong>, live Crypto.com data, and real-time AI signals — <strong>zero risk</strong>.</p>
+    <a href="https://github.com/MohamedDodda/Paper_trading_bot" target="_blank" class="cta-btn">
+      Open Pro Repository →
     </a>
   </section>
 
@@ -283,12 +283,12 @@
       <span class="stat-label">Virtual Balance</span>
     </div>
     <div class="stat">
-      <span class="stat-num" data-count="50">0</span>
+      <span class="stat-num" data-count="8">0</span>
       <span class="stat-label">Supported Pairs</span>
     </div>
     <div class="stat">
       <span class="stat-num" data-count="24">0</span>
-      <span class="stat-label">Live Data</span>
+      <span class="stat-label">Live Data 24/7</span>
     </div>
   </div>
 
@@ -296,30 +296,42 @@
   <section class="features">
     <div class="feature-card">
       <i class="fas fa-chart-line"></i>
-      <h3>Live Market Data</h3>
-      <p>Real-time prices from Crypto.com to simulate authentic trading conditions.</p>
+      <h3>Live Crypto.com Data</h3>
+      <p>Real-time prices for BTC, ETH, SOL, DOGE, SHIB, CRO, XRP, ADA — updated every 15s.</p>
     </div>
 
     <div class="feature-card dark">
       <i class="fas fa-brain"></i>
-      <h3>AI-Powered Trade Signals</h3>
-      <p>DeepSeek AI suggests <strong>BUY/SELL/HOLD</strong> in real time via OpenRouter.</p>
+      <h3>AI-Powered Signals</h3>
+      <p>Mistral + DeepSeek AI via OpenRouter delivers <strong>BUY/SELL/HOLD</strong> decisions in real time.</p>
     </div>
 
     <div class="feature-card">
       <i class="fas fa-shield-alt"></i>
       <h3>Zero Financial Risk</h3>
-      <p>Trade with a <strong>$1,000,000</strong> virtual balance -- 100% safe.</p>
+      <p>100% simulation — <strong>$1,000,000 virtual balance</strong>. No real money ever used.</p>
     </div>
 
     <div class="feature-card ios-card">
       <div class="text">
         <i class="fas fa-mobile-alt"></i>
-        <h3>iOS Native Experience</h3>
-        <p>Runs natively on iPhone & iPad using <strong>Pythonista 3</strong>.</p>
+        <h3>Runs on iPhone & iPad</h3>
+        <p>Native Pythonista 3 support — same repo, zero changes needed.</p>
       </div>
       <img src="https://assets.codepen.io/605876/iphone-14-pro-mockup.png" 
-           alt="Paper Trading Bot on iPhone" class="ios-mockup" loading="lazy">
+           alt="Paper Trading Bot Pro on iPhone" class="ios-mockup" loading="lazy">
+    </div>
+
+    <div class="feature-card dark">
+      <i class="fas fa-desktop"></i>
+      <h3>Full PC/Mac/Linux Support</h3>
+      <p>Now runs natively on desktop with advanced AI, backtesting, and live dashboard.</p>
+    </div>
+
+    <div class="feature-card">
+      <i class="fas fa-trophy"></i>
+      <h3>Pro Edition Launched</h3>
+      <p>November 17, 2025 — Full LSTM/RL ready, QuantStats reports, Streamlit dashboard.</p>
     </div>
   </section>
 
@@ -327,115 +339,78 @@
   <div class="banners">
     <div class="banner warning">
       <i class="fas fa-exclamation-triangle"></i>
-      SIMULATION ONLY -- NO REAL MONEY IS USED
+      SIMULATION ONLY — NO REAL MONEY IS EVER USED
     </div>
-    <div class="banner roadmap">
-      <i class="fas fa-laptop-code"></i>
-      PC Version in Development -- Faster backtesting & strategy optimization coming soon.
+    <div class="banner success">
+      <i class="fas fa-rocket"></i>
+      PRO EDITION LIVE — PC + iOS dual support now available!
     </div>
   </div>
 
-  <!-- Pythonista Setup Guide -->
+  <!-- Pythonista Setup Guide (Still Valid) -->
   <div class="setup-guide">
     <div class="setup-toggle" onclick="toggleSetup()">
-      <spam>Pythonista 3 Setup Guide (API Key Required)</span>
+      <span>Setup Guide — iOS (Pythonista 3) or PC (Terminal)</span>
       <i class="fas fa-chevron-down"></i>
     </div>
     <div class="setup-content" id="setupContent">
-      <p><strong>Step 1: Get your OpenRouter API key (free)</strong></p>
+      <p><strong>Get your free OpenRouter API key</strong></p>
       <a href="https://openrouter.ai/keys" target="_blank" class="api-btn">
         <i class="fas fa-key"></i> Get Free API Key
       </a>
 
-      <p><strong>Step 2: Install Pythonista 3</strong></p>
+      <h4>iPhone / iPad (Pythonista 3)</h4>
       <ol>
-        <li>Download from <a href="http://omz-software.com/pythonista/" target="_blank" style="color:var(--google-blue);">App Store</a></li>
-        <li>Open Pythonista → Tap <code>+</code> → <code>Import from GitHub</code></li>
-        <li>Enter: <code>mohameddodda/Paper_trading_bot</code></li>
-        <li>Tap <strong>Import</strong></li>
+        <li>Install <a href="http://omz-software.com/pythonista/" target="_blank">Pythonista 3</a> from App Store</li>
+        <li>Tap <code>+</code> → Import from GitHub → <code>MohamedDodda/Paper_trading_bot</code></li>
+        <li>Run <code>pythonista_ios_mode.py</code> → type <code>start</code></li>
       </ol>
 
-      <p><strong>Step 3: Add your API key</strong></p>
+      <h4>PC / Mac / Linux (Recommended)</h4>
       <ol>
-        <li>Open <code>config.py</code></li>
-        <li>Replace placeholder:</li>
+        <li><code>git clone https://github.com/MohamedDodda/Paper_trading_bot.git</code></li>
+        <li><code>pip install -r requirements.txt</code></li>
+        <li><code>set OPENROUTER_API_KEY=sk-...</code> (Windows) or <code>export</code> (Mac/Linux)</li>
+        <li><code>python bot.py</code></li>
       </ol>
-      <pre><code>OPENROUTER_API_KEY = "sk-or-v1-..."  # ← Paste your key here</code></pre>
 
-      <p><strong>Step 4: Run!</strong></p>
-      <p>→ Open <code>main.py</code> → Type <code>start</code></p>
-
-      <h4>Free Tier</h4>
-      <ul>
-        <li>$5 free credit (~10,000 signals)</li>
-        <li>After: ~$0.02 per 1,000 signals</li>
-      </ul>
-      <p><em>Your key stays on your device. Never shared.</em></p>
+      <p><em>Your API key stays private on your device.</em></p>
     </div>
   </div>
 
-  <!-- README.md Embedded -->
+  <!-- README.md Embedded (Updated) -->
   <div class="readme-section">
     <div class="readme-box">
-      <h1>Paper Trading Bot</h1>
-      <p><strong>AI-Powered Crypto Strategy Simulator</strong> – Practice before real money.</p>
+      <h1>Paper Trading Bot Pro</h1>
+      <p><strong>AI-Powered Crypto Paper Trading Platform</strong> — Now on PC & iOS</p>
 
       <p>
         <a href="https://opensource.org/licenses/MIT" target="_blank">
-          <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" class="shields">
+          <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
         </a>
-        <img src="https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54" alt="Python" class="shields">
-        <img src="https://img.shields.io/badge/iOS-000000?style=flat&logo=apple&logoColor=white" alt="iOS" class="shields">
+        <img src="https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54" alt="Python">
+        <img src="https://img.shields.io/badge/platform-PC%20%7C%20iOS-success" alt="Platforms">
+        <img src="https://img.shields.io/badge/status-PRO%20LIVE-00d4aa" alt="Pro Live">
       </p>
-
-      <p><strong>Pythonista 3</strong> • <strong>OpenRouter</strong> • <strong>Crypto.com API</strong></p>
 
       <hr>
 
-      <h2>What It Does</h2>
+      <h2>Pro Edition — November 17, 2025</h2>
       <ul>
-        <li>Monitors live Crypto.com prices (BTC, ETH, SOL, DOGE, SHIB, CRO)</li>
-        <li>Uses <strong>DeepSeek AI</strong> (via OpenRouter) to suggest <strong>BUY / SELL / HOLD</strong></li>
-        <li><strong>Auto-executes AI signals</strong> (optional in future)</li>
-        <li>Simulates trades with <strong>$1,000,000 virtual balance</strong></li>
-        <li>Logs every trade to CSV</li>
-        <li>Runs <strong>natively on iPhone/iPad</strong> in <strong>Pythonista 3</strong></li>
-      </ul>
-      <p><strong>Zero risk – No real money is ever used.</strong></p>
-
-      <h2>Features</h2>
-      <table>
-        <tr><th>Feature</th><th>Status</th></tr>
-        <tr><td>Real-time price updates</td><td>Done</td></tr>
-        <tr><td>Dynamic volatility thresholds</td><td>Done</td></tr>
-        <tr><td>AI trade signals</td><td>Done</td></tr>
-        <tr><td><strong>Auto buy/sell (AI-driven)</strong></td><td>Planned</td></tr>
-        <tr><td>Push notifications</td><td>Done</td></tr>
-        <tr><td>CSV trade log</td><td>Done</td></tr>
-        <tr><td>Force buy/sell commands</td><td>Done</td></tr>
-        <tr><td>Console UI with charts</td><td>Done</td></tr>
-      </table>
-
-      <h2>Coming Soon</h2>
-      <ul>
-        <li><strong>Auto Buy/Sell</strong>: Fully automated AI trading (toggle on/off)</li>
-        <li><strong>PC Version (Basic)</strong>: Simple desktop runner (Python script)</li>
+        <li>Full PC/Mac/Linux support with advanced AI engine</li>
+        <li>LSTM + Reinforcement Learning framework (ready for training)</li>
+        <li>Dynamic risk management & volatility-based sizing</li>
+        <li>QuantStats HTML performance reports</li>
+        <li>Live Streamlit equity dashboard</li>
+        <li>Full compatibility with Pythonista 3 on iOS</li>
+        <li>Professional logging, backtesting, and cloud-ready</li>
       </ul>
 
-      <h2>Setup (iOS)</h2>
-      <ol>
-        <li>Install <strong>Pythonista 3</strong> from the App Store</li>
-        <li>Copy <code>bot.py</code> into Pythonista</li>
-        <li>Run → type <code>start</code> in console</li>
-        <li>Watch AI signals and simulated trades</li>
-      </ol>
-
-      <h2>Commands</h2>
-      <pre><code>start    # Resume bot
+      <h2>Commands (Both Platforms)</h2>
+      <pre><code>start    # Begin trading
 stop     # Pause bot
-reset    # Reset balance & portfolio
-force buy BTC   # Buy 10% of balance
-force sell BTC  # Sell all holdings</code></pre>
+reset    # Reset to $1M
+report   # Generate performance report (PC only)</code></pre>
     </div>
   </div>
 
@@ -443,16 +418,17 @@ force sell BTC  # Sell all holdings</code></pre>
   <footer class="footer">
     <p>
       Open Source on 
-      <a href="https://github.com/mohameddodda/Paper_trading_bot" target="_blank">
-        GitHub → mohameddodda/Paper_trading_bot
+      <a href="https://github.com/MohamedDodda/Paper_trading_bot" target="_blank">
+        GitHub → MohamedDodda/Paper_trading_bot
       </a>
     </p>
     <p class="tech-stack">
-      Built with <strong>Pythonista 3</strong> • <strong>OpenRouter</strong> • <strong>GitHub Pages</strong>
+      Built with <strong>Pythonista 3</strong> • <strong>OpenRouter</strong> • <strong>GitHub Pages</strong> • <strong>Love</strong>
     </p>
+    <p>Made by <a href="https://x.com/MohamedDodda" style="color:#00d4aa;">@MohamedDodda</a> — November 17, 2025</p>
   </footer>
 
-  <!-- Scripts -->
+  <!-- Scripts (Unchanged) -->
   <script>
     function toggleSetup() {
       const content = document.getElementById('setupContent');
@@ -466,21 +442,17 @@ force sell BTC  # Sell all holdings</code></pre>
       counters.forEach(counter => {
         const target = parseInt(counter.getAttribute('data-count'));
         const isMoney = counter.textContent.includes('$');
-        const isPairs = target === 50;
-        const isLive = target === 24;
         let count = 0;
         const increment = target / 70;
         const timer = setInterval(() => {
           count += increment;
           if (count >= target) {
             if (isMoney) counter.textContent = '$1,000,000';
-            else if (isPairs) counter.textContent = '50+';
-            else if (isLive) counter.textContent = '24/7';
+            else counter.textContent = target === 8 ? '8+' : '24/7';
             clearInterval(timer);
           } else {
             if (isMoney) counter.textContent = '$' + Math.floor(count).toLocaleString();
-            else if (isPairs) counter.textContent = Math.floor(count) + '+';
-            else if (isLive) counter.textContent = Math.floor(count) + '/7';
+            else counter.textContent = Math.floor(count) + (target === 8 ? '+' : '/7');
           }
         }, 35);
       });

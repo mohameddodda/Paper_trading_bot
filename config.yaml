@@ -1,0 +1,10 @@
+update_interval: 15
+initial_balance: 1000000.0
+symbols:
+  - BTC_USDT
+  - ETH_USDT
+  - SOL_USDT
+  - DOGE_USDT
+  - SHIB_USDT
+  - CRO_USDT
+ai_model: mistralai/mistral-7b-instruct:free
