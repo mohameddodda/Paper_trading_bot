@@ -15,6 +15,11 @@ from dotenv import load_dotenv
 # Load environment variables from .env
 load_dotenv()
 
+class Config:
+    API_KEY = os.getenv('YAHOO_API_KEY', 'default_key')
+    DEFAULT_SYMBOL = 'AAPL'
+    LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')
+
 # === PROJECT ROOT (for checkpoints, logs, etc.) ===
 PROJECT_ROOT = Path(__file__).parent.resolve()
 
