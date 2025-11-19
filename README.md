@@ -2,7 +2,7 @@
 
 ![Deploy: Ready](https://img.shields.io/badge/Deploy-Ready-green)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen)
-![Python: 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue)
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![Platforms](https://img.shields.io/badge/Platforms-PC%20•%20Mac%20•%20Linux%20•%20iOS-success)
 ![Status](https://img.shields.io/badge/Status-PRO%20LIVE-00d4aa)
 ![Simulation Only](https://img.shields.io/badge/Simulation-Only-red)
@@ -35,6 +35,23 @@ Now runs natively on **PC / Mac / Linux** (full power) **and** **iPhone / iPad**
 > **100% simulation. Zero real money. Zero risk.**
 
 ## Quick Start
+
+## Installation
+1. Clone: `git clone https://github.com/mohameddodda/Paper_trading_bot.git`
+2. Navigate: `cd Paper_trading_bot`
+3. Venv: `python -m venv venv` then activate.
+4. Install: `pip install -r requirements.txt`
+5. Env: Copy `.env.example` to `.env` and add keys.
+
+## Usage
+Run: `python src/bot.py`
+
+## Testing
+`python -m pytest tests/`
+
+## Contributing
+Fork, branch, PR.
+
 
 ### PC / Mac / Linux (Recommended – Full Pro Power)
 ```bash

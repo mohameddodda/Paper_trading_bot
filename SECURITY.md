@@ -21,7 +21,7 @@ We actively support only the **latest version** of the bot.
 
 Found a security issue? **Thank you** — we want to know.
 
-**Email**: `security@mohameddodda.dev`  
+**Email**: `mohamed.hisham282@yahoo.com`  
 **X (Twitter)**: [@MohamedDodda](https://x.com/MohamedDodda) (DMs open)
 
 All reports are:
