@@ -1,204 +1,245 @@
-# Paper Trading Bot – Pro Edition
+# Paper Trading Bot - AI-Powered Crypto/Stock Simulator
 
-![Deploy: Ready](https://img.shields.io/badge/Deploy-Ready-green)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen)
-![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
-![Platforms](https://img.shields.io/badge/Platforms-PC%20•%20Mac%20•%20Linux%20•%20iOS-success)
-![Status](https://img.shields.io/badge/Status-PRO%20LIVE-00d4aa)
-![Simulation Only](https://img.shields.io/badge/Simulation-Only-red)
+<p align="center">
+  <img src="assets/bot-running.png" alt="Paper Trading Bot" width="600"/>
+</p>
 
-**AI-Powered Paper Trading Platform**  
-**$1,000,000 virtual balance** • Live market prices (Stocks or Crypto) • Zero financial risk
+<p align="center">
+  <a href="https://github.com/MohamedDodda/Paper_trading_bot/actions/workflows/pages.yml/badge.svg">
+    <img src="https://github.com/MohamedDodda/Paper_trading_bot/actions/workflows/pages.yml/badge.svg" alt="Deployment"/>
+  </a>
+  <a href="https://pypi.org/project/paper-trading-bot/">
+    <img src="https://img.shields.io/pypi/v/paper-trading-bot.svg" alt="PyPI"/>
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License"/>
+  </a>
+</p>
 
-Runs natively on **PC / Mac / Linux** (full power) **and** **iPhone / iPad** (Pythonista 3) — from the same repo.
+## ⚠️ Important Disclaimer
 
-**Pythonista 3** • **OpenRouter** • **Yahoo Finance / Crypto.com APIs** • **Mistral + DeepSeek AI**
+**THIS IS A PAPER TRADING SIMULATOR FOR EDUCATIONAL PURPOSES ONLY.**
 
-## Pro Edition Launched — 2026
+- No real money is involved
+- No real trades are executed
+- This is NOT financial advice
+- Use at your own risk
+- The authors assume no liability for any financial losses
 
-| Feature                            | PC / Mac / Linux | iPhone / iPad (Pythonista 3) |
-|------------------------------------|------------------|------------------------------|
-| Live Crypto.com prices (8+ pairs)  | Yes              | Yes                          |
-| Live Stock prices (Yahoo Finance)   | Yes              | Yes                          |
-| AI signals (OpenRouter)            | Yes              | Yes                          |
-| Dynamic risk & volatility sizing   | Yes              | Yes                          |
-| LSTM + Reinforcement Learning      | Yes (ready)      | No (PC only)                 |
-| QuantStats HTML reports            | Yes              | No (PC only)                 |
-| Live Streamlit dashboard           | Yes              | No (PC only)                 |
-| Professional CSV logging           | Yes              | Yes                          |
-| Backtesting & Monte Carlo          | Yes              | No (PC only)                 |
-| Push + voice alerts                | Yes              | Yes (iOS native)             |
-| Auto-trading (toggle)              | Yes              | Planned                      |
+---
 
-## Supported Assets
+## 📁 Project Structure
 
-### Stocks (Yahoo Finance)
-AAPL • GOOGL • MSFT • TSLA
+```
+paper_trading_bot/
+├── bots/                    # Bot entry points (production)
+│   ├── __init__.py
+│   ├── cli_bot.py          # CLI bot
+│   ├── beast_bot.py        # The BEAST - Advanced CLI
+│   └── ios_bot.py          # iOS/Pythonista version
+│
+├── core/                    # Core trading modules
+│   ├── __init__.py
+│   ├── data_fetcher.py     # Market data fetching
+│   ├── strategy.py         # Trading strategies
+│   └── backtester.py       # Backtesting engine
+│
+├── training/                # AI Training scripts
+│   ├── __init__.py
+│   ├── train_lstm.py       # LSTM model training
+│   ├── train_r1.py        # R1 RL training
+│   ├── rl_environment.py   # Gymnasium environment
+│   ├── backtest.py        # Backtesting script
+│   └── test_live.py       # Live testing
+│
+├── config/                  # Configuration files
+│   ├── __init__.py
+│   ├── settings.py        # Python configuration
+│   ├── config.json        # JSON config
+│   ├── config.yaml       # YAML config
+│   └── gui_config.json   # GUI settings
+│
+├── DEV/                     # Developer tools (for development)
+│   ├── setup_dirs.py      # Directory setup script
+│   └── gui_bot.py        # GUI application
+│
+├── tests/                   # Test files
+│   └── test_bot.py
+│
+├── docs/                    # Documentation
+├── scripts/                 # Utility scripts
+├── assets/                  # Images and media
+├── .github/                # GitHub workflows
+│
+├── setup.py                 # Package setup
+├── requirements.txt         # Dependencies
+└── README.md              # This file
+```
 
-### Crypto (Crypto.com API)
-BTC_USDT • ETH_USDT • SOL_USDT • DOGE_USDT • SHIB_USDT • CRO_USDT • XRP_USDT • ADA_USDT
+---
 
-> **100% simulation. Zero real money. Zero risk.**
+## 🚀 Quick Start
 
-## Quick Start
-
-1. Clone the repo: `git clone https://github.com/mohameddodda/Paper_trading_bot.git`
-2. Install dependencies: `pip install -r requirements.txt`
-3. Set up environment: Copy `.env.example` to `.env` and add your OpenRouter API key.
-4. Run the bot: `python bot.py`
-
-## Installation
+### Installation
 
 ```
 bash
 # Clone the repository
-git clone https://github.com/mohameddodda/Paper_trading_bot.git
-cd Paper_trading_bot
+git clone https://github.com/MohamedDodda/Paper_trading_bot.git
+cd paper_trading_bot
 
-# Create virtual environment
+# Create virtual environment (recommended)
 python -m venv venv
-
-# Activate virtual environment
-# Windows:
-venv\Scripts\activate
-# Mac/Linux:
-source venv/bin/activate
+source venv/bin/activate  # Linux/Mac
+# or
+venv\Scripts\activate     # Windows
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Set API key (optional - for AI signals)
-# Windows:
-set OPENROUTER_API_KEY=sk-or-v1-...
-# Mac/Linux:
-export OPENROUTER_API_KEY=sk-or-v1-...
 ```
 
-## Usage
+### Running the Bots
 
-### PC / Mac / Linux - Modular Version (Recommended)
-```
-bash
-python bot.py
+**CLI Bot:**
+```bash
+python -m bots.cli_bot
 ```
 
-### PC / Mac / Linux - Standalone Version
+**The BEAST (Advanced CLI):**
 ```
 bash
-python Paper_Trading_bot.py
+python -m bots.beast_bot
 ```
-
-### iPhone / iPad (Pythonista 3)
-1. Open Pythonista 3 on your iOS device
-2. Tap + → Import from GitHub
-3. Enter: `mohameddodda/Paper_trading_bot`
-4. Run `pythonista_ios_mode.py`
 
 ### Commands
-- `start` → Begin/resume trading
-- `stop` → Pause bot
-- `reset` → Reset to $1,000,000
-- `status` → Show current balance
-- `report` → Generate QuantStats report (PC only)
-- `exit` → Exit the bot
-
-## Project Structure
 
 ```
-Paper_Trading_Bot/
-├── bot.py                      # Main modular version (recommended)
-├── Paper_Trading_bot.py        # Standalone version
-├── pythonista_ios_mode.py      # iOS/Pythonista version
-├── backtest.py                 # Historical backtesting
-├── config.py                   # Configuration settings
-├── src/                        # Core modules
-│   ├── __init__.py
-│   ├── data_fetcher.py        # Market data fetching
-│   ├── strategy.py            # Trading strategies
-│   └── backtester.py          # Backtesting engine
-├── tests/                      # Test suite
-├── requirements.txt            # Python dependencies
-└── README.md                   # This file
+start    # Begin trading simulation
+stop     # Pause bot
+reset    # Reset to $1M virtual balance
+report   # Generate performance report
+status   # Show current status
+help     # Show commands
+exit     # Exit the bot
 ```
 
-## Configuration
+---
 
-Edit `config.py` for settings:
+## 🤖 AI Features
+
+The bot supports AI-powered trading signals via OpenRouter:
+
+1. **LSTM Training** - Train your own LSTM model:
+   
+```
+bash
+python -m training.train_lstm
+```
+
+2. **Reinforcement Learning** - R1 agent training:
 
 ```
-python
-STOCK_MODE = True       # Set to True for stocks, False for crypto
-USE_AI = True          # Enable AI signals via OpenRouter
-STARTING_CASH = 1_000_000  # Virtual balance
-RISK_PER_TRADE = 0.03  # 3% risk per trade
-STOP_LOSS_PCT = 0.05   # 5% stop loss
-TAKE_PROFIT_PCT = 0.10 # 10% take profit
+bash
+python -m training.train_r1
 ```
 
-## Features
+Set your API key in `.env`:
+```
+OPENROUTER_API_KEY=your_key_here
+```
 
-### Trading Strategies
-- Moving Average Crossover
-- RSI (Relative Strength Index)
-- Bollinger Bands
-- MACD (Moving Average Convergence Divergence)
-- AI-powered signals (DeepSeek via OpenRouter)
+---
 
-### Risk Management
-- Dynamic position sizing based on volatility
-- Stop-loss and take-profit orders
-- Maximum drawdown protection
-- Cooldown between trades
+## 📊 Backtesting
 
-### Reporting
-- CSV trade logging
-- QuantStats HTML performance reports
-- Real-time portfolio tracking
+Run historical backtests:
+```
+bash
+python -m training.backtest
+```
 
-## Testing
+---
+
+## 🧪 Testing
 
 ```
 bash
 # Run tests
-python -m pytest tests/
+pytest tests/
 
-# Run specific test
-python tests/test_bot.py
+# Run with coverage
+pytest --cov=. tests/
 ```
 
-## Dependencies
+---
 
-### Core
-- pandas, numpy, matplotlib
-- yfinance (stock prices)
-- requests (API calls)
-- quantstats (reporting)
+## 📝 Configuration
 
-### Optional (for advanced features)
-- tensorflow (LSTM AI)
-- stable-baselines3 (RL trading)
-- streamlit (dashboard)
-- websocket-client (real-time)
+Configuration can be set via:
+- `config/settings.py` - Python configuration
+- `config/config.json` - JSON configuration
+- `config/config.yaml` - YAML configuration
+- Environment variables (`.env`)
 
-See `requirements.txt` for full list.
+### Key Settings
 
-## Troubleshooting
+| Setting | Description | Default |
+|---------|-------------|---------|
+| `STOCK_MODE` | Use stocks instead of crypto | `True` |
+| `SYMBOLS` | Trading symbols | `['AAPL', 'GOOGL', ...]` |
+| `STARTING_CASH` | Virtual balance | `$1,000,000` |
+| `UPDATE_INTERVAL` | Update frequency (seconds) | `10` |
+| `RISK_PER_TRADE` | Risk per trade | `3%` |
+| `STOP_LOSS_PCT` | Stop loss percentage | `5%` |
+| `TAKE_PROFIT_PCT` | Take profit percentage | `10%` |
 
-- **API Errors**: Check `.env` for valid OpenRouter API key
-- **Import Errors**: Ensure virtual environment is activated
-- **iOS Issues**: Use Pythonista 3 for iOS, not regular Python
-- **Performance**: For large backtests, use PC/Mac
+---
 
-## Legal & Compliance
+## 🔧 Development
 
-⚠️ **Important Disclaimers:**
-- **100% Paper Trading Simulation**: No real money, trades, or financial risk
-- **Not Financial Advice**: This bot does not provide investment recommendations
-- **No Affiliations**: Not affiliated with Yahoo Finance, Crypto.com, OpenRouter, or any exchanges
-- **Educational Purpose Only**: For learning and research
+### Package Structure
 
-## Author
+- `core/` - Core trading logic (data fetching, strategies, backtesting)
+- `bots/` - Different bot interfaces (CLI, iOS)
+- `training/` - AI model training scripts
+- `config/` - Configuration management
+- `DEV/` - Developer tools and GUI
 
-Made with ❤️ by [@MohamedDodda](https://mohameddodda.github.io/)  
-Pro Edition Updated: 2025  
-GitHub: https://github.com/mohameddodda/Paper_trading_bot
+### Adding New Strategies
+
+1. Add strategy to `core/strategy.py`
+2. Import in `core/__init__.py`
+3. Use in bots
+
+---
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) for details.
+
+---
+
+## ⚡ Tech Stack
+
+- **Python 3.8+**
+- **Data**: yfinance, Crypto.com API
+- **AI/ML**: TensorFlow, Stable Baselines3, Gymnasium
+- **GUI**: CustomTkinter, Streamlit
+- **Analysis**: Pandas, NumPy, QuantStats
+
+---
+
+## 👤 Author
+
+**Mohamed Dodda**
+- GitHub: [@MohamedDodda](https://github.com/MohamedDodda)
+- Twitter: [@MohamedDodda](https://x.com/MohamedDodda)
+
+---
+
+## 🙏 Acknowledgments
+
+- OpenRouter for AI signals
+- Crypto.com for market data
+- Yahoo Finance for stock data
+- Contributors and testers

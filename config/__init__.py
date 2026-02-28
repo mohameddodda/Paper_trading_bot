@@ -1,15 +1,15 @@
 """
-config.py – Backward Compatibility Module
-========================================
+config – Configuration Package
+=============================
 
-This file provides backward compatibility for imports.
-All configuration is now in config/settings.py and config/ package.
+Contains all configuration settings for the Paper Trading Bot.
+Supports multiple config formats: Python, JSON, YAML.
 
-For educational paper trading simulations only.
+Usage:
+    from config import SYMBOLS, STARTING_CASH, CRYPTO_MODE
 """
 
-# Re-export from new location
-from config.settings import (
+from .settings import (
     Config,
     PROJECT_ROOT,
     OPENROUTER_API_KEY,
@@ -45,6 +45,7 @@ from config.settings import (
     MOCK_AI,
 )
 
+__version__ = "1.0.0"
 __all__ = [
     "Config",
     "PROJECT_ROOT",

@@ -1,0 +1,20 @@
+{
+  "app": {
+    "title": "Paper Trading Bot",
+    "window_size": "1000x700",
+    "min_window_size": "800x600"
+  },
+  "appearance": {
+    "theme": "dark",
+    "color_theme": "blue"
+  },
+  "sidebar": {
+    "width": 200
+  },
+  "colors": {
+    "primary": "#2CC985",
+    "secondary": "#1F6AA5",
+    "danger": "#C93434",
+    "bg": "#0b0c10"
+  }
+}
