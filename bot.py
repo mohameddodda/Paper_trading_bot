@@ -80,6 +80,8 @@ try:
     HYPOTHESIS_AVAILABLE = True
 except ImportError:
     HYPOTHESIS_AVAILABLE = False
+    given = None  # type: ignore
+    st_hyp = None  # type: ignore
 
 # Imports from our updated files
 from config import STOCK_MODE, CRYPTO_MODE, SYMBOLS, STARTING_CASH, UPDATE_INTERVAL, LOG_FILE, CSV_LOG_FILE, PERFORMANCE_CHART
@@ -165,7 +167,7 @@ class PortfolioManager:
         self.equity_history[today] = total_port
 
     def check_drawdown(self) -> bool:
-        total_port = self.get_total_value(fetch_all_prices())
+        total_port = self.get_total_value(data_fetcher.fetch_all_prices())
         drawdown = (self.max_portfolio_equity - total_port) / self.max_portfolio_equity
         return drawdown >= config['max_global_drawdown']
 

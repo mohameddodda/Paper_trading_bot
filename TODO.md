@@ -1,31 +1,14 @@
-# Bot Improvement TODO
+# Desktop App Conversion Plan
 
-## 1. Create Configuration File
-- [x] Create `config.json` with symbols, intervals, risk settings, etc.
+## Task: Convert CLI bot to desktop app with native window experience
 
-## 2. Update Dependencies
-- [x] Update `requirements.txt` to include Flask
+### Steps:
+1. [x] Create `gui_app.py` - Desktop GUI using customtkinter
+2. [x] Modify `bot.py` - Add GUI mode with thread communication
+3. [x] Update `requirements.txt` - Add customtkinter dependency
+4. [ ] Test the desktop app
 
-## 3. Enhance Security & Config
-- [x] Modify `get_api_key()` to check `OPENROUTER_API_KEY` env var first
-- [x] Load settings from `config.json`
-
-## 4. Improve Performance
-- [x] Add price caching with 10-second TTL
-- [x] Optimize API calls
-
-## 5. Better Error Handling
-- [x] Add retries and exponential backoff for API failures
-- [x] Graceful degradation on errors
-
-## 6. Enhance AI Signals
-- [ ] Add trend analysis (SMA, RSI-like) to AI prompt
-- [ ] Improve prompt instructions for better signals
-
-## 7. Add Web Dashboard
-- [ ] Integrate Flask app for monitoring
-- [ ] Add routes for status, portfolio, logs
-
-## 8. Testing
-- [ ] Test bot functionality with new features
-- [ ] Test web dashboard at localhost:5000
+### Details:
+- gui_app.py: Modern CTk window with portfolio dashboard, trade log, controls
+- bot.py: Add --gui flag, run in background thread, queue-based updates
+- requirements.txt: Add customtkinter>=5.2.0

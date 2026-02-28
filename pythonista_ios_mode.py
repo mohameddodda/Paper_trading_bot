@@ -17,9 +17,22 @@ import csv
 import os
 import datetime
 import json
-import console  # Pythonista UI
 from threading import Thread
 import pandas as pd
+
+# Pythonista UI - mock if not available
+try:
+    import console  # type: ignore
+except ImportError:
+    # Mock console for development/testing outside Pythonista
+    class MockConsole:
+        def alert(self, msg):
+            print(f"[ALERT] {msg}")
+        def input_alert(self, msg):
+            return input(f"{msg}: ")
+        def clear(self):
+            os.system('clear' if os.name != 'nt' else 'cls')
+    console = MockConsole()  # type: ignore
 
 # Imports from project
 from config import (

@@ -1,0 +1,50 @@
+{
+    "app": {
+        "title": "Paper Trading Bot",
+        "version": "3.0.0",
+        "window_size": "1000x700",
+        "min_window_size": "800x600"
+    },
+    "appearance": {
+        "theme": "dark",
+        "color_theme": "blue",
+        "font_family": "Segoe UI",
+        "font_size": "14"
+    },
+    "sidebar": {
+        "width": 200,
+        "logo_text": "📈 Paper Trading\nBot",
+        "show_splash": true
+    },
+    "dashboard": {
+        "show_balance": true,
+        "show_portfolio": true,
+        "show_pnl": true,
+        "show_trades_count": true,
+        "show_activity_log": true,
+        "activity_log_lines": 100
+    },
+    "trading": {
+        "update_interval": 10,
+        "max_risk_pct": 3,
+        "ai_enabled": false
+    },
+    "features": {
+        "show_settings": true,
+        "show_holdings": true,
+        "show_trade_log": true,
+        "auto_refresh": true
+    },
+    "colors": {
+        "primary": "#2fa572",
+        "secondary": "#1f6aa5",
+        "danger": "#c53b3b",
+        "success": "#2fa572",
+        "warning": "#f0a500"
+    },
+    "logo": {
+        "use_image": false,
+        "image_path": "logo.png",
+        "image_size": [120, 120]
+    }
+}

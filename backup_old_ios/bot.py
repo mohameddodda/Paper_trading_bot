@@ -55,17 +55,71 @@ import time
 import csv
 import os
 import datetime
-import console
-import notification
 import threading
 import queue
 import json
 import random
-import keychain
 import re
-import sound  # For voice alerts
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+
+# Try to import console for Pythonista; fallback if not available
+try:
+    import console  # type: ignore
+    CONSOLE_AVAILABLE = True
+except ImportError:
+    CONSOLE_AVAILABLE = False
+    # Fallback console implementation
+    class console:
+        @staticmethod
+        def hud_alert(message, style='', duration=1):
+            print(f"[ALERT] {message}")
+        
+        @staticmethod
+        def input_alert(title, message, default, button, input_type):
+            print(f"{title}: {message}")
+            return input(f"{button}> ") or default
+        
+        @staticmethod
+        def set_color(r, g, b):
+            pass
+
+# Try to import notification for Pythonista; fallback if not available
+try:
+    import notification  # type: ignore
+    NOTIFICATION_AVAILABLE = True
+except ImportError:
+    NOTIFICATION_AVAILABLE = False
+    # Fallback notification implementation
+    class notification:
+        @staticmethod
+        def schedule(message, delay):
+            print(f"[NOTIFICATION] {message}")
+
+# Try to import keychain for Pythonista; fallback if not available
+try:
+    import keychain  # type: ignore
+    KEYCHAIN_AVAILABLE = True
+except ImportError:
+    KEYCHAIN_AVAILABLE = False
+    # Fallback keychain implementation
+    class keychain:
+        _storage = {}
+        
+        @staticmethod
+        def get_password(service, account):
+            return keychain._storage.get((service, account))
+        
+        @staticmethod
+        def set_password(service, account, password):
+            keychain._storage[(service, account)] = password
+
+# Try to import sound for Pythonista; fallback if not available
+try:
+    import sound  # type: ignore
+    SOUND_AVAILABLE = True
+except ImportError:
+    SOUND_AVAILABLE = False
 
 # ------------------------------------------------------------
 # SESSION WITH RETRY
@@ -266,10 +320,11 @@ def log_trade(sym, action, price, qty, bal, profit_pct=None, reason=""):
 
 # Voice Alert (new X feature: iOS sound on trades)
 def voice_alert(message):
-    try:
-        sound.play_effect('arcade:Coin_5')  # Subtle chime; Pythonista built-in
-    except:
-        pass  # Silent fallback
+    if SOUND_AVAILABLE:
+        try:
+            sound.play_effect('arcade:Coin_5')  # Subtle chime; Pythonista built-in
+        except:
+            pass  # Silent fallback
 
 def dynamic_risk(prices):
     if len(prices) < 2: return 0.02

@@ -15,6 +15,12 @@ pyyaml==6.0  # Added for YAML config support
 # Configuration and environment
 python-dotenv==1.0.0
 
+# Cloud, Docker, WebSocket, and Testing
+boto3==1.28.0  # For AWS cloud deployment
+docker==6.1.0  # For containerization
+websocket-client==1.6.0  # For real-time streaming
+hypothesis==6.82.0  # For property-based testing
+
 # Testing
 pytest==7.4.3
 
@@ -34,8 +40,7 @@ ipykernel==6.25.0
 tensorflow==2.13.0  # For LSTM AI
 stable-baselines3==2.0.0  # For RL AI
 streamlit==1.28.0  # For UI Dashboard
-websocket-client==1.6.0  # For real-time streaming
-docker==6.1.0  # For containerization
-boto3==1.28.0  # For AWS cloud deployment
-hypothesis==6.82.0  # For property-based testing
 quantstats==0.0.62  # For advanced reporting
+
+# Desktop GUI (for gui_app.py - native desktop app experience)
+customtkinter>=5.2.0  # Modern GUI framework for desktop app
