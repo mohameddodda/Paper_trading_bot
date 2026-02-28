@@ -4,10 +4,10 @@ Paper Trading Bot – AI-Powered Crypto Strategy Simulator
 ============================================================
 
 Author: @MohamedDodda
-Version: 1.2.1
+Version: 1.0.0
 License: MIT
 GitHub: https://github.com/mohameddodda/Paper_trading_bot
-Live Pages: https://mohameddodda.github.io/Paper_trading_bot/
+Live Pages: https://mohameddodda.github.io/
 
 Features:
 - Real-time Crypto.com prices (BTC, ETH, SOL, DOGE, SHIB, CRO, XRP, ADA)
@@ -44,7 +44,7 @@ MAX_RISK_PCT        = 0.03
 STOP_LOSS_PCT       = -0.05
 TAKE_PROFIT_PCT     = 0.10
 
-__version__ = "1.2.1"
+__version__ = "1.0.0"
 log_file = os.path.expanduser('~/Documents/paper_trading_log.csv')
 
 # ------------------------------------------------------------

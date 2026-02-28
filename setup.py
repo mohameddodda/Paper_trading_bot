@@ -13,7 +13,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="paper-trading-bot",
-    version="0.1.0",
+    version="1.0.0",
     author="Mohamed Dodda",  # Replace with your actual name
     author_email="mohamed.hisham282@yahoo.com",  # Replace with your email
     description="A Python-based paper trading simulation bot for educational purposes. Fetches stock data, applies strategies, and backtests trades.",

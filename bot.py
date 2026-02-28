@@ -4,7 +4,7 @@ bot.py
 Paper Trading Bot – AI-Powered Strategy Simulator (Production-Grade)
 ===================================================================
 
-Version: 3.0.0 (Updated for 2025 – PC/Cloud-Ready)
+Version: 3.0.0 (Updated for 2026 – PC/Cloud-Ready)
 This is a professional-grade paper trading simulator combining modular design, AI, risk management, and testing.
 For educational purposes only—NO REAL TRADING OR FINANCIAL ADVICE.
 Uses public APIs responsibly; no real money involved.
@@ -83,9 +83,9 @@ except ImportError:
 
 # Imports from our updated files
 from config import STOCK_MODE, CRYPTO_MODE, SYMBOLS, STARTING_CASH, UPDATE_INTERVAL, LOG_FILE, CSV_LOG_FILE, PERFORMANCE_CHART
-from data_fetcher import fetch_data_for_symbols, get_live_price
-from strategy import moving_average_crossover
-from backtester import backtest_strategy
+from src.data_fetcher import fetch_data_for_symbols, get_live_price
+from src.strategy import moving_average_crossover
+from src.backtester import backtest_strategy
 
 # -------------------------
 # CONFIG (YAML-Based for Flexibility, Synced with config.py)

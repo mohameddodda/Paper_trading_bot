@@ -19,8 +19,9 @@ import datetime
 import json
 import console  # Pythonista UI
 from threading import Thread
+import pandas as pd
 
-# Imports from project (ensure files are in same directory or path)
+# Imports from project
 from config import (
     SYMBOLS,
     STARTING_CASH,
@@ -31,8 +32,8 @@ from config import (
     LOG_FILE,
     CSV_LOG_FILE,
 )
-from data_fetcher import fetch_all_prices  # For live prices
-from strategy import moving_average_crossover  # For basic signals
+from src.data_fetcher import fetch_all_prices  # For live prices
+from src.strategy import moving_average_crossover  # For basic signals
 
 # iOS-specific session
 session = requests.Session()

@@ -24,9 +24,9 @@ from config import (
     CRYPTO_MODE,
     LOG_FILE,
 )
-from data_fetcher import fetch_data_for_symbols  # For stock data if needed
-from strategy import moving_average_crossover  # For strategy logic
-from backtester import backtest_strategy  # For simulation
+from src.data_fetcher import fetch_data_for_symbols  # For stock data if needed
+from src.strategy import moving_average_crossover  # For strategy logic
+from src.backtester import backtest_strategy  # For simulation
 
 # === Logging ===
 logging.basicConfig(
