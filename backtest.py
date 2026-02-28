@@ -2,14 +2,17 @@
 backtest.py – Historical Strategy Testing
 ========================================
 
-Simulates bot performance using real historical data from Crypto.com.
+Simulates bot performance using real historical data from Crypto.com or Yahoo Finance.
 NO real trading. NO API keys used during backtest.
+For educational paper trading simulations only.
 """
 
 import logging
 import pandas as pd
+import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List
+import os
 
 from config import (
     SYMBOLS,
@@ -17,14 +20,20 @@ from config import (
     BACKTEST_DAYS,
     AGGREGATE_SIZE,
     AGGREGATE_UNIT,
+    STOCK_MODE,
+    CRYPTO_MODE,
+    LOG_FILE,
 )
-from bot import PaperTradingBot
+from data_fetcher import fetch_data_for_symbols  # For stock data if needed
+from strategy import moving_average_crossover  # For strategy logic
+from backtester import backtest_strategy  # For simulation
 
 # === Logging ===
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
     datefmt="%H:%M:%S",
+    filename=LOG_FILE,  # Sync with config.py
 )
 log = logging.getLogger(__name__)
 
@@ -35,6 +44,7 @@ def fetch_crypto_com_aggs(symbol: str, days: int = BACKTEST_DAYS) -> pd.DataFram
     """Fetch 1-minute candle data from Crypto.com public API."""
     try:
         import requests
+        import time
 
         # Convert symbol: BTC_USDT → BTC-USDT
         instrument = symbol.replace("_", "-")
@@ -56,77 +66,86 @@ def fetch_crypto_com_aggs(symbol: str, days: int = BACKTEST_DAYS) -> pd.DataFram
 
         df = pd.DataFrame(data["result"]["data"])
         df["t"] = pd.to_datetime(df["t"], unit="s", utc=True)
-        df = df.rename(columns={"t": "timestamp", "c": "close"})
-        df = df[["timestamp", "close"]].sort_values("timestamp").reset_index(drop=True)
+        df = df.rename(columns={"t": "timestamp", "o": "Open", "h": "High", "l": "Low", "c": "Close", "v": "Volume"})
+        df = df[["timestamp", "Open", "High", "Low", "Close", "Volume"]].sort_values("timestamp").reset_index(drop=True)
+        time.sleep(1)  # Respect API rate limits
         return df
 
     except Exception as e:
         log.error(f"Failed to fetch {symbol}: {e}")
         return pd.DataFrame()
 
+def fetch_historical_data() -> Dict[str, pd.DataFrame]:
+    """Fetch historical data based on mode (crypto or stock)."""
+    data = {}
+    if CRYPTO_MODE:
+        for sym in SYMBOLS:
+            log.info(f"Fetching crypto data for {sym}...")
+            df = fetch_crypto_com_aggs(sym)
+            if not df.empty:
+                data[sym] = df
+    elif STOCK_MODE:
+        # Use data_fetcher.py for stocks
+        data = fetch_data_for_symbols()
+    return data
 
 def run_backtest() -> None:
-    """Run full backtest across all symbols."""
-    log.info(f"Starting backtest: {BACKTEST_DAYS} days, {len(SYMBOLS)} symbols")
+    """Run full backtest across all symbols using modular bot components."""
+    log.info(f"Starting backtest: {BACKTEST_DAYS} days, {len(SYMBOLS)} symbols, Mode: {'Crypto' if CRYPTO_MODE else 'Stock'}")
 
-    bot = PaperTradingBot()
-    bot.portfolio = {sym: 0.0 for sym in SYMBOLS}
-    bot.portfolio["USD"] = STARTING_CASH
-    bot.history: Dict[str, List[dict]] = {}
+    # Initialize components from bot.py
+    from bot import PortfolioManager, TradingStrategy, Backtester, Visualizer
+    portfolio = PortfolioManager()
+    strategy = TradingStrategy()
+    backtester = Backtester(portfolio, strategy)
+    visualizer = Visualizer(portfolio)
 
-    # === Fetch Historical Data ===
-    for sym in SYMBOLS:
-        log.info(f"Fetching {sym}...")
-        df = fetch_crypto_com_aggs(sym)
-        if df.empty:
-            log.warning(f"Skipping {sym} – no data")
-            continue
-        bot.history[sym] = df.to_dict("records")
-
-    if not bot.history:
+    # Fetch historical data
+    historical_data = fetch_historical_data()
+    if not historical_data:
         log.error("No data fetched. Backtest aborted.")
         return
 
-    # === Simulate Tick-by-Tick ===
-    all_timestamps = sorted(
-        {rec["timestamp"] for sym in bot.history for rec in bot.history[sym]}
-    )
-    log.info(f"Simulating {len(all_timestamps)} ticks...")
+    # Simulate trading for each symbol
+    for sym, df in historical_data.items():
+        if df.empty or len(df) < 50:  # Need enough data for strategy
+            log.warning(f"Skipping {sym} – insufficient data")
+            continue
 
-    for current_time in all_timestamps:
-        # Update live history up to current time
-        for sym in SYMBOLS:
-            if sym in bot.history:
-                bot.history[sym] = [
-                    rec for rec in bot.history[sym] if rec["timestamp"] <= current_time
-                ]
+        log.info(f"Backtesting {sym}...")
 
-        # Decision per symbol
-        for sym in SYMBOLS:
-            if sym not in bot.history or len(bot.history[sym]) < 20:
-                continue
+        # Apply strategy (e.g., moving average crossover)
+        signals = moving_average_crossover(df)
 
-            action = bot.rule_based_decision(sym)
-            if action != "hold":
-                # Micro-trade for simulation
-                bot.execute_trade(sym, action, amount_usd=STARTING_CASH * 0.001)  # 0.1%
+        # Run backtest simulation
+        portfolio_result = backtest_strategy(df, signals, portfolio.sim_balance)
 
-    # === Final Portfolio Value ===
-    final_usd = bot.portfolio["USD"]
-    for sym in SYMBOLS:
-        if sym in bot.history and bot.history[sym]:
-            last_price = bot.history[sym][-1]["price"]
-            final_usd += bot.portfolio[sym] * last_price
+        # Update portfolio with final value (simplified aggregation)
+        final_value = portfolio_result['total'].iloc[-1] if not portfolio_result.empty else portfolio.sim_balance
+        portfolio.sim_balance = final_value
 
-    log.info(f"Backtest Complete!")
+    # Final results
+    final_net_worth = portfolio.sim_balance
+    total_return = ((final_net_worth / STARTING_CASH) - 1) * 100
+
+    log.info("Backtest Complete!")
     log.info(f"Starting Balance: ${STARTING_CASH:,.2f}")
-    log.info(f"Final Net Worth:  ${final_usd:,.2f}")
-    log.info(f"Total Return:     {((final_usd / STARTING_CASH) - 1) * 100:+.2f}%")
+    log.info(f"Final Net Worth:  ${final_net_worth:,.2f}")
+    log.info(f"Total Return:     {total_return:+.2f}%")
 
-    # Optional: Save results
-    bot.save_portfolio_snapshot("backtest_final.json")
-    bot.plot_performance(title="Backtest Performance", save_path="backtest_chart.png")
+    # Generate report (using QuantStats from bot.py)
+    visualizer.generate_report()
 
+    # Optional: Save snapshot
+    snapshot = {
+        "final_balance": final_net_worth,
+        "symbols_traded": list(historical_data.keys()),
+        "timestamp": datetime.now().isoformat()
+    }
+    with open("backtest_snapshot.json", "w") as f:
+        import json
+        json.dump(snapshot, f, indent=4)
+    log.info("Snapshot saved to backtest_snapshot.json")
 
 if __name__ == "__main__":
     run_backtest()

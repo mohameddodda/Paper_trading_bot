@@ -1,31 +1,44 @@
 """
-train_rl.py – Lightweight RL Training (No Ray, No GPU)
-======================================================
+train_rl.py – Lightweight RL Training for AI Signals
+=====================================================
 
-Trains a PPO agent using **Stable-Baselines3** (lightweight, iOS-compatible).
-Uses **Crypto.com public API** -- no key needed.
-Designed for **educational simulation only**.
+Trains a PPO agent using Stable-Baselines3 (lightweight, CPU-compatible).
+Uses public APIs (e.g., Crypto.com) -- no keys needed.
+For educational paper trading simulations only—NO REAL TRADING.
 
 Author: @MohamedDodda
-Last updated: November 15, 2025
+Last updated: 2025 (aligned with project)
 """
 
 import os
 import logging
 from datetime import datetime
 from pathlib import Path
-
 import numpy as np
-from stable_baselines3 import PPO
-from stable_baselines3.common.callbacks import BaseCallback
+
+# Optional imports (for advanced features)
+try:
+    from stable_baselines3 import PPO
+    from stable_baselines3.common.callbacks import BaseCallback
+    RL_AVAILABLE = True
+except ImportError:
+    RL_AVAILABLE = False
+    print("Stable-Baselines3 not installed. RL training disabled. Install with: pip install stable-baselines3")
 
 from config import (
     SYMBOLS,
-    WINDOW_SIZE,
     RL_CHECKPOINT_PATH,
     STARTING_CASH,
+    CRYPTO_MODE,
+    STOCK_MODE,
 )
-from rl_environment import RLTradingEnv
+# Assumes rl_environment.py exists (create if missing)
+try:
+    from rl_environment import RLTradingEnv
+    ENV_AVAILABLE = True
+except ImportError:
+    ENV_AVAILABLE = False
+    print("rl_environment.py not found. Create it or disable RL features.")
 
 # === Logging ===
 logging.basicConfig(
@@ -58,15 +71,19 @@ class SaveBestCallback(BaseCallback):
 
 
 def train_rl_agent(
-    symbol: str = "BTC_USDT",
+    symbol: str = SYMBOLS[0] if SYMBOLS else "BTC_USDT",
     total_timesteps: int = 50_000,
-    window_size: int = WINDOW_SIZE,
-) -> PPO:
-    """Train PPO agent on live Crypto.com data."""
+    window_size: int = 60,  # Default if not in config
+) -> None:
+    """Train PPO agent on data (crypto or stock mode)."""
+    if not RL_AVAILABLE or not ENV_AVAILABLE:
+        log.error("RL dependencies not available. Skipping training.")
+        return
+
     if symbol not in SYMBOLS:
         raise ValueError(f"Symbol {symbol} not in config.SYMBOLS")
 
-    log.info(f"Starting RL training: {symbol}, {total_timesteps:,} timesteps")
+    log.info(f"Starting RL training: {symbol}, {total_timesteps:,} timesteps, Mode: {'Crypto' if CRYPTO_MODE else 'Stock'}")
 
     # === Environment ===
     env = RLTradingEnv(symbol=symbol, window_size=window_size)
@@ -84,23 +101,30 @@ def train_rl_agent(
         gae_lambda=0.95,
         clip_range=0.2,
         tensorboard_log="./tb_logs/",
-        device="cpu",  # iOS only
+        device="cpu",  # CPU-only for iOS compatibility
     )
 
     # === Callback ===
     callback = SaveBestCallback()
 
     # === Train ===
-    model.learn(total_timesteps=total_timesteps, callback=callback)
+    try:
+        model.learn(total_timesteps=total_timesteps, callback=callback)
+        log.info("RL training completed successfully.")
+    except Exception as e:
+        log.error(f"RL training failed: {e}")
+        return
 
     # === Save Final ===
     final_path = CHECKPOINT_DIR / "latest"
     model.save(final_path)
     log.info(f"Final model saved: {final_path}")
-
-    return model
+    print("💡 Load in bot.py's TradingStrategy for RL-enhanced signals!")
 
 
 if __name__ == "__main__":
     # Use first symbol by default
-    train_rl_agent(symbol=SYMBOLS[0], total_timesteps=50_000)
+    if SYMBOLS:
+        train_rl_agent(symbol=SYMBOLS[0], total_timesteps=50_000)
+    else:
+        log.error("No symbols in config.SYMBOLS. Check config.py.")

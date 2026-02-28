@@ -1,63 +1,79 @@
 # Security Policy
 
-**Paper Trading Bot** takes your privacy and security seriously — even though **no real money is involved**.
-
-—
+**Paper Trading Bot** takes your privacy and security seriously — even though **no real money is involved**. This bot is for **educational paper trading simulations only**. It does not handle real funds, trades, or financial data. Use at your own risk for learning purposes.
 
 ## Supported Versions
 
 We actively support only the **latest version** of the bot.
 
-| Version | Supported |
-|———|————|
-| `main` (latest) | Yes |
-| Older releases | No |
+Version         Supported
 
-> **Always run the latest version** from [GitHub](https://github.com/mohameddodda/Paper_trading_bot)
+main (latest)   :white_check_mark: Yes
 
-—
+Older releases   :x: No
 
-## Reporting a Vulnerability
+Always run the latest version from GitHub
 
-Found a security issue? **Thank you** — we want to know.
 
-**Email**: `mohamed.hisham282@yahoo.com`  
-**X (Twitter)**: [@MohamedDodda](https://x.com/MohamedDodda) (DMs open)
+Reporting a Vulnerability
+Found a security issue? Thank you — we want to know.
+
+Email: mohamed.hisham282@yahoo.com
+X (Twitter): @MohamedDodda (DMs open)
 
 All reports are:
-- Reviewed **within 24 hours**
-- Kept **strictly confidential**
-- Acknowledged with a response plan
 
-—
+Reviewed within 24 hours
+Kept strictly confidential
+Acknowledged with a response plan
+API Key Security
+Your API keys (e.g., OpenRouter, optional cloud/AWS) are handled securely:
 
-## API Key Security (OpenRouter)
+Stored locally: On your device (via .env file, which is gitignored). On iOS, uses Keychain for extra protection.
+Never transmitted: To us, third parties, or logged in plaintext.
+Never committed: To GitHub—.env is in .gitignore.
+Optional features: AI, cloud, and streaming require keys but disable gracefully if missing.
+We do not collect:
 
-Your **OpenRouter API key** is:
+Usage data
+Trade logs
+Personal information (PII)
+Real financial data
+Data Privacy
+No data collection: The bot fetches public market data (e.g., from Yahoo Finance or Crypto.com APIs) and processes it locally.
+Local storage: Logs and models are saved on your device (e.g., logs/, checkpoints/).
+No sharing: Data is not sent to external servers unless you enable optional cloud features (e.g., AWS, which you control).
+Compliance: Follows general data protection best practices; no GDPR/PII handling as no user data is collected.
+Dependency Risks
+Third-party libraries: Uses open-source packages (e.g., TensorFlow, Stable-Baselines3). Update regularly via pip install -r requirements.txt.
+API limits: Respects rate limits on public APIs; no excessive requests.
+Vulnerabilities: Monitor for updates in dependencies. Report issues if found.
+Best Practices
+Use a free OpenRouter account
+→ openrouter.ai gives $5 free credit
+→ No credit card required
 
-- **Stored only on your iOS device** (via **Keychain**)
-- **Never transmitted** to us or any third party
-- **Never logged** or saved in plaintext
-- **Never committed** to GitHub (`.env` is gitignored)
+Never share your API keys
+→ Store in .env (copy from .env.example)
 
-We **do not** collect:
-- Usage data
-- Trade logs
-- Personal information
+Revoke keys if compromised
+→ OpenRouter: openrouter.ai/keys → Revoke
+→ AWS/Other: Revoke via their dashboards
 
-—
+Run in a virtual environment
+→ python -m venv venv && venv\Scripts\activate (Windows)
+→ Keeps dependencies isolated
 
-## Best Practices
+Update regularly
+→ Pull latest from GitHub and run pip install -r requirements.txt
 
-1. **Use a free OpenRouter account**  
-   → [openrouter.ai](https://openrouter.ai) gives **$5 free credit**  
-   → No credit card required
+Disable optional features
+→ If unsure, set USE_AI=False in config.py
 
-2. **Never share your API key**
+Contact
+For security concerns or questions:
+Email: mohamed.hisham282@yahoo.com
+X (Twitter): @MohamedDodda
 
-3. **Revoke if compromised**  
-   → Go to [openrouter.ai/keys](https://openrouter.ai/keys) → Click **”Revoke”**
+Last updated: 2025
 
-4. **Use `.env.example` as template**  
-   ```env
-   OPENROUTER_API_KEY=sk-or-your-key-here

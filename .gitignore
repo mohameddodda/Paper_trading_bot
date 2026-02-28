@@ -2,121 +2,115 @@
 # Paper Trading Bot – .gitignore
 # ========================================
 
-# === API & Secrets ===
-.env
-.env.local
-config.py
-*.key
-*.pem
-*.crt
-*.pfx
-secrets/
-keychain_storage/
-
-# === Python / Pythonista ===
-*.pyc
-*.pyo
-*.pyd
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.egg-info/
-dist/
-build/
-*.egg
 *.py[cod]
-*.py~
-*.pyui
-*.pyc~
+*$py.class
 
-# === Virtual Environments ===
-.venv/
-venv/
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
 env/
+venv/
 ENV/
 env.bak/
 venv.bak/
 
-# === Logs & Data ===
-*.log
-*.csv
-*.db
-*.sqlite3
-*.jsonl
-checkpoints/
-performance.png
-trades.csv
-paper_trading_log.csv
+# Spyder project settings
+.spyderproject
+.spyproject
 
-# === macOS / iOS ===
-.DS_Store
-*.mobileprovision
-*.ipa
-Thumbs.db
-.AppleDouble
-.LSOverride
-Icon
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Desktop.ini
+# Rope project settings
+.ropeproject
 
-# === IDE / Editors ===
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-*.code-workspace
-*.tmproj
-*.swp
-*.swo
-*~
+# mkdocs documentation
+/site
 
-# === Temp & Backup ===
-*.tmp
-*.bak
-*.backup
-*.orig
-*.rej
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
 
-# === GitHub Pages (Optional) ===
-_site/
-docs/
-*.html
-*.css
-*.js
-!index.html
-
-# === Pythonista Local Files & Folders ===
-Pythonista3/
-Documents/
-Pythonista/
-*.pyui
-*.pyuic
-*.pyuix
-*.pyproject
-
-# Logs & Reports
-bot_logs/
-*.html
-*.csv
-
-# Env & Secrets
-.env
-*.key
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# OS
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
+# Data files (optional, but good for privacy)
+data/*.csv
+data/*.json
+data/*.db
 
 # === Never commit real config or sensitive data ===
 # Always use .env.example + config.py template
