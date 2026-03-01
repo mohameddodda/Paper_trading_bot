@@ -13,6 +13,16 @@ All notable changes to **Paper Trading Bot** will be documented here.
   - `DEV/` - Developer tools (gui_bot, setup_dirs)
   - `tests/` - Test files
 
+### Documentation
+- Expanded `TODO.md` with a detailed multi-phase development roadmap, including:
+  - Phase 0: Quick foundation & polish wins
+  - Phase 1: DevOps, CI/CD & scalability (Dockerfile, docker-compose, GitHub Actions)
+  - Phase 2: Data & persistence (SQLite/PostgreSQL integration)
+  - Phase 3: Real-time alerts & enhanced UI (Telegram/Discord notifications, Streamlit dashboard)
+  - Phase 4: Advanced trading & risk logic (kill-switch, transaction costs, multi-timeframe, walk-forward optimization)
+  - Phase 5: AI & model realism improvements
+  - Phase 6: Community, documentation & trust building
+
 ### Changed
 - **Updated README.md** with new project structure
 - **Updated GUI_README.md** to reference new file locations
