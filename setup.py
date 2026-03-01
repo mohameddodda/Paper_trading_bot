@@ -14,7 +14,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name="paper-trading-bot",
     version="1.3.0",
-    author="Mohamed Hashem",
+    author="Mohamed Dodda",
     author_email="email here",
     description="A Python-based paper trading simulation bot for educational purposes. Fetches stock/crypto data, applies strategies, and backtests trades.",
     long_description=long_description,
