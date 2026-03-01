@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/pypi/v/paper-trading-bot.svg" alt="PyPI"/>
   </a>
   <a href="LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License"/>
+    <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"/>
   </a>
 </p>
 
@@ -25,6 +25,11 @@
 - This is NOT financial advice
 - Use at your own risk
 - The authors assume no liability for any financial losses
+
+**For detailed legal information, please see:**
+- [DISCLAIMER.md](DISCLAIMER.md) - General disclaimer
+- [RISK_DISCLOSURE.md](RISK_DISCLOSURE.md) - Risk disclosures
+- [THIRD_PARTY.md](THIRD_PARTY.md) - Third-party API compliance
 
 ---
 
@@ -215,7 +220,7 @@ Configuration can be set via:
 
 ## 📄 License
 
-MIT License - See [LICENSE](LICENSE) for details.
+Apache License 2.0 - See [LICENSE](LICENSE) for details.
 
 ---
 

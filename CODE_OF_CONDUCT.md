@@ -50,8 +50,8 @@ This Code of Conduct applies to:
 
 If you experience or witness unacceptable behavior, **please report it immediately**.
 
-**Email**: `conduct@mohameddodda.dev`  
-**X (Twitter)**: [@MohamedDodda](https://x.com/MohamedDodda) (DMs open)
+**Email**: `Email here`  
+**Social here**:  
 
 All reports will be reviewed and investigated promptly and fairly.  
 Reporters’ privacy and safety will be protected.
@@ -88,5 +88,5 @@ available at [https://www.contributor-covenant.org/version/2/1/code_of_conduct.h
 
 —
 
-*Last updated: November 15, 2025*  
+*Last updated: March 1, 2026*  
 *Maintained by: Mohamed Dodda (@MohamedDodda)*

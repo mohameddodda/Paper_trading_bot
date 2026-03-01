@@ -13,45 +13,50 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="paper-trading-bot",
-    version="1.0.0",
-    author="Mohamed Dodda",  # Replace with your actual name
-    author_email="mohamed.hisham282@yahoo.com",  # Replace with your email
-    description="A Python-based paper trading simulation bot for educational purposes. Fetches stock data, applies strategies, and backtests trades.",
+    version="1.3.0",
+    author="Mohamed Hashem",
+    author_email="email here",
+    description="A Python-based paper trading simulation bot for educational purposes. Fetches stock/crypto data, applies strategies, and backtests trades.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/mohameddodda/Paper_Trading_Bot",  # Your repo URL
-    packages=find_packages(),  # Assumes src/ structure; adjust if flat (e.g., packages=[''])
+    url="https://github.com/mohameddodda/Paper_trading_bot",
+    packages=find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Education",
-        "License :: OSI Approved :: MIT License",  # Or your chosen license
+        "License :: OSI Approved :: Apache License 2.0",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Topic :: Office/Business :: Financial :: Investment",
         "Topic :: Scientific/Engineering :: Information Analysis",
     ],
-    python_requires=">=3.8",  # Matches your requirements
+    python_requires=">=3.8",
     install_requires=[
-        "yfinance==0.2.28",
-        "requests==2.31.0",
-        "pandas==2.2.0",
-        "numpy==1.26.4",
-        "matplotlib==3.8.0",
-        "plotly==5.15.0",
-        "python-dotenv==1.0.0",
+        "yfinance>=0.2.28",
+        "requests>=2.31.0",
+        "pandas>=2.2.0",
+        "numpy>=1.26.4",
+        "matplotlib>=3.8.0",
+        "plotly>=5.15.0",
+        "python-dotenv>=1.0.0",
     ],
     extras_require={
-        "dev": ["pytest==7.4.3", "black==23.9.1", "isort==5.12.0", "flake8==6.1.0", "mypy==1.3.0", "pre-commit==3.4.0"],
-        "jupyter": ["jupyterlab==4.0.0", "notebook==6.5.0", "ipykernel==6.25.0"],
+        "dev": ["pytest>=7.4.3", "black>=23.9.1", "isort>=5.12.0", "flake8>=6.1.0", "mypy>=1.3.0", "pre-commit>=3.4.0"],
+        "jupyter": ["jupyterlab>=4.0.0", "notebook>=6.5.0", "ipykernel>=6.25.0"],
+        "ai": ["tensorflow>=2.15.0", "stable-baselines3>=2.2.0", "gymnasium>=0.29.0"],
+        "gui": ["customtkinter>=5.2.0", "Pillow>=10.0.0"],
     },
     entry_points={
         "console_scripts": [
-            "paper-bot=src.bot:main",  # CLI command to run the bot
+            "paper-bot= bots.cli_bot:main",
+            "paper-beast= bots.beast_bot:main",
+            "paper-gui= DEV.gui_bot:main",
         ],
     },
-    include_package_data=True,  # Includes non-Python files like config.py if marked
-    zip_safe=False,  # Recommended for data-heavy packages
+    include_package_data=True,
+    zip_safe=False,
 )

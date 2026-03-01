@@ -19,11 +19,10 @@ Reporting a Vulnerability
 Found a security issue? Thank you — we want to know.
 
 Email: mohamed.hisham282@yahoo.com
-X (Twitter): @MohamedDodda (DMs open)
 
 All reports are:
 
-Reviewed within 24 hours
+Reviewed within 48 hours
 Kept strictly confidential
 Acknowledged with a response plan
 API Key Security
@@ -73,7 +72,6 @@ Disable optional features
 Contact
 For security concerns or questions:
 Email: mohamed.hisham282@yahoo.com
-X (Twitter): @MohamedDodda
 
-Last updated: 2025
+Last updated: 2026
 

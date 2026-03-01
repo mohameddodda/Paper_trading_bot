@@ -21,8 +21,8 @@ pip install customtkinter
 
 ```
 bash
-# Run the desktop GUI
-python gui_app.py
+# Run the desktop GUI (using module path)
+python -m DEV.gui_bot
 ```
 
 The application will open in a native window with:
@@ -63,7 +63,7 @@ The application will open in a native window with:
 
 ### Option 1: Config File (Easy - Recommended)
 
-Edit `gui_config.json` to customize the app:
+Edit `config/gui_config.json` to customize the app:
 
 ```
 json
@@ -95,7 +95,7 @@ export GUI_COLOR_THEME="blue"
 
 ### Option 3: Code Modification
 
-For deeper customization, edit `gui_app.py`:
+For deeper customization, edit `DEV/gui_bot.py`:
 
 **Changing the App Title:**
 ```
@@ -144,16 +144,22 @@ self.analytics_tab = self.tabview.add("📈 Analytics")
 
 ```
 Paper_Trading_Bot/
-├── gui_app.py           # Main GUI application
-├── gui_config.json     # GUI configuration file
-├── GUI_README.md       # This file
-├── bot.py              # Core bot logic
-├── config.py           # Bot configuration
-├── requirements.txt    # Dependencies
-└── src/                # Bot modules
-    ├── data_fetcher.py
-    ├── strategy.py
-    └── backtester.py
+├── DEV/
+│   └── gui_bot.py           # Main GUI application
+├── config/
+│   ├── gui_config.json      # GUI configuration file
+│   └── settings.py          # Bot configuration
+├── core/
+│   ├── data_fetcher.py      # Market data fetching
+│   ├── strategy.py          # Trading strategies
+│   └── backtester.py        # Backtesting engine
+├── bots/
+│   ├── cli_bot.py           # CLI bot
+│   ├── beast_bot.py         # The BEAST CLI
+│   └── ios_bot.py           # iOS version
+├── GUI_README.md            # This file
+├── requirements.txt         # Dependencies
+└── README.md               # Main documentation
 ```
 
 ---
@@ -163,7 +169,7 @@ Paper_Trading_Bot/
 ### Adding Your Own Logo
 
 1. Place your logo file in the project root (PNG/JPG)
-2. Add import at top of `gui_app.py`:
+2. Add import at top of `DEV/gui_bot.py`:
    
 ```
 python
@@ -193,7 +199,7 @@ CustomTkinter supports custom colors. Create a theme file:
 
 ```
 python
-# In gui_app.py
+# In DEV/gui_bot.py
 ctk.set_default_color_theme("custom_theme.json")
 ```
 
@@ -205,12 +211,12 @@ ctk.set_default_color_theme("custom_theme.json")
 
 ### Connecting to Your Own Bot Logic
 
-The GUI imports from `bot.py`. To use different logic:
+The GUI imports from `bots/beast_bot.py`. To use different logic:
 
 ```
 python
-# In gui_app.py, modify imports:
-# from bot import portfolio, data_fetcher, strategy, bot_step
+# In DEV/gui_bot.py, modify imports:
+# from bots.beast_bot import portfolio, data_fetcher, strategy, bot_step
 
 # Replace with your own:
 # from my_custom_bot import my_portfolio, my_fetcher, my_step
@@ -233,7 +239,7 @@ pip install Pillow
 ```
 
 ### Window too small/large
-Edit `gui_config.json`:
+Edit `config/gui_config.json`:
 ```
 json
 {
@@ -242,7 +248,7 @@ json
 ```
 
 ### Bot not starting
-- Check that `bot.py` has no errors: `python -m py_compile bot.py`
+- Check that `bots/beast_bot.py` has no errors: `python -m py_compile bots.beast_bot`
 - Verify API keys in `.env` file
 
 ---

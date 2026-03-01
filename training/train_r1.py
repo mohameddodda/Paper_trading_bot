@@ -1,3 +1,17 @@
+# Copyright 2026 Mohamed Dodda
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python3
 """
 train_r1.py – R1 Reasoning Model Training Pipeline
@@ -121,7 +135,7 @@ def run_fine_tuning():
     ║  This script fine-tunes a reasoning model for trading    ║
     ║  signals based on market data analysis.                  ║
     ║                                                           ║
-    ║  WARNING: Paper trading simulation only!                 ║
+    ║  WARNING: Paper trading simulation only!                ║
     ╚═══════════════════════════════════════════════════════════╝
     """)
     
@@ -205,13 +219,12 @@ def main():
     ⚙️ Training config ready: {CHECKPOINT_DIR}/training_config.json
     
     To run training (requires GPU):
-    
+
 ```
 bash
     python -m torch.distributed.launch --nproc_per_node=4 \\
         examples/train_r1.py \\
         --config {config['output_dir']}/training_config.json
-    
 ```
     """)
 
