@@ -66,7 +66,7 @@
 
 ## Conclusion
 
-**The project is 99% ready for use.**
+**The project is 80% ready for use.**
 
 To run the bot:
 ```

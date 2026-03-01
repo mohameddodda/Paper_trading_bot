@@ -238,7 +238,7 @@ Apache License 2.0 - See [LICENSE](LICENSE) for details.
 
 **Mohamed Dodda**
 - GitHub: [@MohamedDodda](https://github.com/MohamedDodda)
-- Twitter: [@MohamedDodda](https://x.com/MohamedDodda)
+- Instagram: [@MohamedDodda_](https://instagram.com/MohamedDodda)
 
 ---
 
