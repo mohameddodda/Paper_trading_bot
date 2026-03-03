@@ -5,11 +5,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/MohamedDodda/Paper_trading_bot/actions/workflows/pages.yml/badge.svg">
-    <img src="https://github.com/MohamedDodda/Paper_trading_bot/actions/workflows/pages.yml/badge.svg" alt="Deployment"/>
-  </a>
   <a href="https://pypi.org/project/paper-trading-bot/">
     <img src="https://img.shields.io/pypi/v/paper-trading-bot.svg" alt="PyPI"/>
+  </a>
+  <a href="https://pypi.org/project/paper-trading-bot/">
+    <img src="https://img.shields.io/pypi/pyversions/paper-trading-bot" alt="Python Versions"/>
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"/>

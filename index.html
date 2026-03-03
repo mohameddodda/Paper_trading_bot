@@ -269,10 +269,12 @@
 
   <!-- Hero -->
   <section class="hero">
-    <h1>Paper Trading Bot <span style="background:#00d4aa;color:black;padding:8px 20px;border-radius:50px;font-size:0.7em;font-weight:bold;">PRO</span></h1>
+    <h1>Paper Trading Bot</h1>
+    <p style="background:#ff9800;color:black;padding:8px 20px;border-radius:50px;font-size:0.9em;font-weight:bold;display:inline-block;margin-bottom:1rem;">IN DEVELOPMENT</p>
     <p>Practice crypto trading with <strong>$1,000,000 virtual balance</strong>, live Crypto.com data, and real-time AI signals — <strong>zero risk</strong>.</p>
+    <p style="color: #ffb74d; font-size: 1rem; margin-top: 0.5rem;">⚠️ Project Status: <strong>Not Finished</strong> — Currently at 68% completion</p>
     <a href="https://github.com/MohamedDodda/Paper_trading_bot" target="_blank" class="cta-btn">
-      Open Pro Repository →
+      View on GitHub →
     </a>
   </section>
 
@@ -285,6 +287,10 @@
     <div class="stat">
       <span class="stat-num" data-count="8">0</span>
       <span class="stat-label">Supported Pairs</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="68">0</span>
+      <span class="stat-label">% Ready</span>
     </div>
     <div class="stat">
       <span class="stat-num" data-count="24">0</span>
@@ -341,9 +347,9 @@
       <i class="fas fa-exclamation-triangle"></i>
       SIMULATION ONLY — NO REAL MONEY IS EVER USED
     </div>
-    <div class="banner success">
-      <i class="fas fa-rocket"></i>
-      PRO EDITION LIVE — PC + iOS dual support now available!
+    <div class="banner" style="background: rgba(255,152,0,0.15); border: 1px solid rgba(255,152,0,0.5); color: #fff;">
+      <i class="fas fa-tools" style="color: #ff9800;"></i>
+      🚧 IN DEVELOPMENT — Project is 68% complete — Not finished yet
     </div>
   </div>
 
@@ -383,6 +389,7 @@
     <div class="readme-box">
       <h1>Paper Trading Bot Pro</h1>
       <p><strong>AI-Powered Crypto Paper Trading Platform</strong> — Now on PC & iOS</p>
+      <p style="color: #ff9800; font-weight: 600; margin: 1rem 0;">⚠️ Status: IN DEVELOPMENT — 68% Complete — NOT FINISHED</p>
 
       <p>
         <a href="https://opensource.org/licenses/MIT" target="_blank">
@@ -390,20 +397,31 @@
         </a>
         <img src="https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54" alt="Python">
         <img src="https://img.shields.io/badge/platform-PC%20%7C%20iOS-success" alt="Platforms">
-        <img src="https://img.shields.io/badge/status-PRO%20LIVE-00d4aa" alt="Pro Live">
+        <img src="https://img.shields.io/badge/status-In%20Development-ff9800" alt="In Development">
       </p>
 
       <hr>
 
-      <h2>Pro Edition —2026</h2>
+      <h2>Current Features (68% Ready)</h2>
       <ul> 
-        <li>Full PC/Mac/Linux support with advanced AI engine</li>
-        <li>LSTM + Reinforcement Learning framework (ready for training)</li>
-        <li>Dynamic risk management & volatility-based sizing</li>
-        <li>QuantStats HTML performance reports</li>
-        <li>Live Streamlit equity dashboard</li>
-        <li>Full compatibility with Pythonista 3 on iOS</li>
-        <li>Professional logging, backtesting, and cloud-ready</li>
+        <li>✅ Full PC/Mac/Linux support with CLI interface</li>
+        <li>✅ Live Crypto.com data (8 pairs: BTC, ETH, SOL, DOGE, SHIB, CRO, XRP, ADA)</li>
+        <li>✅ AI signals via OpenRouter (Mistral + DeepSeek)</li>
+        <li>✅ Multiple trading strategies (MA, RSI, Bollinger Bands, MACD)</li>
+        <li>✅ $1,000,000 virtual balance for paper trading</li>
+        <li>✅ Pythonista 3 support for iOS</li>
+        <li>✅ Basic backtesting with metrics</li>
+      </ul>
+
+      <h2>Coming Soon (Still in Development)</h2>
+      <ul style="color: #ffb74d;">
+        <li>🔄 LSTM + Reinforcement Learning framework</li>
+        <li>🔄 QuantStats HTML performance reports</li>
+        <li>🔄 Live Streamlit equity dashboard</li>
+        <li>🔄 Dynamic risk management & volatility-based sizing</li>
+        <li>🔄 Telegram/Discord notifications</li>
+        <li>🔄 Docker support & cloud deployment</li>
+        <li>🔄 SQLite database for trade persistence</li>
       </ul>
 
       <h2>Commands (Both Platforms)</h2>
@@ -448,10 +466,13 @@ report   # Generate performance report (PC only)</code></pre>
           count += increment;
           if (count >= target) {
             if (isMoney) counter.textContent = '$1,000,000';
-            else counter.textContent = target === 8 ? '8+' : '24/7';
+            else if (target === 8) counter.textContent = '8+';
+            else if (target === 68) counter.textContent = '68%';
+            else counter.textContent = '24/7';
             clearInterval(timer);
           } else {
             if (isMoney) counter.textContent = '$' + Math.floor(count).toLocaleString();
+            else if (target === 68) counter.textContent = Math.floor(count) + '%';
             else counter.textContent = Math.floor(count) + (target === 8 ? '+' : '/7');
           }
         }, 35);
