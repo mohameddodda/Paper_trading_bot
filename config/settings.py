@@ -80,6 +80,9 @@ CRYPTO_SYMBOLS = [
 # Use the appropriate symbols based on mode
 SYMBOLS = STOCK_SYMBOLS if STOCK_MODE else CRYPTO_SYMBOLS
 
+# WebSocket real-time streaming (Phase 3)
+USE_WEBSOCKET = os.getenv('USE_WEBSOCKET', 'false').lower() == 'true'
+
 # === SIMULATION SETTINGS ===
 STARTING_CASH = 1_000_000.0  # $1M virtual balance (paper trading only)
 UPDATE_INTERVAL = 10  # seconds between market checks
@@ -129,9 +132,13 @@ if platform.system() != "iOS":
 DEBUG_MODE = False
 MOCK_AI = False  # For testing without API calls
 
+# === DATABASE ===
+DB_PATH = PROJECT_ROOT / "paper_trading.db"
+
 # === FINAL CHECK ===
 if DEBUG_MODE:
     print(f"[CONFIG] Loaded {len(SYMBOLS)} symbols in {'Stock' if STOCK_MODE else 'Crypto'} mode, starting with ${STARTING_CASH:,.0f}")
+    print(f"[CONFIG] Database: {DB_PATH}")
     if USE_AI:
         print("[CONFIG] AI features enabled.")
     else:

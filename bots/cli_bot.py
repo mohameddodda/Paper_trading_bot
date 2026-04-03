@@ -1,4 +1,4 @@
-# Copyright 2026 Mohamed Dodda
+# Copyright 2026 Mohamed Dodda - Updated April 2, 2026
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,8 +38,10 @@ Key Features:
 # ------------------------------------------------------------
 import requests
 import time
-import csv
 import os
+from core.db_manager import db_manager
+from config.settings import PROJECT_ROOT
+import csv  # Keep for potential other uses
 import sys
 import datetime
 import threading
@@ -58,6 +60,20 @@ import yaml
 from typing import Dict, List, Optional, Tuple
 
 # Optional advanced imports (add to requirements.txt if using)
+try:
+    from plyer import notification
+    PLYER_AVAILABLE = True
+except ImportError:
+    notification = None
+    PLYER_AVAILABLE = False
+
+try:
+    import winsound
+    WINSOUND_AVAILABLE = True
+except ImportError:
+    winsound = None
+    WINSOUND_AVAILABLE = False
+
 try:
     import tensorflow as tf  # For LSTM AI
     LSTM_AVAILABLE = True
@@ -140,23 +156,22 @@ def alert(msg, type='INFO'):
         reset = '\033[0m'
         print(f"{color}[{type}]{reset} {msg}")
         
-        # Desktop notification (optional)
-        if notification:
-            notification.notify(
-                title=f"Paper Trading Bot - {type}",
-                message=msg,
-                timeout=5
-            )
-        
-        # Sound alerts (optional)
-        if winsound:
-            winsound.Beep(800 if type in ['BUY', 'SELL'] else 600, 300)
-        elif playsound:
-            sound_file = 'buy.wav' if type == 'BUY' else 'sell.wav' if type == 'SELL' else 'alert.wav'
-            try:
-                playsound(sound_file)
-            except:
-                pass
+        # Enhanced Phase 3 notifications with plyer + sound
+        try:
+            if PLYER_AVAILABLE and notification:
+                notification.notify(
+                    title=f"Paper Trading Bot - {type}",
+                    message=msg,
+                    timeout=5,
+                    app_name="PaperTradingBot"
+                )
+            
+            # Cross-platform sound
+            if WINSOUND_AVAILABLE and winsound:
+                freq = 1000 if type == 'BUY' else 500 if type == 'SELL' else 800
+                winsound.Beep(freq, 500)
+        except Exception:
+            pass  # Silent fail for notifications
                 
     except Exception as e:
         print(f"[{type}] {msg}")
@@ -166,17 +181,7 @@ def now():
     return datetime.datetime.now().strftime('%H:%M:%S')
 
 # === LOGGING ===
-def log_trade(symbol, action, price, qty, balance, reason=""):
-    """Log trade to CSV"""
-    log_file = 'trades.csv'
-    row = [now(), symbol, action, price, qty, balance, reason]
-    
-    try:
-        with open(log_file, 'a', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(row)
-    except Exception as e:
-        print(f"Log error: {e}")
+# log_trade replaced with db_manager.log_trade() ✅ Phase 2
 
 # === CORE LOGIC ===
 def bot_step():
@@ -192,8 +197,9 @@ def bot_step():
     if hasattr(strategy, 'get_ai_signal'):
         ai_signal = strategy.get_ai_signal(prices)
     
-    # Technical signals
-    tech_signal = moving_average_crossover(prices.get(config['symbols'][0], 0))
+# Technical signals (Phase 4 AI)
+    load_ai_models()
+    tech_signal = generate_combined_signal(pd.DataFrame({'Close': list(prices.values())}))
     
     # Combined decision
     buy_score = 0
@@ -221,8 +227,9 @@ def bot_step():
         qty = usd / current_price
         portfolio.buy(symbol, qty, current_price)
         
-        log_trade(symbol, "BUY", current_price, qty, portfolio.sim_balance, 
-                  reason=f"AI: {ai_signal}, Tech: {tech_signal}")
+        # DB logging Phase 2 ✅
+        db_manager.log_trade(symbol, "BUY", current_price, qty, 0.0, portfolio.sim_balance, 
+                            f"AI:{ai_signal} Tech:{tech_signal}", 'cli_bot')
         
         alert(f"BUY {symbol} @ ${current_price:.2f}", "BUY")
     
@@ -236,8 +243,8 @@ def bot_step():
         if pnl_pct >= config['take_profit_pct'] or pnl_pct <= -config['stop_loss_pct']:
             portfolio.sell(symbol, qty, current_price)
             
-            log_trade(symbol, "SELL", current_price, qty, portfolio.sim_balance,
-                      reason=f"TP/SL: {pnl_pct:.2%}")
+db_manager.log_trade(symbol, "SELL", current_price, qty, pnl_pct*100, portfolio.sim_balance, 
+                            reason=f"TP/SL: {pnl_pct:.2%}", strategy='cli_bot')
             
             alert(f"SELL {symbol} @ ${current_price:.2f} (PnL: {pnl_pct:.2%})", "SELL")
 
@@ -356,7 +363,11 @@ def input_thread():
 
 threading.Thread(target=input_thread, daemon=True).start()
 
-alert("Bot started (v3.0.0 – Paper Trading Simulation Only)", 'RESET')
+# Phase 2: Initialize DB
+db_manager.init_db()
+print(f"✅ Database ready: {PROJECT_ROOT / 'paper_trading.db'}")
+
+alert("Bot started v3.0.0 – DB Persistence Enabled", 'RESET')
 last_update = 0
 
 while True:

@@ -22,7 +22,7 @@ For educational paper trading simulations only—NO REAL TRADING.
 Runs on iPhone/iPad via Pythonista 3.
 
 Author: @MohamedDodda
-Last updated: 2025 (aligned with project)
+Last updated: 2026 (aligned with project)
 """
 
 import requests
@@ -64,6 +64,8 @@ from config import (
     CSV_LOG_FILE,
 )
 from core import fetch_all_prices, moving_average_crossover
+from core.db_manager import db_manager
+db_manager.init_db()
 
 # iOS-specific session
 session = requests.Session()

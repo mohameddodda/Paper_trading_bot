@@ -8,6 +8,12 @@
   <a href="https://pypi.org/project/paper-trading-bot/">
     <img src="https://img.shields.io/pypi/v/paper-trading-bot.svg" alt="PyPI"/>
   </a>
+  <a href="https://github.com/MohamedDodda/Paper_Trading_Bot/actions/workflows/ci.yml">
+    <img src="https://img.shields.io/github/actions/workflow-status/MohamedDodda/Paper_Trading_Bot/ci.yml?branch=main" alt="CI"/>
+  </a>
+  <a href="https://codecov.io/gh/MohamedDodda/Paper_Trading_Bot">
+    <img src="https://img.shields.io/codecov/c/github/MohamedDodda/Paper_Trading_Bot/main.svg" alt="Coverage"/>
+  </a>
   <a href="https://pypi.org/project/paper-trading-bot/">
     <img src="https://img.shields.io/pypi/pyversions/paper-trading-bot" alt="Python Versions"/>
   </a>
@@ -64,9 +70,12 @@ paper_trading_bot/
 │   ├── config.yaml       # YAML config
 │   └── gui_config.json   # GUI settings
 │
-├── DEV/                     # Developer tools (for development)
-│   ├── setup_dirs.py      # Directory setup script
-│   └── gui_bot.py        # GUI application
+├── bots/                    # Bot entry points (production)
+│   ├── __init__.py
+│   ├── cli_bot.py          # CLI bot
+│   ├── beast_bot.py        # The BEAST - Advanced CLI
+│   ├── gui_bot.py          # GUI application
+│   ├── ios_bot.py          # iOS/Pythonista version
 │
 ├── tests/                   # Test files
 │   └── test_bot.py
@@ -238,7 +247,7 @@ Apache License 2.0 - See [LICENSE](LICENSE) for details.
 
 **Mohamed Dodda**
 - GitHub: [@MohamedDodda](https://github.com/MohamedDodda)
-- Instagram: [@MohamedDodda_](https://instagram.com/MohamedDodda)
+- Instagram: [@MohamedDodda_](https://instagram.com/MohamedDodda_)
 
 ---
 

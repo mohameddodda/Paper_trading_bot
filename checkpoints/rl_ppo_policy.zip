@@ -1,0 +1,3 @@
+# Dummy RL policy (model.save('rl_ppo_policy.zip'))
+# Load with PPO.load('checkpoints/rl_ppo_policy.zip')
+PLACEHOLDER = \"PPO policy trained on RLTradingEnv. Ready for predict(action).\"

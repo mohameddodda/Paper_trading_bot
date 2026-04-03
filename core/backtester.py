@@ -1,4 +1,4 @@
-# Copyright 2026 Mohamed Dodda
+# Copyright 2026 Mohamed Dodda - Updated April 2, 2026
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +35,10 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import (
     STARTING_CASH,
     LOG_FILE,
+    DB_PATH,
 )
+
+from core.db_manager import db_manager
 
 # Configure logging
 logging.basicConfig(
@@ -172,6 +175,21 @@ def backtest_strategy(
         log.info(f"Backtest complete: {len(buy_trades)} buys, {len(sell_trades)} sells")
         log.info(f"Final balance: ${balance:.2f}")
         log.info(f"Total return: {((balance - initial_balance) / initial_balance * 100):.2f}%")
+        
+# Save trades to DB (Phase 2) ✅
+        db_manager.init_db()
+        symbol = 'BACKTEST_SYMBOL'  # Dynamic symbol could be passed as param in future
+        for trade in trades:
+            db_manager.log_trade(
+                symbol=symbol,
+                trade_type=trade['type'],
+                price=trade['price'],
+                qty=trade['qty'],
+                pnl_pct=trade['pnl_pct'],
+                balance_after=balance,
+                reason=trade['reason'],
+                strategy='backtest_strategy'
+            )
     
     return results_df
 
