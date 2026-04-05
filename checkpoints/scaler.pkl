@@ -1,3 +1,0 @@
-# Dummy scaler file (joblib.dump(scaler, 'checkpoints/scaler.pkl'))
-# Load with joblib.load('checkpoints/scaler.pkl')
-PLACEHOLDER = \"MinMaxScaler fitted on historical data. Ready for inference.\"
