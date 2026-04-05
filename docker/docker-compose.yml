@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: paper-trading-bot
+    volumes:
+      - .:/app
+      - ./paper_trading.db:/app/paper_trading.db:delegated  # Phase 2 DB persistence
+    ports:
+      - "8501:8501"  # For Streamlit dashboard if run
+    environment:
+      - PYTHONPATH=/app
+    stdin_open: true
+    tty: true
+    command: python -m bots.cli_bot  # Override ENTRYPOINT if needed, e.g. python -m DEV.gui_bot
+
+  # Optional: PostgreSQL for persistence (Phase 2)
+  postgres:
+    image: postgres:16-alpine
+    container_name: paper-trading-postgres
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: paper_trading
+      POSTGRES_USER: bot
+      POSTGRES_PASSWORD: supersecret  # Change in production
+    ports:
+      - "5432:5432"
+
+  # Optional: Redis for caching/state
+  redis:
+    image: redis:7-alpine
+    container_name: paper-trading-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
+

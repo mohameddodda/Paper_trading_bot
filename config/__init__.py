@@ -26,6 +26,7 @@ Usage:
 from .settings import (
     Config,
     PROJECT_ROOT,
+    DB_PATH,
     OPENROUTER_API_KEY,
     USE_AI,
     STOCK_MODE,
@@ -94,4 +95,5 @@ __all__ = [
     "KEYCHAIN_SERVICE",
     "DEBUG_MODE",
     "MOCK_AI",
+    "DB_PATH",
 ]

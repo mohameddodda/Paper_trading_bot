@@ -31,6 +31,10 @@ import pandas as pd
 import numpy as np
 import sys
 import os
+import tensorflow as tf
+import joblib
+from stable_baselines3 import PPO
+from pathlib import Path
 
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -41,6 +45,34 @@ from config import (
     CRYPTO_MODE,
     LOG_FILE,
 )
+
+from training.rl_environment import RLTradingEnv
+
+# AI Model Paths
+CHECKPOINTS_DIR = Path(__file__).parent.parent / \"checkpoints\"
+LSTM_MODEL_PATH = CHECKPOINTS_DIR / \"lstm_model.h5\"
+SCALER_PATH = CHECKPOINTS_DIR / \"scaler.pkl\"
+RL_POLICY_PATH = CHECKPOINTS_DIR / \"rl_ppo_policy.zip\"
+
+# Global AI models (lazy load)
+lstm_model = None
+scaler = None
+rl_policy = None
+
+def load_ai_models():
+    \"\"\"Lazy load AI models on first use.\"\"\"
+    global lstm_model, scaler, rl_policy
+    try:
+        if lstm_model is None and LSTM_MODEL_PATH.exists():
+            lstm_model = tf.keras.models.load_model(LSTM_MODEL_PATH)
+            scaler = joblib.load(SCALER_PATH)
+            log.info(\"✅ LSTM model and scaler loaded\")
+        if rl_policy is None and RL_POLICY_PATH.exists():
+            rl_policy = PPO.load(RL_POLICY_PATH)
+            log.info(\"✅ RL policy loaded\")
+    except Exception as e:
+        log.warning(f\"AI model load failed: {e}. Using traditional strategies.\")
+
 
 # Configure logging
 logging.basicConfig(
@@ -200,42 +232,86 @@ def macd_signals(
     return signals
 
 
+def get_lstm_signal(prices: List[float], window: int = 60) -> int:
+    \"\"\"Get LSTM prediction signal.\"\"\"
+    load_ai_models()
+    if lstm_model is None or scaler is None or len(prices) < window:
+        return 0
+    
+    # Prepare input
+    price_arr = np.array(prices[-window:]).reshape(1, -1, 1)
+    price_scaled = scaler.transform(price_arr.reshape(-1, 1)).reshape(price_arr.shape)
+    
+    pred = lstm_model.predict(price_scaled, verbose=0)[0][0]
+    current_price = prices[-1]
+    
+    if pred > current_price * 1.002:
+        return 1
+    elif pred < current_price * 0.998:
+        return -1
+    return 0
+
+def get_rl_signal(symbol: str = SYMBOLS[0] if SYMBOLS else 'BTC_USDT') -> int:
+    \"\"\"Get RL agent action.\"\"\"
+    load_ai_models()
+    if rl_policy is None:
+        return 0
+    
+    env = RLTradingEnv(symbol=symbol)
+    obs, _ = env.reset()
+    action, _ = rl_policy.predict(obs, deterministic=True)
+    env.close()
+    env = None  # Cleanup
+    return int(action - 1)  # Convert RL action to signal
+
 def generate_combined_signal(
     data: pd.DataFrame,
-    methods: List[str] = ["ma", "rsi", "bb", "macd"]
+    methods: List[str] = ["ma", "rsi", "bb", "macd", "lstm", "rl"]
 ) -> int:
-    """
-    Generate a combined trading signal from multiple strategies.
+    \"\"\"
+    Generate a combined trading signal from multiple strategies (AI enhanced).
     
     Args:
         data: DataFrame with OHLC data
-        methods: List of methods to use ['ma', 'rsi', 'bb', 'macd']
+        methods: List of methods including 'lstm', 'rl'
     
     Returns:
         Final signal: 1 (buy), -1 (sell), 0 (hold)
-    """
+    \"\"\"
     signals = []
     weights = []
     
     if "ma" in methods:
         ma_signal = moving_average_crossover(data).iloc[-1] if len(data) > 50 else 0
         signals.append(ma_signal)
-        weights.append(0.3)
+        weights.append(0.2)
     
     if "rsi" in methods:
         rsi_signal = rsi_signals(data).iloc[-1]
         signals.append(rsi_signal)
-        weights.append(0.25)
+        weights.append(0.2)
     
     if "bb" in methods:
         bb_signal = bollinger_bands_signals(data).iloc[-1]
         signals.append(bb_signal)
-        weights.append(0.25)
+        weights.append(0.2)
     
     if "macd" in methods:
         macd_signal = macd_signals(data).iloc[-1]
         signals.append(macd_signal)
-        weights.append(0.2)
+        weights.append(0.15)
+    
+    prices = data['Close'].tolist() if 'Close' in data else []
+    if "lstm" in methods:
+        lstm_signal = get_lstm_signal(prices)
+        signals.append(lstm_signal)
+        weights.append(0.15)
+    
+    symbol = SYMBOLS[0] if SYMBOLS else "BTC_USDT"
+    if "rl" in methods:
+        rl_signal = get_rl_signal(symbol)
+        signals.append(rl_signal)
+        weights.append(0.1)
     
     if not signals:
         return 0

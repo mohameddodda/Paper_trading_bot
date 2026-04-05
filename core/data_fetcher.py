@@ -31,6 +31,9 @@ import pandas as pd
 import requests
 import sys
 import os
+import websocket  # Phase 3 real-time
+import threading
+import json
 
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -40,6 +43,7 @@ from config import (
     STOCK_MODE,
     CRYPTO_MODE,
     LOG_FILE,
+    USE_WEBSOCKET,
 )
 
 # API timeout
@@ -58,6 +62,11 @@ log = logging.getLogger(__name__)
 _price_cache: Dict[str, float] = {}
 _cache_timestamp: float = 0
 _CACHE_TTL: float = 5  # Cache prices for 5 seconds
+
+# Phase 3 WebSocket globals
+ws_running: bool = False
+ws_thread = None
+ws_prices: Dict[str, float] = {}
 
 
 def _get_crypto_prices() -> Dict[str, float]:

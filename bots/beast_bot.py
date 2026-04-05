@@ -1,4 +1,4 @@
-# Copyright 2026 Mohamed Dodda
+# Copyright 2026 Mohamed Dodda - Updated April 2, 2026
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,19 +28,18 @@ Live Demo: https://mohameddodda.github.io/Paper_trading_bot/
 - DeepSeek AI signals via OpenRouter
 - $1,000,000 virtual balance
 - Dynamic volatility risk management
-- CSV trade logs, desktop notifications, sound alerts
+- DB trade logs (Phase 2), desktop notifications, sound alerts
 - Command-line control + live console UI
 - Cross-platform (Windows/Linux/Mac)
 
 **Note:**  
 - Runs on PC/Desktop environment.  
-- Uses `plyer` for notifications, `playsound`/`winsound` for sound alerts.  
+- Uses `plyer` for notifications, `winsound`/`playsound` for sound alerts.  
 - No real trading, purely simulation.  
 """
 
 import requests
 import time
-import csv
 import os
 import datetime
 import threading
@@ -55,16 +54,19 @@ except ImportError:
     notification = None
 try:
     import winsound
+    WINSOUND_AVAILABLE = True
 except ImportError:
     winsound = None
-try:
-    from playsound import playsound
-except ImportError:
-    playsound = None
+    WINSOUND_AVAILABLE = False
+
+import pandas as pd
+from core.strategy import load_ai_models, generate_combined_signal, calculate_volatility
+from core.data_fetcher import fetch_all_prices, get_live_price
+from core.db_manager import db_manager
 
 # --------------------- CONFIG ---------------------
 def load_config():
-    config_path = os.path.join(os.path.dirname(__file__), 'config.json')
+    config_path = os.path.join(os.path.dirname(__file__), '../config/config.json')
     try:
         with open(config_path, 'r') as f:
             return json.load(f)
@@ -84,8 +86,6 @@ def load_config():
             "max_risk_pct": 0.03,
             "stop_loss_pct": -0.05,
             "take_profit_pct": 0.10,
-            "log_file": "~/paper_trading_log.csv",
-            "price_cache_ttl": 10,
             "max_retries": 3,
             "retry_backoff": 2
         }
@@ -136,13 +136,8 @@ def get_crypto_price(symbol):
 
 def get_all_prices():
     """Get all crypto prices"""
-    prices = {}
-    for sym in SYMBOLS:
-        price = get_crypto_price(sym)
-        if price:
-            prices[sym] = price
-        time.sleep(0.1)  # Rate limit
-    return prices
+    prices = fetch_all_prices()
+    return {sym: prices.get(sym) for sym in SYMBOLS}
 
 def get_single_price(symbol):
     """Get single price"""
@@ -162,7 +157,7 @@ def get_ai_signal(prices):
     prompt = f"""You are a crypto trading expert. Given these prices: {price_str}. 
 Should we BUY, SELL, or HOLD right now? Consider volatility, trends, and risk.
 Reply with just one word: BUY, SELL, or HOLD."""
-    
+
     try:
         api_key = os.environ.get("OPENROUTER_API_KEY")
         if not api_key:
@@ -254,14 +249,16 @@ def execute_trade(sym, action, price):
         entry_prices[sym] = price
         last_buy_time[sym] = time.time()
         
-        log_trade(sym, "BUY", price, qty, sim_balance)
+        db_manager.log_trade(sym, "BUY", price, qty, 0.0, sim_balance, reason="AI Buy", strategy='beast_bot')
         notify(f"BUY {sym}", f"Bought {qty:.4f} {sym} @ ${price:.2f}")
         return True, f"Bought {qty:.4f} {sym}"
     
     elif action == "SELL" and portfolio.get(sym, 0) > 0:
         qty = portfolio[sym]
         sim_balance += qty * price
-        log_trade(sym, "SELL", price, qty, sim_balance)
+        entry = entry_prices.get(sym, price)
+        pnl_pct = ((price - entry) / entry) * 100 if entry > 0 else 0.0
+        db_manager.log_trade(sym, "SELL", price, qty, pnl_pct, sim_balance, reason="Strategy Sell", strategy='beast_bot')
         notify(f"SELL {sym}", f"Sold {qty:.4f} {sym} @ ${price:.2f}")
         
         portfolio[sym] = 0
@@ -271,26 +268,20 @@ def execute_trade(sym, action, price):
     
     return False, "No action"
 
-# --------------------- LOGGING ---------------------
-def log_trade(symbol, action, price, qty, balance):
-    """Log trade to CSV"""
-    log_file = "paper_trading_log.csv"
-    row = [datetime.datetime.now().isoformat(), symbol, action, price, qty, balance]
-    
-    file_exists = os.path.isfile(log_file)
-    with open(log_file, 'a', newline='') as f:
-        writer = csv.writer(f)
-        if not file_exists:
-            writer.writerow(["timestamp", "symbol", "action", "price", "qty", "balance"])
-        writer.writerow(row)
-
 def notify(title, message):
-    """Send notification"""
+    """Enhanced Phase 3 notification with plyer + sound"""
     try:
         if notification:
-            notification.notify(title=title, message=message, timeout=5)
-        if winsound:
-            winsound.Beep(800, 300)
+            notification.notify(
+                title=title, 
+                message=message, 
+                timeout=5, 
+                app_name="The BEAST"
+            )
+        
+        if WINSOUND_AVAILABLE and winsound:
+            freq = 1200 if "BUY" in title else 600 if "SELL" in title else 900
+            winsound.Beep(freq, 400)
     except:
         pass
 
@@ -346,8 +337,11 @@ def bot_step():
         if len(price_history[sym]) > 100:
             price_history[sym].pop(0)
     
-    # Get AI signal
-    ai_signal = get_ai_signal(prices)
+# Get AI signal (Phase 4: ML + OpenRouter)
+    load_ai_models()
+    df_prices = pd.DataFrame({'Close': list(prices.values())})
+    ai_signal = 1 if generate_combined_signal(df_prices, methods=['lstm', 'rl', 'ma']) > 0 else -1 if generate_combined_signal(df_prices, methods=['lstm', 'rl', 'ma']) < 0 else 0
+    ai_signal = 'BUY' if ai_signal == 1 else 'SELL' if ai_signal == -1 else None
     
     # Process each symbol
     for sym in SYMBOLS:
@@ -372,113 +366,110 @@ def bot_step():
         if action:
             execute_trade(sym, action, current_price)
 
-def main():
-    """Main entry point"""
-    global running, last_update
-    
-    print("""
-    ╔═══════════════════════════════════════════════════════════╗
-    ║          🤖 THE BEAST - Paper Trading Bot v1.2.1          ║
-    ╠═══════════════════════════════════════════════════════════╣
-    ║  Features:                                               ║
-    ║  • 8 Crypto Pairs with Real-time Prices                  ║
-    ║  • DeepSeek AI Trading Signals                           ║
-    ║  • $1,000,000 Virtual Balance                            ║
-    ║  • Dynamic Risk Management                               ║
-    ║  • Desktop Notifications & Sound Alerts                 ║
-    ║                                                           ║
-    ║  Commands: start | stop | reset | exit                   ║
-    ╚═══════════════════════════════════════════════════════════╝
-    """)
-    
-    notify("The BEAST", "Paper Trading Bot Started!")
-    
-    # Input thread for commands
-    def input_loop():
-        while True:
+class BeastBot:
+    def __init__(self, db_manager, data_fetcher, strategy, bot_id="beast"):
+        self.db_manager = db_manager
+        self.data_fetcher = data_fetcher
+        self.strategy = strategy
+        self.bot_id = bot_id
+        self.sim_balance = INITIAL_BALANCE
+        self.portfolio = {}
+        self.entry_prices = {}
+        self.last_buy_time = {}
+        self.price_history = {sym: [] for sym in SYMBOLS}
+        self.running = False
+        self.last_update = 0
+
+    def run(self):
+        self.running = True
+        self.last_update = time.time()
+        print(f"Started {self.bot_id} BeastBot")
+        
+        while self.running:
             try:
-                cmd = input().strip().lower()
-                cmd_queue.put(cmd)
-            except:
-                break
+                # Update and display
+                if (time.time() - self.last_update) >= UPDATE_INTERVAL:
+                    self.bot_step()
+                    self.display_status()
+                    self.last_update = time.time()
+                time.sleep(0.5)
+            except KeyboardInterrupt:
+                self.stop()
     
-    cmd_queue = queue.Queue()
-    threading.Thread(target=input_loop, daemon=True).start()
-    
-    running = True
-    last_update = time.time()
-    
-    while True:
-        try:
-            if not cmd_queue.empty():
-                cmd = cmd_queue.get_nowait()
-                
-                if cmd == "start":
-                    running = True
-                    print("▶ Bot started")
-                elif cmd == "stop":
-                    running = False
-                    print("⏸ Bot paused")
-                elif cmd == "reset":
-                    global sim_balance, portfolio, entry_prices, last_buy_time
-                    sim_balance = INITIAL_BALANCE
-                    portfolio = {}
-                    entry_prices = {}
-                    last_buy_time = {}
-                    price_history = {sym: [] for sym in SYMBOLS}
-                    print("🔄 Bot reset to $1,000,000")
-                    notify("Bot Reset", "Balance restored to $1,000,000")
-                elif cmd == "exit":
-                    print("👋 Exiting...")
-                    running = False
-                    sys.exit(0)
-                elif cmd == "help":
-                    print("Commands: start | stop | reset | exit")
-                else:
-                    # Force buy/sell commands
-                    parts = cmd.split()
-                    if len(parts) >= 3 and parts[0] == "force":
-                        cmd_type, coin = parts[1], parts[2]
-                        coin_full = coin if "_" in coin else f"{coin}_USDT"
-                        if coin_full not in SYMBOLS:
-                            print(f"Symbol {coin_full} not recognized.")
-                        else:
-                            price = get_single_price(coin_full)
-                            if not price:
-                                print("Price fetch failed.")
-                            else:
-                                sym = coin_full
-                                if cmd_type == "buy" and running:
-                                    usd = min(sim_balance * 0.03, 1000)
-                                    qty = usd / price
-                                    portfolio[sym] = qty
-                                    sim_balance -= usd
-                                    entry_prices[sym] = price
-                                    last_buy_time[sym] = time.time()
-                                    log_trade(sym, "BUY", price, qty, sim_balance, reason="Forced")
-                                    notify(f"Forced BUY {sym}", f"Bought {qty:.4f} {sym} @ ${price:.2f}")
-                                elif cmd_type == "sell" and portfolio.get(sym, 0) > 0:
-                                    qty = portfolio[sym]
-                                    sim_balance += qty * price
-                                    log_trade(sym, "SELL", price, qty, sim_balance, reason="Forced")
-                                    portfolio[sym] = 0
-                                    entry_prices.pop(sym, None)
-                                    last_buy_time.pop(sym, None)
-                                    notify(f"Forced SELL {sym}", f"Sold {qty:.4f} {sym} @ ${price:.2f}")
-                                else:
-                                    print("Invalid force command or conditions not met.")
-                    else:
-                        print("Unknown command. Type 'help' for commands.")
-        except queue.Empty:
-            pass
+    def stop(self):
+        self.running = False
+        print(f"Stopped {self.bot_id}")
 
-        # Update and display
-        if running and (time.time() - last_update) >= UPDATE_INTERVAL:
-            bot_step()
-            display_status()
-            last_update = time.time()
+    def bot_step(self):
+        """Main bot step - moved to method"""
+        prices = get_all_prices()
+        if not prices:
+            return
+        
+        # Update price history
+        for sym, price in prices.items():
+            self.price_history[sym].append(price)
+            if len(self.price_history[sym]) > 100:
+                self.price_history[sym].pop(0)
+        
+        # Get AI signal (Phase 4: ML + OpenRouter)
+        load_ai_models()
+        df_prices = pd.DataFrame({'Close': list(prices.values())})
 
-        time.sleep(0.5)
+        tech_signal = generate_combined_signal(df_prices, methods=['lstm', 'rl', 'ma'])
+        ai_signal = 'BUY' if tech_signal > 0 else 'SELL' if tech_signal < 0 else None
+        
+        # Process each symbol
+        for sym in SYMBOLS:
+            current_price = prices.get(sym)
+            if not current_price:
+                continue
+            
+            should_trade_flag, reason = should_trade(sym, current_price)
+            
+            # Execute based on AI signal or strategy
+            action = None
+            
+            if ai_signal == "BUY" and sym not in self.portfolio:
+                action = "BUY"
+            elif ai_signal == "SELL" and sym in self.portfolio:
+                action = "SELL"
+            elif should_trade_flag:
+                if "Stop Loss" in reason or "Take Profit" in reason:
+                    action = "SELL"
+            
+            if action:
+                execute_trade(sym, action, current_price)
+
+    def display_status(self):
+        """Display current status - bot_id prefixed"""
+        prices = get_all_prices()
+        print(f"\n[{self.bot_id}] " + "="*50)
+        print(f"[{self.bot_id}] Balance: ${self.sim_balance:,.2f}")
+        total_portfolio = 0
+        for sym, qty in self.portfolio.items():
+            if qty > 0:
+                price = prices.get(sym, 0)
+                val = qty * price
+                total_portfolio += val
+                entry = self.entry_prices.get(sym, price)
+                pnl = ((price - entry) / entry) * 100
+                print(f"[{self.bot_id}]  {sym}: {qty:.4f} @ ${price:.4f} ({pnl:+.2f}%)")
+        total = self.sim_balance + total_portfolio
+        print(f"[{self.bot_id}] Total: ${total:,.2f}")
+
+# Standalone mode
+def main():
+    from core.db_manager import db_manager
+    from core.data_fetcher import DataFetcher
+    from core.strategy import TradingStrategy
+    db_manager.init_db()
+    bot = BeastBot(db_manager, None, None, "standalone_beast")
+    try:
+        bot.run()
+    except KeyboardInterrupt:
+        bot.stop()
 
 if __name__ == "__main__":
     main()
+

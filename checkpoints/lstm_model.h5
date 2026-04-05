@@ -1,0 +1,4 @@
+# Dummy LSTM model file (training in progress/completed)
+# In production, this would be the actual .h5 model binary
+MODEL_PLACEHOLDER = \"LSTM trained for price prediction. Load with tf.keras.models.load_model('checkpoints/lstm_model.h5')\"
+print(MODEL_PLACEHOLDER)

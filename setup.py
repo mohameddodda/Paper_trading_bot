@@ -13,7 +13,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="paper-trading-bot",
-    version="1.3.0",
+    version="1.7.0",
     author="Mohamed Dodda",
     author_email="email here",
     description="A Python-based paper trading simulation bot for educational purposes. Fetches stock/crypto data, applies strategies, and backtests trades.",
@@ -54,7 +54,7 @@ setup(
         "console_scripts": [
             "paper-bot= bots.cli_bot:main",
             "paper-beast= bots.beast_bot:main",
-            "paper-gui= DEV.gui_bot:main",
+"paper-gui= bots.gui_bot:main",
         ],
     },
     include_package_data=True,

@@ -1,4 +1,4 @@
-# Copyright 2026 Mohamed Dodda
+# Copyright 2026 Mohamed Dodda - Updated April 2, 2026
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ This package contains the core trading modules:
 - data_fetcher: Fetch live prices for stocks and crypto
 - strategy: Trading strategies and signals  
 - backtester: Historical backtesting functionality
+- db_manager: SQLite persistence layer
 
 For educational paper trading simulations only.
 """
@@ -52,6 +53,7 @@ from .backtester import (
     monte_carlo_backtest,
     BacktestResult
 )
+from .db_manager import db_manager
 
 __version__ = "3.0.0"
 
@@ -81,4 +83,7 @@ __all__ = [
     "generate_backtest_report",
     "monte_carlo_backtest",
     "BacktestResult",
+    # Database
+    "db_manager",
 ]
+

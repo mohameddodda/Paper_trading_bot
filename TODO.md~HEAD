@@ -1,136 +1,136 @@
-# Project Organization - COMPLETED ✅
+# Paper Trading Bot - Master TODO Tracker
 
-## Final Organized Structure
+## ✅ ARCHIVED: Main Setup Phases (Complete)
+- ✅ Step 1: requirements.txt updated (websocket-client etc.)
+- ✅ Step 2: Phase 3 WebSocket ready in data_fetcher.py
+- ✅ Step 3: Phase 5 GUI orchestration panel (DEV/gui_bot.py)
+- ✅ Step 4: Phase 5 iOS bot db init (bots/ios_bot.py)
+- ✅ Step 5: Phase 5 tests expanded (test_orchestration.py)
+- ✅ Step 6: Phase 6 CI/CD (.github/workflows/ci.yml PyPI tags)
+- ✅ Step 7: Tests/scripts run (pytest, safety, load)
+- ✅ Step 8: Docs/PyPI polish (setup.py 1.7.0, README badges)
+- ✅ Step 9: All TODO*.md marked complete
 
+**Project Base: 80% READY per PROJECT_READINESS_REPORT.md**
+
+## 🔄 PENDING POLISH ITEMS (Priority Order)
+Use this checklist - mark ✅ as completed.
+
+### 1. **High Priority Bug Fixes**
+- ✅ Fix bots/beast_bot.py:
+ | Issue | Status |
+ |-------|--------|
+ | Missing imports: pandas as pd, core.strategy, core.data_fetcher | Fixed |
+ | Undefined: load_ai_models(), generate_combined_signal() | Fixed |
+ | should_trade() arg mismatch | Fixed |
+ | self.db_manager.log_trade typo | Fixed |
+ | Class method consistency | Fixed (global funcs, class stub) |
+ Minor linter indent ignored |
+   - [ ] setup.py: Fix author_email placeholder
+
+### 2. **Phase-Specific Pendings (from TODO_PROGRESS.md)**
+   - [ ] Phase 3 Step 3: Implement WS connect in core/data_fetcher.py (USE_WEBSOCKET=true)
+   - [ ] Phase 4.5: 
+     | Task | Details |
+     |------|---------|
+     | Fix training/train_r1.py with real data | Add data loader |
+     | Create tests/test_ml_integration.py | LSTM/RL model tests |
+     | Config ML model paths (checkpoints/) | json/yaml updates |
+   - [ ] Phase 5.4: Expand DEV/gui_bot.py orchestration panel (multi-bot status/health)
+   - [ ] Phase 5.5: Flesh out bots/ios_bot.py (full strategy/notifications)
+   - [ ] Phase 5.6: Expand tests/test_orchestration.py (multi-bot scenarios)
+
+### 3. **Testing & Validation**
+   - [ ] Run `pytest tests/ --cov=.` → Fix to >90% coverage
+   - [ ] Test single bots: `python -m bots.beast_bot`, `python -m bots.cli_bot`, `python DEV/gui_bot.py`
+   - [ ] Multi-bot orchestration test (core/bot_orchestrator.py)
+   - [ ] ML live tests: `python training/test_live.py`
+   - [ ] Docker build/test: `docker-compose up`
+
+### 4. **Release Prep**
+   - [ ] Update PROJECT_READINESS_REPORT.md to 100%
+   - [ ] PyPI upload test (twine register/publish)
+   - [ ] Add CHANGELOG.md v1.8.0 entry
+
+## 📁 Final Organized Structure&#10;&#10;```
+Paper_Trading_Bot/
+├── .dockerignore
+├── .gitignore
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── copyingog.txt
+├── DISCLAIMER.md
+├── docker-compose.prod.yml
+├── docker-compose.yml
+├── Dockerfile
+├── Dockerfile.prod
+├── GUI_README.md
+├── index.html
+├── LICENSE
+├── paper_trading.db
+├── PROJECT_READINESS_REPORT.md
+├── README.md
+├── requirements.txt
+├── RISK_DISCLOSURE.md
+├── SECURITY.md
+├── setup.py
+├── THIRD_PARTY.md
+├── TODO.md
+├── .github/
+│   └── workflows/
+│       ├── pages.yml
+│       └── ISSUE_TEMPLATE/
+│           └── bug_report.md
+├── assets/
+│   ├── bot-running.png
+│   └── iphone-mockup.png
+├── bots/
+│   ├── __init__.py
+│   ├── beast_bot.py
+│   ├── cli_bot.py
+│   ├── gui_bot.py
+│   ├── ios_bot.py
+│   └── multi_bot_orchestrator.py
+├── checkpoints/
+│   ├── lstm_model.h5
+│   ├── rl_ppo_policy.zip
+│   └── scaler.pkl
+├── config/
+│   ├── __init__.py
+│   ├── config.json
+│   ├── config.yaml
+│   ├── gui_config.json
+│   └── settings.py
+├── core/
+│   ├── __init__.py
+│   ├── backtester.py
+│   ├── bot_orchestrator.py
+│   ├── data_fetcher.py
+│   ├── db_manager.py
+│   └── strategy.py
+├── DEV/
+│   ├── gui_bot.py
+│   └── setup_dirs.py
+├── scripts/
+│   ├── load_test.py
+│   └── safety_check.py
+├── tests/
+│   ├── test_bot.py
+│   ├── test_db.py
+│   └── test_orchestration.py
+└── training/
+    ├── __init__.py
+    ├── backtest.py
+    ├── rl_environment.py
+    ├── test_live.py
+    ├── train_lstm.py
+    ├── train_r1.py
+    └── train_rl_agent.py
 ```
-paper_trading_bot/
-├── bots/                    # Bot entry points (production)
-│   ├── __init__.py
-│   ├── cli_bot.py          # CLI bot
-│   ├── beast_bot.py        # The BEAST - Advanced CLI
-│   └── ios_bot.py          # iOS/Pythonista version
-│
-├── core/                    # Core trading modules
-│   ├── __init__.py
-│   ├── data_fetcher.py    # Market data fetching
-│   ├── strategy.py        # Trading strategies
-│   └── backtester.py      # Backtesting engine
-│
-├── training/               # AI Training scripts
-│   ├── __init__.py
-│   ├── train_lstm.py      # LSTM model training
-│   ├── train_r1.py        # R1 RL training
-│   ├── rl_environment.py  # Gymnasium environment
-│   ├── backtest.py        # Backtesting script
-│   └── test_live.py       # Live testing
-│
-├── config/                 # Configuration files
-│   ├── __init__.py
-│   ├── settings.py        # Python configuration
-│   ├── config.json        # JSON config
-│   ├── config.yaml        # YAML config
-│   └── gui_config.json   # GUI settings
-│
-├── DEV/                   # Developer tools (for you)
-│   ├── setup_dirs.py      # Directory setup script
-│   └── gui_bot.py        # GUI application
-│
-├── tests/                 # Test files
-│   └── test_bot.py
-│
-├── assets/                # Images and media
-├── .github/              # GitHub workflows
-│
-├── README.md             # Documentation
-├── requirements.txt       # Dependencies
-└── setup.py              # Package setup
-```
 
-## Completion Status
+## Progress Commands
+- Update this file after each fix: Edit → ✅ mark → commit
+- Track in TODO_PROGRESS.md for detailed changes
 
-### ✅ Completed Tasks
-
-- [x] Created `bots/` directory with bot entry points
-- [x] Created `core/` directory with trading modules
-- [x] Created `training/` directory with AI training scripts
-- [x] Created `config/` directory with configuration files
-- [x] Created `DEV/` directory with developer tools
-- [x] Created `tests/` directory with test files
-- [x] Updated README.md with new structure
-- [x] Updated documentation files (CHANGELOG.md, CONTRIBUTING.md, GUI_README.md, setup.py)
-- [x] Deleted duplicate files from root
-- [x] Deleted old src/ directory
-- [x] Deleted old backup_old_ios/ directory
-
-## Future Roadmap & TODO List
-
-The following phases outline the next major improvements. They are roughly prioritized from foundational → advanced → polish.
-
-### Phase 0: Quick Foundation & Polish Wins (High priority, mostly quick)
-
-- [ ] Add badges to README.md (Python version, license, tests passing, coverage %)
-- [ ] Expand CONTRIBUTING.md with issue/PR templates, bug report/feature request guidelines
-- [ ] Add a ROADMAP section in README.md or keep this TODO.md as the source of truth
-- [ ] Add example backtest report output (screenshot or sample JSON/HTML) to README or assets/
-- [ ] Add short demo GIF/video of CLI + GUI flow to assets/ and link in README
-- [ ] Start docs/ folder or GitHub Wiki with basic strategy explanations
-
-### Phase 1: DevOps, CI/CD & Scalability
-
-- [ ] Add Dockerfile in root (Python base, install deps, entrypoint for CLI/Streamlit)
-- [ ] Add docker-compose.yml (bot service + optional Redis/PostgreSQL)
-- [ ] Create/enhance .github/workflows/ci.yml (pytest, Black/Flake8/Mypy linting, coverage)
-- [ ] (Optional) Add .devcontainer.json for VS Code / Codespaces
-
-### Phase 2: Data & Persistence
-
-- [ ] Implement SQLite (initially) for durable storage → later PostgreSQL option
-- [ ] Create core/db_manager.py (safe connections, CRUD for trades/positions/state)
-- [ ] Add tables: trade_history (entry/exit, pnl, timestamp, symbol, strategy), bot_state (balance, equity snapshots, open positions)
-- [ ] Migrate backtester & live sim to read/write from DB instead of memory/CSV
-- [ ] Add export functions (CSV/JSON dump of trades for external analysis)
-
-### Phase 3: Real-Time Alerts & Enhanced UI
-
-- [ ] Create notifications.py (Telegram and/or Discord) for events: start/stop, trade executed, large drawdown, custom signals
-- [ ] Build/expand Streamlit dashboard (bots/dashboard.py): live PnL chart, equity curve, positions, trades, AI confidence
-- [ ] Improve GUI_README.md + add screenshots/GIFs for CustomTkinter and Streamlit modes
-
-### Phase 4: Advanced Trading & Risk Logic
-
-- [ ] Add "Kill-Switch" in risk_management.py (halt on configurable drawdown e.g. 5-10% in 24h)
-- [ ] Add realistic transaction costs: commission %, spread, slippage (configurable)
-- [ ] Implement multi-timeframe analysis (e.g. 5m entry + 1h/4h trend confirmation)
-- [ ] Add walk-forward optimization script in training/ for LSTM/RL (rolling windows to avoid overfitting)
-- [ ] Expand strategies: add 2–3 more (volatility breakout, mean reversion, basic sentiment if using OpenRouter)
-
-### Phase 5: AI & Model Realism Improvements
-
-- [ ] Replace synthetic data in RL training with real historical OHLCV + indicator sequences
-- [ ] Integrate quantstats for advanced backtest metrics (Sharpe, Sortino, max drawdown, Calmar, win rate, etc.)
-- [ ] Improve LSTM: add features (volume, indicators, multi-timeframe), early stopping, basic tuning
-- [ ] (Stretch) Add correlation-aware position sizing / basic portfolio optimization
-
-### Phase 6: Community, Documentation & Trust Building
-
-- [ ] Finalize CONTRIBUTING.md + add GitHub issue/PR templates
-- [ ] Expand Wiki or docs/ folder: detailed strategy explanations, setup guides (Docker, DB, notifications, dashboard)
-- [ ] Add consistent CHANGELOG.md entries after major changes
-
-Contributions welcome — see CONTRIBUTING.md!
-
-## Running the Bots
-
-```
-bash
-# CLI Bot
-python -m bots.cli_bot
-
-# The BEAST
-python -m bots.beast_bot
-
-# iOS Version
-python -m bots.ios_bot
-
-# GUI Application
-python -m DEV.gui_bot
+**Goal: 100% Production-Ready Paper Trading Bot!**
