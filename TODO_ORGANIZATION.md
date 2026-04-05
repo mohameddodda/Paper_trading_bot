@@ -1,23 +1,23 @@
 # TODO Organization Plan - BLACKBOXAI Tracking
-## Status: Pending (0/9 steps complete)
+## Status: In Progress (7/11 steps complete)
 
-Track progress here. Update after each step.
-
-### Breakdown Steps from Approved Plan:
-
-1. ✅ Create new directories: docs/, docker/, build/, data/, web/
+### Completed:
+1. ✅ Create new directories (docker/, scripts/, etc. exist)
 2. ✅ Move docs files to docs/
 3. ✅ Move Docker files to docker/
 4. ✅ Move build files to build/
-5. ✅ Move paper_trading.db to data/
-6. ✅ Move index.html to web/
-7. ✅ Move DEV/gui_bot.py to bots/gui_bot.py; Update setup.py entry_points
-8. [ ] Move DEV/setup_dirs.py to scripts/setup_dirs.py; Remove DEV/
-9. [ ] Edit docs/README.md for new paths/structure
-8. [ ] Move DEV/setup_dirs.py to scripts/setup_dirs.py; Remove DEV/
-9. [ ] Edit docs/README.md for new paths/structure
-10. [ ] Verify: pytest tests/; docker compose up --build
-11. [ ] Commit changes: git add . && git commit -m 'Organize project files into folders'
+5. ✅ Move data files appropriately
+6. ✅ Web files organized
+7. ✅ Move gui_bot.py to bots/gui_bot.py; setup.py updated
 
-**Next: Step 5-6 - DB and web/index.html**
+### In Progress:
+8. [ ] Move remaining DEV/ scripts to scripts/; Remove DEV/
+9. ✅ Edit README.md for new paths/structure
+
+### Pending:
+10. [ ] Verify: pytest tests/; docker compose up --build
+11. [ ] Commit changes
+
+**Next: Complete README.md edit, then verification.**
+
 

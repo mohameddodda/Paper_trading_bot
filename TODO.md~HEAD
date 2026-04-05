@@ -21,10 +21,10 @@ Use this checklist - mark ✅ as completed.
  | Issue | Status |
  |-------|--------|
  | Missing imports: pandas as pd, core.strategy, core.data_fetcher | Fixed |
- | Undefined: load_ai_models(), generate_combined_signal() | Fixed |
- | should_trade() arg mismatch | Fixed |
- | self.db_manager.log_trade typo | Fixed |
- | Class method consistency | Fixed (global funcs, class stub) |
+ | Undefined: load_ai_models(), generate_combined_signal()         | Fixed |
+ | should_trade() arg mismatch                                     | Fixed |
+ | self.db_manager.log_trade typo                                  | Fixed |
+ | Class method consistency                                        | Fixed (global funcs, class stub) |
  Minor linter indent ignored |
    - [ ] setup.py: Fix author_email placeholder
 

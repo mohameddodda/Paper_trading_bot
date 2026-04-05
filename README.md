@@ -39,56 +39,64 @@
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure (Updated for New Organization)
 
 ```
-paper_trading_bot/
-├── bots/                    # Bot entry points (production)
+Paper_Trading_Bot/
+├── .github/                 # GitHub workflows & templates
+│   └── workflows/
+├── assets/                  # Images & media (bot-running.png, iphone-mockup.png)
+├── bots/                    # Bot implementations
 │   ├── __init__.py
-│   ├── cli_bot.py          # CLI bot
-│   ├── beast_bot.py        # The BEAST - Advanced CLI
-│   └── ios_bot.py          # iOS/Pythonista version
-│
-├── core/                    # Core trading modules
+│   ├── beast_bot.py
+│   ├── cli_bot.py
+│   ├── gui_bot.py
+│   ├── ios_bot.py
+│   └── multi_bot_orchestrator.py
+├── build/                   # Build artifacts
+├── checkpoints/             # Model checkpoints (lstm_model.h5, rl_ppo_policy.zip)
+├── config/                  # All configurations
 │   ├── __init__.py
-│   ├── data_fetcher.py     # Market data fetching
-│   ├── strategy.py         # Trading strategies
-│   └── backtester.py       # Backtesting engine
-│
-├── training/                # AI Training scripts
+│   ├── config.json
+│   ├── config.yaml
+│   ├── gui_config.json
+│   └── settings.py
+├── core/                    # Core logic
 │   ├── __init__.py
-│   ├── train_lstm.py       # LSTM model training
-│   ├── train_r1.py        # R1 RL training
-│   ├── rl_environment.py   # Gymnasium environment
-│   ├── backtest.py        # Backtesting script
-│   └── test_live.py       # Live testing
-│
-├── config/                  # Configuration files
-│   ├── __init__.py
-│   ├── settings.py        # Python configuration
-│   ├── config.json        # JSON config
-│   ├── config.yaml       # YAML config
-│   └── gui_config.json   # GUI settings
-│
-├── bots/                    # Bot entry points (production)
-│   ├── __init__.py
-│   ├── cli_bot.py          # CLI bot
-│   ├── beast_bot.py        # The BEAST - Advanced CLI
-│   ├── gui_bot.py          # GUI application
-│   ├── ios_bot.py          # iOS/Pythonista version
-│
-├── tests/                   # Test files
-│   └── test_bot.py
-│
-├── docs/                    # Documentation
+│   ├── backtester.py
+│   ├── bot_orchestrator.py
+│   ├── data_fetcher.py
+│   ├── db_manager.py
+│   └── strategy.py
+├── data/                    # Data storage
+├── docker/                  # Docker configs
+│   ├── docker-compose.prod.yml
+│   ├── docker-compose.yml
+│   ├── Dockerfile
+│   └── Dockerfile.prod
 ├── scripts/                 # Utility scripts
-├── assets/                  # Images and media
-├── .github/                # GitHub workflows
-│
-├── setup.py                 # Package setup
+│   ├── load_test.py
+│   ├── safety_check.py
+│   └── setup_dirs.py
+├── tests/                   # Unit tests
+│   ├── test_bot.py
+│   ├── test_db.py
+│   └── test_orchestration.py
+├── training/                # Training scripts
+│   ├── __init__.py
+│   ├── backtest.py
+│   ├── rl_environment.py
+│   ├── test_live.py
+│   ├── train_lstm.py
+│   ├── train_r1.py
+│   └── train_rl_agent.py
+├── setup.py                 # Package installation
 ├── requirements.txt         # Dependencies
-└── README.md              # This file
+├── README.md               # This file
+├── TODO_ORGANIZATION.md    # Reorg tracking
+└── index.html              # Web entry (if applicable)
 ```
+
 
 ---
 
@@ -99,17 +107,18 @@ paper_trading_bot/
 ```
 bash
 # Clone the repository
-git clone https://github.com/MohamedDodda/Paper_trading_bot.git
-cd paper_trading_bot
+git clone https://github.com/MohamedDodda/Paper_Trading_Bot.git
+cd Paper_Trading_Bot
 
 # Create virtual environment (recommended)
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# or
-venv\Scripts\activate     # Windows
+# or 
+venv\Scripts\activate      # Windows
 
-# Install dependencies
+# Install in editable mode (recommended for development)
 pip install -r requirements.txt
+pip install -e .
 ```
 
 ### Running the Bots
@@ -120,10 +129,15 @@ python -m bots.cli_bot
 ```
 
 **The BEAST (Advanced CLI):**
-```
-bash
+```bash
 python -m bots.beast_bot
 ```
+
+**GUI Bot:**
+```bash
+python -m bots.gui_bot
+```
+
 
 ### Commands
 
@@ -217,7 +231,8 @@ Configuration can be set via:
 - `bots/` - Different bot interfaces (CLI, iOS)
 - `training/` - AI model training scripts
 - `config/` - Configuration management
-- `DEV/` - Developer tools and GUI
+- `scripts/` - Utility scripts
+- `docker/` - Containerization
 
 ### Adding New Strategies
 
