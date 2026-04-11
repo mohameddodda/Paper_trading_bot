@@ -70,36 +70,47 @@ ws_prices: Dict[str, float] = {}
 
 
 def _get_crypto_prices() -> Dict[str, float]:
-    """
-    Fetch live crypto prices from Crypto.com public API.
-    No API key required.
-    """
+    \"\"\"Fetch live crypto prices from Crypto.com API.
+    Uses correct /v2/public/get-ticker endpoint with retries.\"\"\"
+    base_url = os.getenv("CRYPTO_API_BASE", "https://api.crypto.com/v2")
     global _price_cache, _cache_timestamp
     
-    try:
-        response = requests.get(
-            "https://api.crypto.com/exchange/v1/public/get-tickers",
-            timeout=API_TIMEOUT,
-            headers={'User-Agent': 'PaperTradingBot/3.0.0'}
-        )
-        response.raise_for_status()
-        data = response.json()
+    prices = {}
+    symbols = ["BTC_USDT", "ETH_USDT", "SOL_USDT", "DOGE_USDT", "SHIB_USDT", "CRO_USDT", "XRP_USDT", "ADA_USDT"]
+    
+    for sym in symbols:
+        for attempt in range(3):
+            try:
+                url = f"{base_url}/public/get-ticker?instrument_name={sym}"
+                resp = requests.get(url, timeout=5, headers={'User-Agent': 'PaperTradingBot/1.1'})
+                data = resp.json()
+                
+                if data.get("code") == 0 and data.get("result", {}).get("data"):
+                    ask_price = float(data["result"]["data"]["a"])
+                    prices[sym] = ask_price
+                    break
+            except Exception as e:
+                log.warning(f"{sym} attempt {attempt+1} failed: {e}")
+                if attempt < 2:
+                    time.sleep(RETRY_BACKOFF)
         
-        prices = {}
-        for item in data.get("result", {}).get("data", []):
-            if 'i' in item and 'a' in item:
-                symbol = item['i']
-                price = float(item['a'])
-                prices[symbol] = price
-        
-        _price_cache.update(prices)
-        _cache_timestamp = time.time()
-        return prices
-        
-    except Exception as e:
-        log.error(f"Crypto price fetch error: {e}")
-        # Return cached prices as fallback
-        return _price_cache.copy()
+        if sym not in prices:
+            # yfinance fallback (FIX7)
+            try:
+                import yfinance as yf
+                ticker = yf.Ticker(sym.replace("_", "-") + "-USD")
+                prices[sym] = ticker.fast_info['last_price']
+                log.info(f"yfinance fallback for {sym}")
+            except:
+                log.error(f"No price for {sym}")
+    
+    _price_cache.update(prices)
+    _cache_timestamp = time.time()
+    return prices
+</xai:function_call name="edit_file">
+
+<xai:function_call name="edit_file">
+<parameter name="path">d:/playground/Paper_Trading_Bot/core/data_fetcher.py
 
 
 def _get_stock_prices() -> Dict[str, float]:

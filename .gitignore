@@ -111,6 +111,13 @@ dmypy.json
 data/*.csv
 data/*.json
 data/*.db
+data/trades.db
+data/logs/
+data/history/
+data/exports/
+*.h5
+*.zip
+*.pkl
 
 # === Never commit real config or sensitive data ===
 # Always use .env.example + config.py template

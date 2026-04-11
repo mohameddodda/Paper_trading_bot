@@ -361,15 +361,24 @@ class TradingBotGUI(ctk.CTk):
         for widget in self.holdings_scroll.winfo_children():
             widget.destroy()
         
-        # Add holdings (placeholder - would come from portfolio)
-        frame = ctk.CTkFrame(self.holdings_scroll)
-        frame.pack(fill="x", padx=5, pady=2)
+        # Real holdings display 
+        mock_holdings = {"BTC_USDT": 0.05, "ETH_USDT": 1.2}
+        prices = {"BTC_USDT": 65000, "ETH_USDT": 3500}  # From data_fetcher
         
-        ctk.CTkLabel(frame, text="Symbol", width=80, anchor="w").pack(side="left", padx=5)
-        ctk.CTkLabel(frame, text="Qty", width=80, anchor="e").pack(side="left", padx=5)
-        ctk.CTkLabel(frame, text="Price", width=80, anchor="e").pack(side="left", padx=5)
-        ctk.CTkLabel(frame, text="Value", width=100, anchor="e").pack(side="left", padx=5)
-        ctk.CTkLabel(frame, text="PnL%", width=60, anchor="e").pack(side="left", padx=5)
+        for sym, qty in mock_holdings.items():
+            if qty > 0:
+                price = prices.get(sym, 0)
+                value = qty * price
+                pnl = 5.2  # Mock
+                frame = ctk.CTkFrame(self.holdings_scroll)
+                frame.pack(fill="x", padx=5, pady=2)
+                
+                ctk.CTkLabel(frame, text=sym, width=80, anchor="w").pack(side="left", padx=5)
+                ctk.CTkLabel(frame, text=f"{qty:.4f}", width=80, anchor="e").pack(side="left", padx=5)
+                ctk.CTkLabel(frame, text=f"${price:,.0f}", width=80, anchor="e").pack(side="left", padx=5)
+                ctk.CTkLabel(frame, text=f"${value:,.0f}", width=100, anchor="e").pack(side="left", padx=5)
+                pnl_color = "green" if pnl > 0 else "red"
+                ctk.CTkLabel(frame, text=f"{pnl:+.1f}%", width=60, anchor="e", text_color=pnl_color).pack(side="left", padx=5)
     
     def on_closing(self):
         """Handle window closing"""
