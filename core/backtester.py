@@ -56,7 +56,9 @@ def backtest_strategy(
     initial_balance: float = STARTING_CASH,
     position_size: float = 0.1,
     stop_loss: float = 0.05,
-    take_profit: float = 0.10
+    take_profit: float = 0.10,
+    slippage_pct: float = 0.0005,  # 0.05%
+    commission_pct: float = 0.001  # 0.1%
 ) -> pd.DataFrame:
     """
     Backtest a trading strategy.
@@ -176,6 +178,14 @@ def backtest_strategy(
         log.info(f"Final balance: ${balance:.2f}")
         log.info(f"Total return: {((balance - initial_balance) / initial_balance * 100):.2f}%")
         
+# Apply costs to trades (Phase 4)
+        slippage_buy = trade['price'] * 0.0005  # 0.05%
+        commission = trade['price'] * trade['qty'] * 0.001  # 0.1%
+        if trade['type'] == 'BUY':
+            trade['price'] += slippage_buy + commission / trade['qty']
+        else:
+            trade['price'] -= slippage_buy + commission / trade['qty']
+
 # Save trades to DB (Phase 2) ✅
         db_manager.init_db()
         symbol = 'BACKTEST_SYMBOL'  # Dynamic symbol could be passed as param in future

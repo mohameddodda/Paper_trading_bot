@@ -249,7 +249,8 @@ def execute_trade(sym, action, price):
         entry_prices[sym] = price
         last_buy_time[sym] = time.time()
         
-        db_manager.log_trade(sym, "BUY", price, qty, 0.0, sim_balance, reason="AI Buy", strategy='beast_bot')
+db_manager.log_trade(sym, "BUY", price, qty, 0.0, self.sim_balance, reason="AI Buy", strategy='beast_bot')
+    db_manager.save_state(self.sim_balance, self.sim_balance + sum(qty * get_live_price(s) for s, qty in self.portfolio.items()), self.portfolio)
         notify(f"BUY {sym}", f"Bought {qty:.4f} {sym} @ ${price:.2f}")
         return True, f"Bought {qty:.4f} {sym}"
     
@@ -379,7 +380,10 @@ def bot_step():
             if "Stop Loss" in reason or "Take Profit" in reason:
                 action = "SELL"
         
-        if action:
+if risk_manager.should_halt():
+        notify("🚨 HALT", "Daily drawdown limit hit")
+        return
+    if action:
             execute_trade(sym, action, current_price)
 
 class BeastBot:
@@ -443,7 +447,14 @@ def main():
     from core.db_manager import db_manager
     from core.data_fetcher import DataFetcher
     from core.strategy import TradingStrategy
+latest_state = db_manager.load_latest_state()
+if latest_state:
+    self.sim_balance = latest_state['balance']
+    self.portfolio = latest_state['open_positions']
+    print(f"✅ BeastBot loaded state: Balance ${self.sim_balance:.2f}")
+else:
     db_manager.init_db()
+    print("✅ BeastBot new DB initialized")
     bot = BeastBot(db_manager, None, None, "standalone_beast")
     try:
         bot.run()

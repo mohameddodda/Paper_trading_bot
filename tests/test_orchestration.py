@@ -5,7 +5,7 @@ from unittest.mock import Mock, patch, MagicMock
 
 @pytest.fixture
 def orchestrator():
-    orch = BotOrchestrator(num_bots=1, db_path=':memory:')
+    orch = BotOrchestrator(num_bots=1)
     orch.bots = {'test_bot': Mock()}
     orch.threads = [Mock()]
     return orch

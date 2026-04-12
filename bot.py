@@ -49,13 +49,28 @@ def main():
         print(f\"⚠️  Setup check failed: {e}\")
         print(\"Continue anyway...\")
 
-    parser = argparse.ArgumentParser(description=\"Paper Trading Bot Launcher\")
+parser = argparse.ArgumentParser(description=\"Paper Trading Bot Launcher\")
     parser.add_argument(\"--mode\", choices=[\"cli\", \"beast\", \"gui\"], default=\"cli\",
                         help=\"Bot mode: cli (default), beast, gui\")
+    parser.add_argument(\"--report\", action=\"store_true\", help=\"Generate report from DB\")
     args = parser.parse_args()
 
     print_banner(args.mode)
 
+    if args.report:
+        from core.db_manager import db_manager
+        db_manager.init_db()
+        stats = db_manager.get_trade_stats()
+        trades = db_manager.get_trades(limit=50)
+        print(\"\\n📊 TRADING REPORT\")
+        print(f\"Total Trades: {stats['total_trades']}\")
+        print(f\"Avg PnL: {stats['avg_pnl_pct']:.2f}%\")
+        print(f\"Win Rate: {stats['win_rate_pct']:.1f}%\")
+        print(\"\\nRecent Trades:\")
+        for trade in trades[-10:]:
+            print(f\"  {trade['timestamp'][:16]} {trade['type']} {trade['symbol']} @${trade['price']:.4f} PnL:{trade['pnl_pct']:+.1f}%\")
+        return
+        
     if args.mode == \"cli\":
         from bots.cli_bot import main as cli_main
         cli_main()

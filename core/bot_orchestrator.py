@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 import logging
 from typing import List, Dict, Any, Optional
-from core.db_manager import DBManager
+from core.db_manager import db_manager
 from core.data_fetcher import DataFetcher
 from core.strategy import TradingStrategy
 from bots.beast_bot import BeastBot
@@ -13,8 +13,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class BotOrchestrator:
-    def __init__(self, db_path: str = 'paper_trading.db', num_bots: int = 2, bot_types: List[str] = None):
-        self.db_manager = DBManager(db_path)
+    def __init__(self, num_bots: int = 2, bot_types: List[str] = None):
+        self.db_manager = db_manager
         self.data_fetcher = DataFetcher()
         self.strategy = TradingStrategy()
         self.num_bots = num_bots
@@ -31,6 +31,9 @@ class BotOrchestrator:
         self.bot_id_counter += 1
         if bot_type == 'beast':
             bot = BeastBot(self.db_manager, self.data_fetcher, self.strategy, bot_id=bot_id)
+        elif bot_type == 'cli':
+            from bots.cli_bot import CLIBot
+            bot = CLIBot(self.db_manager, self.data_fetcher, self.strategy, bot_id=bot_id)
         else:
             raise ValueError(f"Unknown bot type: {bot_type}")
         return bot

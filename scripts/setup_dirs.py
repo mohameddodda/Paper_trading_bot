@@ -12,17 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-\"\"\"setup_dirs.py – Directory Setup Script
+"""setup_dirs.py – Directory Setup Script
 ======================================
 
 Creates the necessary directory structure for the Paper Trading Bot.
-Run: python setup_dirs.py\"\"\"
+Run: python setup_dirs.py"""
 
 import os
 from pathlib import Path
 
-def create_directories():
-    \"\"\"Create all required directories.\"\"\"
+def create_directories():\n    \"\"\"Create all required directories.\"\"\"
     root = Path(__file__).parent.resolve()
     
     dirs = [

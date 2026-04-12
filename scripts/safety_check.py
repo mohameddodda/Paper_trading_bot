@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-\"\"\"Security dependency scan using Safety.\"\"\"
+"""Security dependency scan using Safety."""
 import subprocess
 import sys
 from pathlib import Path

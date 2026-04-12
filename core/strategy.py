@@ -49,10 +49,10 @@ from config import (
 from training.rl_environment import RLTradingEnv
 
 # AI Model Paths
-CHECKPOINTS_DIR = Path(__file__).parent.parent / \"checkpoints\"
-LSTM_MODEL_PATH = CHECKPOINTS_DIR / \"lstm_model.h5\"
-SCALER_PATH = CHECKPOINTS_DIR / \"scaler.pkl\"
-RL_POLICY_PATH = CHECKPOINTS_DIR / \"rl_ppo_policy.zip\"
+CHECKPOINTS_DIR = Path(__file__).parent.parent / 'checkpoints'
+LSTM_MODEL_PATH = CHECKPOINTS_DIR / 'lstm_model.h5'
+SCALER_PATH = CHECKPOINTS_DIR / 'scaler.pkl'
+RL_POLICY_PATH = CHECKPOINTS_DIR / 'rl_ppo_policy.zip'
 
 # Global AI models (lazy load)
 lstm_model = None

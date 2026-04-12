@@ -160,27 +160,34 @@ class DatabaseManager:
             columns = [desc[0] for desc in cursor.description]
             return [dict(zip(columns, row)) for row in cursor.fetchall()]
 
+    def get_recent_trades(self, limit: int = 100) -> List[Dict[str, Any]]:
+        """Get most recent trades (for health checks)."""
+        return self.get_trades(limit=limit)
+
     def get_trade_stats(self, symbol: Optional[str] = None, days: int = 30) -> Dict[str, Any]:
         """Get summary statistics for trades."""
-        cutoff = datetime.now().strftime('%Y-%m-%d')
-        where_clause = f"timestamp > '{cutoff}'" if days == 30 else ''
+        params = []
+        where_conditions = []
+        
+        if days == 30:
+            where_conditions.append("date(timestamp) >= date('now', '-30 days')")
         if symbol:
-            if where_clause:
-                where_clause += f" AND symbol = '{symbol}'"
-            else:
-                where_clause = f"symbol = '{symbol}'"
-
+            where_conditions.append("symbol = ?")
+            params.append(symbol)
+        
+        where_clause = " AND ".join(where_conditions) if where_conditions else "1=1"
+        
         query = f'''
             SELECT 
                 COUNT(*) as total_trades,
-                AVG(pnl_pct) as avg_pnl,
+                AVG(pnl_pct) as avg_pnl_pct,
                 SUM(CASE WHEN pnl_pct > 0 THEN 1 ELSE 0 END) * 100.0 / COUNT(*) as win_rate_pct
             FROM trade_history 
-            WHERE {where_clause if where_clause else '1=1'}
+            WHERE {where_clause}
         '''
         
         with self.get_connection() as conn:
-            cursor = conn.execute(query)
+            cursor = conn.execute(query, params)
             row = cursor.fetchone()
             if row:
                 return {
